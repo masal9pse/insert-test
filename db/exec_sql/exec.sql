@@ -19,4 +19,5 @@ posts.id = post_category.post_id
  ON
 categories.id = post_category.category_id
 WHERE
-posts.id=3;
+--posts.id=3;
+categories.id=1;
