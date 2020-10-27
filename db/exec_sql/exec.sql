@@ -19,5 +19,6 @@ posts.id = post_category.post_id
  ON
 categories.id = post_category.category_id
 WHERE
+categories.category='音楽';
 --posts.id=3;
-categories.id=1;
+--categories.id=1;
