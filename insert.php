@@ -1,28 +1,20 @@
 <?php
-var_dump($_POST);
-?>
-<html>
+require('dbconnect.php');
+$posts = $_POST;
+var_dump($posts);
+//$db->beginTransaction();
 
-<body>
- <form action="" method="post">
-  <!--ファイル、methodの指定-->
-  <table border="1">
-   <tr>
-    <td>タイトル</td>
-    <td><input type="text" name="title" required></td>
-    <!--名前の入力フォーム作成-->
-    <td>本文</td>
-    <td><input type="text" name="detail" required></td>
-    <!--コメント入力フォーム作成-->
-    <td>画像</td>
-    <td><input type="text" name="image" required></td>
-    <!--パスワード入力フォーム作成-->
-    <td colspan="2" align="center">
-     <input type="submit" value="送信">
-     <!--送信ボタン作成-->
-   </tr>
-  </table>
- </form>
-</body>
+//$sql = 'INSERT INTO posts(title,detail,image,created_at,updated_at) set :title,:detail,:image,now(),now()';
+$sql = 'INSERT INTO posts(title,detail,image,created_at,updated_at) VALUES (:title,:detail,:image,now(),now())';
 
-</html>
+try {
+ $stmt = $db->prepare($sql);
+ $stmt->bindValue(':title', $posts['title'], PDO::PARAM_STR);
+ $stmt->bindValue(':detail', $posts['detail'], PDO::PARAM_STR);
+ $stmt->bindValue(':image', $posts['image'], PDO::PARAM_STR);
+ $stmt->execute();
+ var_dump($stmt);
+ echo '成功';
+} catch (PDOException $e) {
+ echo $e;
+}
