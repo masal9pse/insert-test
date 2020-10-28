@@ -22,3 +22,7 @@ WHERE
 categories.category='音楽';
 --posts.id=3;
 --categories.id=1;
+
+SELECT *
+from posts
+where title='ナルト' or detail='アニメと映画';
