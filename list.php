@@ -16,6 +16,8 @@ $lists = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
  <h1>一覧リスト</h1>
+ <a href="./search_form.php">検索リンク</a>
+ <a href="./insert_form.html">投稿リンク</a>
  <?php foreach ($lists as $list) : ?>
   <ul>
    <li><?php echo $list['title']; ?></li>
