@@ -2,6 +2,7 @@
 require('dbconnect.php');
 //var_dump($_GET);
 $where = [];
+$binds = [];
 if (!empty($_GET['category'])) {
  $where[] = 'LEFT JOIN
  post_category
@@ -10,35 +11,39 @@ if (!empty($_GET['category'])) {
  ON categories.id = post_category.category_id
 WHERE categories.category = :category';
 
- //$stmt = $db->prepare($sql);
- //$stmt->bindValue(':category', $_GET["category"], PDO::PARAM_STR);
- //$stmt->bindValue(':title', '%' . $_GET['search'] . '%', PDO::PARAM_STR);
- //$stmt->bindValue(':detail', '%' . $_GET['search'] . '%', PDO::PARAM_STR);
- //$stmt->execute();
- //$search = $stmt->fetchAll(PDO::FETCH_ASSOC);
- ////var_dump($stmt);
- //var_dump($search);
- //var_dump($where);
-}
-if (!empty($_GET['search'])) {
- $where[] = 'posts.title like :title or posts.detail like :detail';
+ $binds[':category'] = $_GET['category'];
 }
 
+if (!empty($_GET['search'])) {
+ $where[] = 'posts.title like :title or posts.detail like :detail';
+ $binds[':title'] = '%' . $_GET['search'] . '%';
+ $binds[':detail'] = '%' . $_GET['search'] . '%';
+}
+//var_dump($binds);
 //var_dump($where);
 
 if (isset($where)) {
  $whereSql = implode(' AND ', $where);
- $sql = 'SELECT * from posts where ' . $whereSql;
+ $sql = 'SELECT * from posts ' . $whereSql;
+ $stmt = $db->prepare($sql);
+ foreach ($binds as $key => $val) {
+  // foreach ($binds as $val) {
+  $stmt->bindValue($key, $val, PDO::PARAM_STR);
+  //$stmt->bindValue($val, PDO::PARAM_INT);
+  //var_dump($key); // カラム取得
+  //var_dump($val); // 検索のために入力した値を取得
+  //var_dump($stmt);
+ }
+ $stmt->execute();
+} else {
+ $sql = 'SELECT * from posts';
+ $stmt = $db->query($sql);
 }
-//var_dump($whereSql);
 var_dump($sql);
-//if (!empty($_GET['search'])) {
-// $sql = 'SELECT * from posts where title like :title or detail like :detail';
-// //$sql = 'SELECT * from posts where title=:title';
-// $stmt = $db->prepare($sql);
-// $stmt->bindValue(':title', '%' . $_GET['search'] . '%', PDO::PARAM_STR);
-// $stmt->bindValue(':detail', '%' . $_GET['search'] . '%', PDO::PARAM_STR);
-// $stmt->execute();
-// $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// var_dump($search);
-//}
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//var_dump($stmt);
+var_dump($results);
+
+foreach ($results as $result) {
+ echo $result['title'] . ' ';
+}
