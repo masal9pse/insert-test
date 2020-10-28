@@ -20,11 +20,11 @@ WHERE categories.category = :category';
 }
 
 if (!empty($_GET['search'])) {
- $sql = 'SELECT * from posts where title=:title or detail=:detail';
+ $sql = 'SELECT * from posts where title like :title or detail like :detail';
  //$sql = 'SELECT * from posts where title=:title';
  $stmt = $db->prepare($sql);
- $stmt->bindValue(':title', $_GET['search'], PDO::PARAM_STR);
- $stmt->bindValue(':detail', $_GET['search'], PDO::PARAM_STR);
+ $stmt->bindValue(':title', '%' . $_GET['search'] . '%', PDO::PARAM_STR);
+ $stmt->bindValue(':detail', '%' . $_GET['search'] . '%', PDO::PARAM_STR);
  $stmt->execute();
  $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
  var_dump($search);
