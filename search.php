@@ -9,8 +9,7 @@ if (!empty($_GET['category'] || $_GET['search'])) {
  ON posts.id = post_category.post_id
  LEFT JOIN categories
  ON categories.id = post_category.category_id
-WHERE categories.category = :category 
-or title like :title or detail like :detail';
+WHERE categories.category = :category and posts.title like :title or posts.detail like :detail';
 
  $stmt = $db->prepare($sql);
  $stmt->bindValue(':category', $_GET["category"], PDO::PARAM_STR);

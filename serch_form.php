@@ -20,10 +20,10 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
  <h1>検索機能</h1>
  <form action="search.php" method="get">
   <select name="category">
-   <option value="">未選択</option>
    <?php foreach ($categories as $category) : ?>
     <option value="<?php echo $category['category']; ?>"><?php echo $category['category']; ?></option>
    <?php endforeach; ?>
+   <option value="">未選択</option>
   </select>
   <!--<input type="text" name="title" placeholder="検索したい値">-->
   <input type="text" name="search" placeholder="検索したい値">
