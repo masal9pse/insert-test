@@ -11,16 +11,16 @@
   <h1>投稿フォーム</h1>
   <a href="./list.php">一覧表示リンク</a>
   <a href="./search_form.php">検索リンク</a>
-  <form action="insert.php" method="post">
+  <form action="insert.php" method="post" enctype="multipart/form-data">
     <!--ファイル、methodの指定-->
     <table border="1">
       <tr>
         <td>タイトル</td>
-        <td><input type="text" name="title" required></td>
+        <td><input type="text" name="title"></td>
         <td>本文</td>
-        <td><input type="text" name="detail" required></td>
+        <td><input type="text" name="detail"></td>
         <td>画像</td>
-        <td><input type="text" name="image" required></td>
+        <td><input type="file" name="image"></td>
         <td colspan="2" align="center">
           <input type="submit" value="送信">
           <!--送信ボタン作成-->
