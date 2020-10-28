@@ -28,8 +28,10 @@ if (!empty($_GET['search'])) {
 
 if (isset($where)) {
  $whereSql = implode(' AND ', $where);
+ $sql = 'SELECT * from posts where ' . $whereSql;
 }
-var_dump($whereSql);
+//var_dump($whereSql);
+var_dump($sql);
 //if (!empty($_GET['search'])) {
 // $sql = 'SELECT * from posts where title like :title or detail like :detail';
 // //$sql = 'SELECT * from posts where title=:title';
