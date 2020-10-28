@@ -25,7 +25,8 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <option value="<?php echo $category['category']; ?>"><?php echo $category['category']; ?></option>
    <?php endforeach; ?>
   </select>
-  <input type="text" name="title" placeholder="検索したい値">
+  <!--<input type="text" name="title" placeholder="検索したい値">-->
+  <input type="text" name="search" placeholder="検索したい値">
   <input type="submit" value="送信" />
  </form>
 </body>
