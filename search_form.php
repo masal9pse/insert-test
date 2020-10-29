@@ -20,7 +20,8 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <h1>検索フォーム</h1>
   <a href="./list.php">全件表示リンク</a>
   <a href="./insert_form.html">投稿リンク</a>
-  <form action="search.php" method="get">
+  <!--<form action="search.php" method="get">-->
+  <form action="search2.php" method="get">
     <select name="category">
       <?php foreach ($categories as $category) : ?>
         <option value="<?php echo $category['category']; ?>"><?php echo $category['category']; ?></option>
