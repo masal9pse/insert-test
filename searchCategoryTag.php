@@ -28,7 +28,7 @@ if (empty($_GET['category']) && !empty($_GET['search'])) {
  WHERE posts.title LIKE :title OR posts.detail LIKE :detail';
  $stmt = $db->prepare($sql);
  $stmt->bindValue(':title', '%' . $_GET["search"] . '%', PDO::PARAM_STR);
- $stmt->bindValue(':category', '%' . $_GET["search"] . '%', PDO::PARAM_STR);
+ $stmt->bindValue(':detail', '%' . $_GET["search"] . '%', PDO::PARAM_STR);
  $stmt->execute();
  var_dump($stmt);
  $test = $stmt->fetchAll(PDO::FETCH_ASSOC);
