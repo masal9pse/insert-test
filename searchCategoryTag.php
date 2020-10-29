@@ -17,9 +17,16 @@ if (!empty($_GET['tags'])) {
   //echo $tag;
   $stmt->bindValue(':tags', $tag, PDO::PARAM_STR);
   $stmt->execute();
-  $tag_search[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $tag_searches[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
  }
- var_dump($tag_search);
+ //var_dump($tag_searches);
+ foreach ($tag_searches as $tag_search) {
+  //var_dump($tag_search);
+  foreach ($tag_search as $result) {
+   //var_dump($result);
+   echo $result['title'] . ' ';
+  }
+ }
  exit;
 }
 
