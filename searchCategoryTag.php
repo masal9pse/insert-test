@@ -1,7 +1,28 @@
 <?php
 require('dbconnect.php');
-var_dump($_GET);
-exit;
+//var_dump($_GET);
+//exit;
+// まずはタグの検索オンリーで結果を取得したい。 => getをどう検索結果に加えるか
+if (!empty($_GET['tags'])) {
+ $sql = 'SELECT * FROM posts
+ LEFT JOIN post_tag
+ ON posts.id = post_tag.post_id
+ LEFT JOIN tags
+ ON tags.id = post_tag.tag_id
+ where tags.tag = :tags';
+ $stmt = $db->prepare($sql);
+ foreach ($_GET['tags'] as $tag) {
+  //echo $tag['tag'];
+  //var_dump($tag);
+  //echo $tag;
+  $stmt->bindValue(':tags', $tag, PDO::PARAM_STR);
+  $stmt->execute();
+  $tag_search[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ }
+ var_dump($tag_search);
+ exit;
+}
+
 if (!empty($_GET['category'] && empty($_GET['search']))) {
  $sql = 'SELECT * FROM posts LEFT JOIN post_category ON posts.id = post_category.post_id
  LEFT JOIN categories

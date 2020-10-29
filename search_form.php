@@ -35,7 +35,7 @@ $tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <input type="text" name="search" placeholder="検索したい値">
     <br>
     <?php foreach ($tags as $tag) : ?>
-      <input type="checkbox" name="tag[]" value="<?php echo $tag['tag']; ?>">
+      <input type="checkbox" name="tags[]" value="<?php echo $tag['tag']; ?>">
       <label for="<?php echo $tag['tag']; ?>"><?php echo $tag['tag']; ?></label>
     <?php endforeach; ?>
     </select>
