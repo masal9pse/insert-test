@@ -1,7 +1,7 @@
 <?php
 require('dbconnect.php');
-//var_dump($_GET);
-
+var_dump($_GET);
+exit;
 if (!empty($_GET['category'] && empty($_GET['search']))) {
  $sql = 'SELECT * FROM posts LEFT JOIN post_category ON posts.id = post_category.post_id
  LEFT JOIN categories

@@ -2,9 +2,13 @@
 <?php
 require('dbconnect.php');
 
-$sql = 'SELECT * from categories';
-$stmt = $db->query($sql);
+$category_sql = 'SELECT * from categories';
+$stmt = $db->query($category_sql);
 $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$tag_sql = 'SELECT * from tags';
+$stmt = $db->query($tag_sql);
+$tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //var_dump($categories);
 ?>
 
@@ -28,8 +32,14 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <option value="<?php echo $category['category']; ?>"><?php echo $category['category']; ?></option>
       <?php endforeach; ?>
     </select>
-    <!--<input type="text" name="title" placeholder="検索したい値">-->
     <input type="text" name="search" placeholder="検索したい値">
+    <br>
+    <input type="checkbox" name="tag" id="">
+    <label for="">
+      <?php foreach ($tags as $tag) : ?>
+        <option value="<?php echo $tag['tag']; ?>"><?php echo $tag['tag']; ?></option>
+      <?php endforeach; ?>
+    </label>
     <input type="submit" value="送信" />
   </form>
 </body>
