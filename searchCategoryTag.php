@@ -15,9 +15,6 @@ WHERE pt.tag_id = t.id
 GROUP BY p.id
 HAVING COUNT( p.id )= ";
 
- //where tags.tag='面白い' OR tags.tag='感動できる
-
- //where tags.tag = :tags';
  $where = [];
  //$binds = [];
  foreach ($_GET['tags'] as $tag) {
@@ -33,10 +30,9 @@ HAVING COUNT( p.id )= ";
  $stmt = $db->query($sql);
  $tag_search = $stmt->fetchAll(PDO::FETCH_ASSOC);
  var_dump($tag_search);
- exit;
 }
 
-if (!empty($_GET['tags'])) {
+if (!empty($_GET['tags']) && empty($_GET['search'])) {
  $first_sql = "SELECT p.*
 FROM post_tag pt, posts p, tags t
 WHERE pt.tag_id = t.id
@@ -77,9 +73,8 @@ HAVING COUNT( p.id )= ";
    echo $result['title'] . ' ';
   }
  }
- exit;
 }
-
+//exit;
 if (!empty($_GET['category'] && empty($_GET['search']))) {
  $sql = 'SELECT * FROM posts LEFT JOIN post_category ON posts.id = post_category.post_id
  LEFT JOIN categories
@@ -93,7 +88,7 @@ WHERE categories.category = :category';
 }
 //var_dump($stmt);
 //exit;
-if (empty($_GET['category']) && !empty($_GET['search'])) {
+if (empty($_GET['category'] && $_GET['tags']) && !empty($_GET['search'])) {
  //if (!empty($_GET['search'])) {
  $sql = 'SELECT * FROM posts 
  WHERE posts.title LIKE :title OR posts.detail LIKE :detail';
