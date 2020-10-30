@@ -41,4 +41,26 @@ FROM posts
  ON categories.id = post_category.category_id
 WHERE categories.category = 'アニメ' and posts.title like '%N%';
 
--- テキストフォームカテゴリー
+-- なぜかand検索で値が取れない
+SELECT *
+FROM posts LEFT JOIN post_tag ON posts.id = post_tag.post_id
+ LEFT JOIN tags ON tags.id = post_tag.tag_id
+where tags.tag='面白い' AND tags.tag='感動できる';
+
+-- ？なぜかとれない
+SELECT *
+FROM posts LEFT JOIN post_tag ON posts.id = post_tag.post_id
+ LEFT JOIN tags ON tags.id = post_tag.tag_id
+where post_tag.tag_id=1 and post_tag.tag_id=2;
+
+-- or検索で重複した値を削除する
+SELECT DISTINCT posts.*
+FROM posts LEFT JOIN post_tag ON posts.id = post_tag.post_id
+ LEFT JOIN tags ON tags.id = post_tag.tag_id
+where post_tag.tag_id=1 or post_tag.tag_id=2;
+
+-- タグ検索に使用するsql => これ使う
+SELECT DISTINCT posts.*
+FROM posts LEFT JOIN post_tag ON posts.id = post_tag.post_id
+ LEFT JOIN tags ON tags.id = post_tag.tag_id
+where tags.tag='面白い' OR tags.tag='感動できる';
