@@ -11,7 +11,7 @@ WHERE pt.tag_id = t.id
  AND (t.tag IN (";
 
  $second_sql = "AND p.id = pt.post_id
- AND p.title LIKE '%N%' or p.detail LIKE '%N%'
+ AND p.title LIKE '%{$_GET['search']}%' or p.detail LIKE '%{$_GET['search']}%'
 GROUP BY p.id
 HAVING COUNT( p.id )= ";
 
