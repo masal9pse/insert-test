@@ -1,3 +1,28 @@
+-- これを使う
+SELECT p.*
+FROM post_tag pt, posts p, tags t
+WHERE pt.tag_id = t.id
+ AND (t.tag IN ('面白い', '感動できる', 'アニメ化'))
+ AND p.id = pt.post_id
+GROUP BY p.id
+HAVING COUNT( p.id )=3
+
+SELECT COUNT(p.id), p.*
+FROM posts p
+ JOIN post_tag pt ON p.id = pt.post_id
+ JOIN tags t ON pt.tag_id = t.id
+WHERE t.id IN (1, 2, 3)
+GROUP BY p.id;
+
+SELECT posts.*
+FROM posts
+ JOIN post_tag AS pt ON posts.id = pt.post_id
+ JOIN tags ON pt.tag_id = tags.id
+WHERE  tags.tag='面白い' or tags.tag='感動できる' or tags.tag='アニメ化'
+--WHERE tags.tag IN ('感動できる','面白い','アニメ化','映画化')
+GROUP BY posts.id
+HAVING COUNT(posts.id) = 3;
+
 --なぜか狙った結果が取得できる
 SELECT posts.*
 FROM posts
