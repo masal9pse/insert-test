@@ -1,3 +1,12 @@
+--なぜか狙った結果が取得できる
+SELECT posts.*
+FROM posts
+ JOIN post_tag AS pt ON posts.id = pt.post_id
+ JOIN tags ON pt.tag_id = tags.id
+WHERE tags.tag IN ('感動できる','面白い','アニメ化')
+GROUP BY posts.id
+HAVING COUNT(posts.id) = 3;
+
 -- カテゴリー検索の未完成例
 SELECT posts.* , categories.*
 from categories
@@ -59,8 +68,14 @@ FROM posts LEFT JOIN post_tag ON posts.id = post_tag.post_id
  LEFT JOIN tags ON tags.id = post_tag.tag_id
 where post_tag.tag_id=1 or post_tag.tag_id=2;
 
--- タグ検索に使用するsql => これ使う
+-- タグ検索に使用するsql => これ使う => 絞り込みができない
 SELECT DISTINCT posts.*
 FROM posts LEFT JOIN post_tag ON posts.id = post_tag.post_id
  LEFT JOIN tags ON tags.id = post_tag.tag_id
 where tags.tag='面白い' OR tags.tag='感動できる';
+
+-- 絞り込みできない
+SELECT distinct posts.*, tags.*
+FROM posts LEFT JOIN post_tag ON posts.id = post_tag.post_id
+ LEFT JOIN tags ON tags.id = post_tag.tag_id
+where tags.tag　IN ('面白い','感動できる','アニメ化');

@@ -4,8 +4,10 @@ require('dbconnect.php');
 //exit;
 // まずはタグの検索オンリーで結果を取得したい。 => getをどう検索結果に加えるか
 if (!empty($_GET['tags'])) {
- $sql = "SELECT * FROM posts LEFT JOIN post_tag ON posts.id = post_tag.post_id
- LEFT JOIN tags ON tags.id = post_tag.tag_id where ";
+ $sql = "SELECT DISTINCT posts.*
+ FROM posts LEFT JOIN post_tag ON posts.id = post_tag.post_id
+  LEFT JOIN tags ON tags.id = post_tag.tag_id where ";
+ //where tags.tag='面白い' OR tags.tag='感動できる
 
  //where tags.tag = :tags';
  $where = [];
@@ -16,7 +18,7 @@ if (!empty($_GET['tags'])) {
  }
  //var_dump($where);
  //$whereSql = implode(' OR ', $where);
- $whereSql = implode(' AND ', $where);
+ $whereSql = implode(' OR ', $where);
  $sql = $sql . $whereSql;
  //$sql .= $whereSql;
  var_dump($sql);
