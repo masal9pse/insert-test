@@ -3,7 +3,39 @@ require('dbconnect.php');
 //var_dump(count($_GET['tags']));
 //echo count($_GET['tags']);
 //exit;
-// まずはタグの検索オンリーで結果を取得したい。 => getをどう検索結果に加えるか
+
+if (!empty($_GET['tags'] && $_GET['search'])) {
+ $first_sql = "SELECT p.*
+FROM post_tag pt, posts p, tags t
+WHERE pt.tag_id = t.id
+ AND (t.tag IN (";
+
+ $second_sql = "AND p.id = pt.post_id
+ AND p.title LIKE '%N%' or p.detail LIKE '%N%'
+GROUP BY p.id
+HAVING COUNT( p.id )= ";
+
+ //where tags.tag='面白い' OR tags.tag='感動できる
+
+ //where tags.tag = :tags';
+ $where = [];
+ //$binds = [];
+ foreach ($_GET['tags'] as $tag) {
+  $where[] = "'$tag'";
+  //$binds[''] = $tag;
+ }
+ //var_dump($where);
+ //$whereSql = implode(' OR ', $where);
+ $whereSql = implode(' , ', $where);
+ $sql = $first_sql . $whereSql . '))' . ' ' .  $second_sql . count($_GET['tags']);
+ //$sql .= $whereSql;
+ var_dump($sql);
+ $stmt = $db->query($sql);
+ $tag_search = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ var_dump($tag_search);
+ exit;
+}
+
 if (!empty($_GET['tags'])) {
  $first_sql = "SELECT p.*
 FROM post_tag pt, posts p, tags t
