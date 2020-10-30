@@ -1,4 +1,14 @@
--- これを使う
+-- テキストフォームとタグ検索の絞り込み検索の成功例
+SELECT p.*
+FROM post_tag pt, posts p, tags t
+WHERE pt.tag_id = t.id
+ AND (t.tag IN ('面白い', '感動できる', 'アニメ化'))
+ AND p.id = pt.post_id
+ AND p.title LIKE '%天%' or p.detail LIKE '%天%'
+GROUP BY p.id
+HAVING COUNT( p.id )=3
+
+-- タグ検索ではこれを使う
 SELECT p.*
 FROM post_tag pt, posts p, tags t
 WHERE pt.tag_id = t.id
