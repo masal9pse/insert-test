@@ -11,7 +11,7 @@ FROM posts
  ON post_tag.tag_id = tags.id
 WHERE  categories.category = 'アニメ'
  AND tags.tag IN ('感動できる','面白い')
- AND posts.title like '%%'
+ AND posts.title like '%N%' or posts.detail like '%N%'
 GROUP BY posts.id
 HAVING COUNT(posts.id) = 2;
 

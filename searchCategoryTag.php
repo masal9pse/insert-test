@@ -3,6 +3,27 @@ require('dbconnect.php');
 //var_dump(count($_GET['tags']));
 //echo count($_GET['tags']);
 //exit;
+if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
+ $sql = "SELECT count(*), posts.*
+ FROM posts
+  LEFT JOIN post_category
+  ON posts.id = post_category.post_id
+  LEFT JOIN categories
+  ON categories.id = post_category.category_id
+  JOIN post_tag
+  ON posts.id = post_tag.post_id
+  JOIN tags
+  ON post_tag.tag_id = tags.id
+ WHERE  categories.category = 'アニメ'
+  AND tags.tag IN ('感動できる','面白い')
+  AND posts.title like '%N%' or posts.detail like '%N%'
+ GROUP BY posts.id
+ HAVING COUNT(posts.id) = 2";
+ $stmt = $db->query($sql);
+ $tag_search = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ var_dump($tag_search);
+ exit;
+}
 
 if (!empty($_GET['tags'] && $_GET['search'])) {
  $first_sql = "SELECT p.*
