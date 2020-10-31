@@ -1,3 +1,31 @@
+SELECT posts.*
+FROM posts
+ LEFT JOIN post_category
+ ON posts.id = post_category.post_id
+ LEFT JOIN categories
+ ON categories.id = post_category.category_id
+ JOIN post_tag
+ ON posts.id = post_tag.post_id
+ JOIN tags
+ ON post_tag.tag_id = tags.id
+WHERE 
+ categories.category = 'アニメ' AND
+ tags.tag IN ('感動できる','面白い','アニメ化')
+ and posts.title like '%天%'
+GROUP BY posts.id
+HAVING COUNT(posts.id) = 3;
+
+-- innerjoinでテキストフォーム＋タグ検索のアンド検索
+SELECT posts.*
+FROM posts
+ JOIN post_tag AS pt ON posts.id = pt.post_id
+ JOIN tags ON pt.tag_id = tags.id
+WHERE tags.tag IN ('感動できる','面白い','アニメ化')
+ and posts.title like '%天%'
+GROUP BY posts.id
+HAVING COUNT(posts.id) = 3;
+
+
 -- テキストフォームとタグ検索の絞り込み検索の成功例1
 SELECT p.*
 FROM post_tag pt, posts p, tags t
@@ -39,7 +67,6 @@ FROM posts
  JOIN post_tag AS pt ON posts.id = pt.post_id
  JOIN tags ON pt.tag_id = tags.id
 WHERE  tags.tag='面白い' or tags.tag='感動できる' or tags.tag='アニメ化'
---WHERE tags.tag IN ('感動できる','面白い','アニメ化','映画化')
 GROUP BY posts.id
 HAVING COUNT(posts.id) = 3;
 
@@ -113,14 +140,21 @@ FROM posts LEFT JOIN post_tag ON posts.id = post_tag.post_id
  LEFT JOIN tags ON tags.id = post_tag.tag_id
 where post_tag.tag_id=1 or post_tag.tag_id=2;
 
--- タグ検索に使用するsql => これ使う => 絞り込みができない
-SELECT DISTINCT posts.*
-FROM posts LEFT JOIN post_tag ON posts.id = post_tag.post_id
- LEFT JOIN tags ON tags.id = post_tag.tag_id
-where tags.tag='面白い' OR tags.tag='感動できる';
-
 -- 絞り込みできない
 SELECT distinct posts.*, tags.*
 FROM posts LEFT JOIN post_tag ON posts.id = post_tag.post_id
  LEFT JOIN tags ON tags.id = post_tag.tag_id
 where tags.tag　IN ('面白い','感動できる','アニメ化');
+
+--とれない
+SELECT *
+FROM posts
+ LEFT JOIN post_tag
+ ON posts.id = post_tag.post_id
+ LEFT JOIN tags
+ ON tags.id = post_tag.tag_id
+ LEFT JOIN post_category
+ ON posts.id = post_category.post_id
+ LEFT JOIN categories
+ ON categories.id = post_category.category_id
+WHERE tags.tag = '面白い' and tags.tag='感動できる' and categories.category='アニメ' AND posts.title like '%N%' or posts.detail like '%N%';

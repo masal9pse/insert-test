@@ -45,8 +45,8 @@ WHERE categories.category = '音楽' and posts.title like '%N%' or posts.detail 
 
 --　正常値、Narutoが出力される
 SELECT *
-from posts LEFT JOIN
- post_category
+from posts
+ LEFT JOIN post_category
  ON posts.id = post_category.post_id
  LEFT JOIN categories
  ON categories.id = post_category.category_id
