@@ -1,7 +1,5 @@
 <?php
 require('dbconnect.php');
-//var_dump(count($_GET['tags']));
-//echo count($_GET['tags']);
 
 // tagとカテゴリーの絞り込み検索
 if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
@@ -55,7 +53,7 @@ if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
   ON post_tag.tag_id = tags.id
  WHERE  categories.category = '{$_GET['category']}'
   AND tags.tag IN ($whereSql)  
-  AND posts.title like '%{$_GET['search']}%' OR posts.detail like '%{$_GET['search']}%'
+  AND (posts.title like '%{$_GET['search']}%' OR posts.detail like '%{$_GET['search']}%')
  GROUP BY posts.id
  HAVING COUNT(posts.id) = $category_count";
 
@@ -164,8 +162,8 @@ if (!empty($_GET['category'] && $_GET['search']) && empty($_GET['tags'])) {
  LEFT JOIN categories
  ON categories.id = post_category.category_id
 WHERE categories.category = :category 
-AND posts.title like :title 
-OR posts.detail like :detail';
+AND (posts.title like :title 
+OR posts.detail like :detail)';
 
  $stmt = $db->prepare($sql);
  $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
