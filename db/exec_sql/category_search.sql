@@ -9,11 +9,12 @@ FROM posts
  JOIN tags
  ON post_tag.tag_id = tags.id
 WHERE 
- categories.category = 'アニメ' AND
- tags.tag IN ('感動できる','面白い','アニメ化')
- and posts.title like '%天%'
+ (categories.category = 'アニメ' AND
+ tags.tag IN ('感動できる','面白い','アニメ化'))
+ and (posts.title like '%ア%' or posts.detail like '%ア%')
 GROUP BY posts.id
-HAVING COUNT(posts.id) = 3;
+HAVING COUNT
+(posts.id) = 3;
 
 -- innerjoinでテキストフォーム＋タグ検索のアンド検索
 SELECT posts.*
