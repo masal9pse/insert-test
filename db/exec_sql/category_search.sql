@@ -11,9 +11,16 @@ FROM posts
 WHERE 
  categories.category = 'アニメ' AND
  tags.tag IN ('感動できる','面白い','アニメ化')
- and posts.title like '%天%'
+ --and posts.title like '%a%' or post.detail like '%a%'
+ and (posts.title,posts.detail
+) IN
+(
+  ('アニメ',
+  'アニメ'
+))
 GROUP BY posts.id
-HAVING COUNT(posts.id) = 3;
+HAVING COUNT
+(posts.id) = 3;
 
 -- innerjoinでテキストフォーム＋タグ検索のアンド検索
 SELECT posts.*

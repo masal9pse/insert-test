@@ -125,11 +125,15 @@ HAVING COUNT( p.id )= ";
  var_dump($tag_search);
 }
 //exit;
+// カテゴリーのみが入力されている条件
 if (!empty($_GET['category'] && empty($_GET['search']) && empty($_GET['tags']))) {
- $sql = 'SELECT * FROM posts LEFT JOIN post_category ON posts.id = post_category.post_id
+ $sql = 'SELECT * FROM posts 
+ LEFT JOIN post_category 
+ ON posts.id = post_category.post_id
  LEFT JOIN categories
  ON categories.id = post_category.category_id
 WHERE categories.category = :category';
+
  $stmt = $db->prepare($sql);
  $stmt->bindValue(':category', $_GET["category"], PDO::PARAM_STR);
  $stmt->execute();
