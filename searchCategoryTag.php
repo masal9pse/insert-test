@@ -5,7 +5,10 @@ require('dbconnect.php');
 
 // tagとカテゴリーの絞り込み検索
 if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
+ echo count($_GET['tags']);
+ //exit;
  //if (!empty($_GET['tags'] && $_GET['category'])) {
+ $where = [];
  $sql = "SELECT count(*), posts.*
  FROM posts
   LEFT JOIN post_category
@@ -16,10 +19,14 @@ if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
   ON posts.id = post_tag.post_id
   JOIN tags
   ON post_tag.tag_id = tags.id
- WHERE  categories.category = 'アニメ'
-  AND tags.tag IN ('感動できる','面白い')  
+ WHERE  categories.category = '{$_GET['category']}'
+  AND tags.tag IN ($where)  
  GROUP BY posts.id
- HAVING COUNT(posts.id) = 2";
+ HAVING COUNT(posts.id) = count({$_GET['tags']})";
+
+ foreach ($_GET['tags'] as $tag) {
+  $where[] = "'$tag'";
+ }
  var_dump($sql);
  $stmt = $db->query($sql);
  $tag_search = $stmt->fetchAll(PDO::FETCH_ASSOC);
