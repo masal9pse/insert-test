@@ -14,7 +14,7 @@ if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
  //var_dump($binds);
  //exit;
  $whereSql = implode(' , ', $where);
- //var_dump($where);
+ //var_dump($whereSql);
  $sql = "SELECT count(*), posts.*
  FROM posts
   LEFT JOIN post_category
@@ -35,18 +35,13 @@ if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
  //$stmt = $db->query($sql);
  $stmt = $db->prepare($sql);
  $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
- foreach ($binds as $key => $val) {
-  $stmt->bindValue($key, $val, PDO::PARAM_STR);
-  //var_dump($key); // 検索のために入力した値を取得
-  //var_dump($val); // 検索のために入力した値を取得
+ foreach ($binds as $whereSql => $val) {
+  $stmt->bindValue($whereSql, $val, PDO::PARAM_STR);
  }
-
  $stmt->bindValue(':title', "%{$_GET['search']}%", PDO::PARAM_STR);
  $stmt->bindValue(':detail', "%{$_GET['search']}%", PDO::PARAM_STR);
  $stmt->bindValue(':category_count', $category_count, PDO::PARAM_INT);
- //foreach($whereSql){
 
- //}
  $stmt->execute();
  $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
  var_dump($search);
