@@ -19,9 +19,11 @@ $lists = $stmt->fetchAll(PDO::FETCH_ASSOC);
  <a href="./search_form.php">検索リンク</a>
  <a href="./insert_form.html">投稿リンク</a>
  <?php foreach ($lists as $list) : ?>
-  <ul>
-   <li><?php echo $list['title']; ?></li>
-  </ul>
+  <div>
+   <td><?php echo $list['title']; ?></td>
+   <td><?php echo $list['detail']; ?></td>
+   <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
+  </div>
  <?php endforeach ?>
 </body>
 
