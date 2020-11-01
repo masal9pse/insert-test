@@ -12,7 +12,6 @@ if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
  }
  //var_dump($where);
  //var_dump($binds);
- //exit;
  $whereSql = implode(' , ', $where);
  //var_dump($whereSql);
  $sql = "SELECT count(*), posts.*
@@ -52,8 +51,10 @@ if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
 if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
  $category_count = count($_GET['tags']);
  $where = [];
- foreach ($_GET['tags'] as $tag) {
-  $where[] = "'$tag'";
+ $binds = [];
+ foreach ($_GET['tags'] as $key =>  $tag) {
+  $where[] = ":tag" . $key;
+  $binds[":tag" . $key] = $tag;
  }
  $whereSql = implode(' , ', $where);
  //var_dump($where);
@@ -67,14 +68,19 @@ if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
   ON posts.id = post_tag.post_id
   JOIN tags
   ON post_tag.tag_id = tags.id
- WHERE  categories.category = '{$_GET['category']}'
+ WHERE  categories.category = :category
   AND tags.tag IN ($whereSql)  
  GROUP BY posts.id
- HAVING COUNT(posts.id) = $category_count";
+ HAVING COUNT(posts.id) = :category_count";
 
  //var_dump($sql);
  //$stmt = $db->query($sql);
  $stmt = $db->prepare($sql);
+ $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
+ foreach ($binds as $whereSql => $val) {
+  $stmt->bindValue($whereSql, $val, PDO::PARAM_STR);
+ }
+ $stmt->bindValue(':category_count', $category_count, PDO::PARAM_INT);
  $stmt->execute();
  $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
  var_dump($search);
@@ -88,25 +94,32 @@ WHERE pt.tag_id = t.id
  AND (t.tag IN (";
 
  $second_sql = "AND p.id = pt.post_id
- AND p.title LIKE '%{$_GET['search']}%' 
- OR p.detail LIKE '%{$_GET['search']}%'
+ AND p.title LIKE :title
+ OR p.detail LIKE :detail
 GROUP BY p.id
 HAVING COUNT( p.id )= ";
 
  $where = [];
- //$binds = [];
- foreach ($_GET['tags'] as $tag) {
-  $where[] = "'$tag'";
-  //$binds[''] = $tag;
+ $binds = [];
+ foreach ($_GET['tags'] as $key =>  $tag) {
+  $where[] = ":tag" . $key;
+  $binds[":tag" . $key] = $tag;
  }
  //var_dump($where);
  //$whereSql = implode(' OR ', $where);
  $whereSql = implode(' , ', $where);
- $sql = $first_sql . $whereSql . '))' . ' ' .  $second_sql . count($_GET['tags']);
+ $sql = $first_sql . $whereSql . '))' . ' ' .  $second_sql . ':category_count';
  //$sql .= $whereSql;
- //var_dump($sql);
+ var_dump($sql);
+ $category_count = count($_GET['tags']);
  //$stmt = $db->query($sql);
  $stmt = $db->prepare($sql);
+ foreach ($binds as $whereSql => $val) {
+  $stmt->bindValue($whereSql, $val, PDO::PARAM_STR);
+ }
+ $stmt->bindValue(':title', "%{$_GET['search']}%", PDO::PARAM_STR);
+ $stmt->bindValue(':detail', "%{$_GET['search']}%", PDO::PARAM_STR);
+ $stmt->bindValue(':category_count', $category_count, PDO::PARAM_INT);
  $stmt->execute();
  $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
  var_dump($search);
@@ -122,9 +135,6 @@ WHERE pt.tag_id = t.id
 GROUP BY p.id
 HAVING COUNT( p.id )= ";
 
- //where tags.tag='面白い' OR tags.tag='感動できる
-
- //where tags.tag = :tags';
  $where = [];
  //$binds = [];
  foreach ($_GET['tags'] as $tag) {
