@@ -5,9 +5,14 @@ require('dbconnect.php');
 if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
  $category_count = count($_GET['tags']);
  $where = [];
- foreach ($_GET['tags'] as $tag) {
-  $where[] = "'$tag'";
+ $binds = [];
+ foreach ($_GET['tags'] as $key =>  $tag) {
+  $where[] = ":tag" . $key;
+  $binds[":tag" . $key] = $tag;
  }
+ //var_dump($where);
+ //var_dump($binds);
+ //exit;
  $whereSql = implode(' , ', $where);
  //var_dump($where);
  $sql = "SELECT count(*), posts.*
@@ -20,15 +25,28 @@ if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
   ON posts.id = post_tag.post_id
   JOIN tags
   ON post_tag.tag_id = tags.id
- WHERE  categories.category = '{$_GET['category']}'
+ WHERE  categories.category = :category
   AND tags.tag IN ($whereSql)  
-  AND (posts.title like '%{$_GET['search']}%' OR posts.detail like '%{$_GET['search']}%')
+  AND (posts.title like :title OR posts.detail like :detail )
  GROUP BY posts.id
- HAVING COUNT(posts.id) = $category_count";
-
- //var_dump($sql);
+ HAVING COUNT(posts.id) = :category_count";
+ //{$_GET['category']}
+ var_dump($sql);
  //$stmt = $db->query($sql);
  $stmt = $db->prepare($sql);
+ $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
+ foreach ($binds as $key => $val) {
+  $stmt->bindValue($key, $val, PDO::PARAM_STR);
+  //var_dump($key); // 検索のために入力した値を取得
+  //var_dump($val); // 検索のために入力した値を取得
+ }
+
+ $stmt->bindValue(':title', "%{$_GET['search']}%", PDO::PARAM_STR);
+ $stmt->bindValue(':detail', "%{$_GET['search']}%", PDO::PARAM_STR);
+ $stmt->bindValue(':category_count', $category_count, PDO::PARAM_INT);
+ //foreach($whereSql){
+
+ //}
  $stmt->execute();
  $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
  var_dump($search);
