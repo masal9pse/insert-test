@@ -1,38 +1,7 @@
 <?php
 require('dbconnect.php');
 
-// tagとカテゴリーの絞り込み検索
-if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
- $category_count = count($_GET['tags']);
- $where = [];
- foreach ($_GET['tags'] as $tag) {
-  $where[] = "'$tag'";
- }
- $whereSql = implode(' , ', $where);
- //var_dump($where);
- $sql = "SELECT count(*), posts.*
- FROM posts
-  LEFT JOIN post_category
-  ON posts.id = post_category.post_id
-  LEFT JOIN categories
-  ON categories.id = post_category.category_id
-  JOIN post_tag
-  ON posts.id = post_tag.post_id
-  JOIN tags
-  ON post_tag.tag_id = tags.id
- WHERE  categories.category = '{$_GET['category']}'
-  AND tags.tag IN ($whereSql)  
- GROUP BY posts.id
- HAVING COUNT(posts.id) = $category_count";
-
- var_dump($sql);
- $stmt = $db->query($sql);
- $tag_search = $stmt->fetchAll(PDO::FETCH_ASSOC);
- var_dump($tag_search);
- //exit;
-}
-
-// tag,category,searchの絞り込み検索
+// tag,category,searchの絞り込み検索 => インジェクション対策はこれから
 if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
  $category_count = count($_GET['tags']);
  $where = [];
@@ -57,10 +26,41 @@ if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
  GROUP BY posts.id
  HAVING COUNT(posts.id) = $category_count";
 
- var_dump($sql);
+ //var_dump($sql);
  $stmt = $db->query($sql);
- $tag_search = $stmt->fetchAll(PDO::FETCH_ASSOC);
- var_dump($tag_search);
+ $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ var_dump($search);
+ //exit;
+}
+
+// tagとカテゴリーの絞り込み検索
+if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
+ $category_count = count($_GET['tags']);
+ $where = [];
+ foreach ($_GET['tags'] as $tag) {
+  $where[] = "'$tag'";
+ }
+ $whereSql = implode(' , ', $where);
+ //var_dump($where);
+ $sql = "SELECT count(*), posts.*
+ FROM posts
+  LEFT JOIN post_category
+  ON posts.id = post_category.post_id
+  LEFT JOIN categories
+  ON categories.id = post_category.category_id
+  JOIN post_tag
+  ON posts.id = post_tag.post_id
+  JOIN tags
+  ON post_tag.tag_id = tags.id
+ WHERE  categories.category = '{$_GET['category']}'
+  AND tags.tag IN ($whereSql)  
+ GROUP BY posts.id
+ HAVING COUNT(posts.id) = $category_count";
+
+ //var_dump($sql);
+ $stmt = $db->query($sql);
+ $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ var_dump($search);
  //exit;
 }
 
@@ -89,8 +89,8 @@ HAVING COUNT( p.id )= ";
  //$sql .= $whereSql;
  var_dump($sql);
  $stmt = $db->query($sql);
- $tag_search = $stmt->fetchAll(PDO::FETCH_ASSOC);
- var_dump($tag_search);
+ $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ var_dump($search);
 }
 
 if (!empty($_GET['tags']) && empty($_GET['search']) && empty($_GET['tags'])) {
@@ -119,8 +119,8 @@ HAVING COUNT( p.id )= ";
  //$sql .= $whereSql;
  var_dump($sql);
  $stmt = $db->query($sql);
- $tag_search = $stmt->fetchAll(PDO::FETCH_ASSOC);
- var_dump($tag_search);
+ $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ var_dump($search);
 }
 //exit;
 // カテゴリーのみが入力されている条件
@@ -135,9 +135,9 @@ WHERE categories.category = :category';
  $stmt = $db->prepare($sql);
  $stmt->bindValue(':category', $_GET["category"], PDO::PARAM_STR);
  $stmt->execute();
- var_dump($sql);
- $search2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
- var_dump($search2);
+ //var_dump($sql);
+ $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ var_dump($search);
 }
 //var_dump($stmt);
 //exit;
@@ -149,9 +149,9 @@ if (!empty($_GET['search']) && empty($_GET['category']) && empty($_GET['tags']))
  $stmt->bindValue(':title', '%' . $_GET["search"] . '%', PDO::PARAM_STR);
  $stmt->bindValue(':detail', '%' . $_GET["search"] . '%', PDO::PARAM_STR);
  $stmt->execute();
- var_dump($stmt);
- $test = $stmt->fetchAll(PDO::FETCH_ASSOC);
- var_dump($test);
+ //var_dump($stmt);
+ $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ var_dump($search);
  //exit;
 }
 
@@ -169,8 +169,13 @@ OR posts.detail like :detail)';
  $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
  $stmt->bindValue(':title', '%' . $_GET['search'] . '%', PDO::PARAM_STR);
  $stmt->bindValue(':detail', '%' . $_GET['search'] . '%', PDO::PARAM_STR);
- var_dump($stmt);
+ //var_dump($stmt);
  $stmt->execute();
- $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
- var_dump($results);
+ $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ var_dump($search);
+}
+
+//if (empty($_GET)) {
+if (empty($_GET['search']) && empty($_GET['category']) && empty($_GET['tags'])) {
+ echo '結果は０件です';
 }
