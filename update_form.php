@@ -1,12 +1,11 @@
 <?php
 include('dbconnect.php');
-//var_dump($_GET);
 $sql = 'SELECT * from posts where id=:id';
 $stmt = $db->prepare($sql);
 $stmt->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
 $stmt->execute();
 $update_post = $stmt->fetch(PDO::FETCH_ASSOC);
-var_dump($update_post);
+//var_dump($update_post);
 ?>
 
 <!DOCTYPE html>
@@ -19,10 +18,12 @@ var_dump($update_post);
 </head>
 
 <body>
- <form action="update.php" method="post">
-  <p><?php echo $update_post['title']; ?></p>
-  <p><?php echo $update_post['detail']; ?></p>
+ <form action="update.php" method="post" enctype="multipart/form-data">
+  <input type="text" name="id" value="<?php echo $update_post['id'] ?>">
+  <input type="text" name="title" value="<?php echo $update_post['title']; ?>">
+  <textarea name="detail" id="" cols="30" rows="10"><?php echo $update_post['detail']; ?></textarea>
   <img src="<?php echo 'images/' . $update_post['image'] ?>" alt="">
+  <input type="file" name="image" id="" value="<?php echo $update_post['image']; ?>">
   <input type="submit" value="編集する">
  </form>
 </body>
