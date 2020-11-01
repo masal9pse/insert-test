@@ -5,15 +5,22 @@ require('dbconnect.php');
 if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
  $category_count = count($_GET['tags']);
  $where = [];
+ $binds = [];
  //exit;
  foreach ($_GET['tags'] as $key =>  $tag) {
   //for ($i = 1; $i <= $category_count; $i++) {
   $where[] = ":tag" . $key;
+  $binds[":tag" . $key] = $tag;
   //echo $i . ' ';
   //}
   //$where[] = "'$tag'";
  }
- //var_dump($where);
+ //foreach ($binds as $a) {
+ // //var_dump($a);
+ // echo $a;
+ //}
+ var_dump($where);
+ var_dump($binds);
  //exit;
  $whereSql = implode(' , ', $where);
  //var_dump($where);
@@ -37,9 +44,21 @@ if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
  //$stmt = $db->query($sql);
  $stmt = $db->prepare($sql);
  $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
+ foreach ($binds as $key => $val) {
+  // foreach ($binds as $val) {
+  $stmt->bindValue($key, $val, PDO::PARAM_STR);
+  // $UserDataSet->bindValue($val, PDO::PARAM_INT);
+  //var_dump($key); // カラム取得
+  var_dump($val); // 検索のために入力した値を取得
+  //var_dump($stmt);
+ }
+
  $stmt->bindValue(':title', "%{$_GET['search']}%", PDO::PARAM_STR);
  $stmt->bindValue(':detail', "%{$_GET['search']}%", PDO::PARAM_STR);
  $stmt->bindValue(':category_count', $category_count, PDO::PARAM_INT);
+ //foreach($whereSql){
+
+ //}
  $stmt->execute();
  $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
  var_dump($search);
