@@ -4,30 +4,31 @@ include('dbconnect.php');
 //var_dump($_FILES);
 
 try {
- $select_sql = 'SELECT * from posts where id=:id';
- $select_stmt = $db->prepare($select_sql);
- $select_stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
- $select_stmt->execute();
- $result_for_rm_old_image =  $select_stmt->fetch(PDO::FETCH_ASSOC);
- var_dump($result_for_rm_old_image);
+ $old_sql = 'SELECT * from posts where id=:id';
+ $old_stmt = $db->prepare($old_sql);
+ $old_stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
+ $old_stmt->execute();
+ $old_result =  $old_stmt->fetch(PDO::FETCH_ASSOC);
+ //var_dump($old_result);
+ $old_image = $old_result['image'];
  //exit;
- $update_sql = 'UPDATE posts set title=:title,detail=:detail,image=:image,created_at=now(),updated_at=now() where id=:id';
- $image = uniqid(mt_rand(), true); //ファイル名をユニーク化
- //var_dump($image);
- //$image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);
- $image = $image . '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);
- //var_dump($image);
+ $new_sql = 'UPDATE posts set title=:title,detail=:detail,image=:image,created_at=now(),updated_at=now() where id=:id';
+ $new_image = uniqid(mt_rand(), true); //ファイル名をユニーク化
+ //var_dump($new_image);
+ //$new_image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);
+ $new_image = $new_image . '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);
+ //var_dump($new_image);
  //exit;
- $update_stmt = $db->prepare($update_sql);
- $update_stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
- $update_stmt->bindValue(':title', $_POST['title'], PDO::PARAM_STR);
- $update_stmt->bindValue(':detail', $_POST['detail'], PDO::PARAM_STR);
- $update_stmt->bindValue(':image', $image, PDO::PARAM_STR);
+ $new_stmt = $db->prepare($new_sql);
+ $new_stmt->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
+ $new_stmt->bindValue(':title', $_POST['title'], PDO::PARAM_STR);
+ $new_stmt->bindValue(':detail', $_POST['detail'], PDO::PARAM_STR);
+ $new_stmt->bindValue(':image', $new_image, PDO::PARAM_STR);
  if (!empty($_FILES['image']['name'])) {
-  unlink('./images/' . $result_for_rm_old_image['image']);
-  move_uploaded_file($_FILES['image']['tmp_name'], './images/' . $image);
+  unlink('./images/' . $old_image);
+  move_uploaded_file($_FILES['image']['tmp_name'], './images/' . $new_image);
  }
- $update_stmt->execute();
+ $new_stmt->execute();
  echo '更新にせいこうしました';
 } catch (PDOException $e) {
  echo $e . '更新できませんでした';
