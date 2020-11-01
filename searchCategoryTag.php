@@ -27,7 +27,9 @@ if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
  HAVING COUNT(posts.id) = $category_count";
 
  //var_dump($sql);
- $stmt = $db->query($sql);
+ //$stmt = $db->query($sql);
+ $stmt = $db->prepare($sql);
+ $stmt->execute();
  $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
  var_dump($search);
  //exit;
@@ -58,7 +60,9 @@ if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
  HAVING COUNT(posts.id) = $category_count";
 
  //var_dump($sql);
- $stmt = $db->query($sql);
+ //$stmt = $db->query($sql);
+ $stmt = $db->prepare($sql);
+ $stmt->execute();
  $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
  var_dump($search);
  //exit;
@@ -87,8 +91,10 @@ HAVING COUNT( p.id )= ";
  $whereSql = implode(' , ', $where);
  $sql = $first_sql . $whereSql . '))' . ' ' .  $second_sql . count($_GET['tags']);
  //$sql .= $whereSql;
- var_dump($sql);
- $stmt = $db->query($sql);
+ //var_dump($sql);
+ //$stmt = $db->query($sql);
+ $stmt = $db->prepare($sql);
+ $stmt->execute();
  $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
  var_dump($search);
 }
