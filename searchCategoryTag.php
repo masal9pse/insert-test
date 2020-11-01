@@ -20,15 +20,18 @@ if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
   ON posts.id = post_tag.post_id
   JOIN tags
   ON post_tag.tag_id = tags.id
- WHERE  categories.category = '{$_GET['category']}'
+ WHERE  categories.category = :category
   AND tags.tag IN ($whereSql)  
-  AND (posts.title like '%{$_GET['search']}%' OR posts.detail like '%{$_GET['search']}%')
+  AND (posts.title like :title OR posts.detail like :detail )
  GROUP BY posts.id
  HAVING COUNT(posts.id) = $category_count";
-
- //var_dump($sql);
+ //{$_GET['category']}
+ var_dump($sql);
  //$stmt = $db->query($sql);
  $stmt = $db->prepare($sql);
+ $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
+ $stmt->bindValue(':title', "%{$_GET['search']}%", PDO::PARAM_STR);
+ $stmt->bindValue(':detail', "%{$_GET['search']}%", PDO::PARAM_STR);
  $stmt->execute();
  $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
  var_dump($search);
