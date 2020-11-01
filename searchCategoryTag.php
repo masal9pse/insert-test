@@ -40,10 +40,6 @@ if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
  $stmt->bindValue(':title', "%{$_GET['search']}%", PDO::PARAM_STR);
  $stmt->bindValue(':detail', "%{$_GET['search']}%", PDO::PARAM_STR);
  $stmt->bindValue(':category_count', $category_count, PDO::PARAM_INT);
-
- $stmt->execute();
- $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
- var_dump($search);
  //exit;
 }
 
@@ -82,8 +78,6 @@ if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
  }
  $stmt->bindValue(':category_count', $category_count, PDO::PARAM_INT);
  $stmt->execute();
- $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
- var_dump($search);
  //exit;
 }
 
@@ -121,8 +115,6 @@ HAVING COUNT( p.id )= ";
  $stmt->bindValue(':detail', "%{$_GET['search']}%", PDO::PARAM_STR);
  $stmt->bindValue(':category_count', $category_count, PDO::PARAM_INT);
  $stmt->execute();
- $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
- var_dump($search);
 }
 
 if (!empty($_GET['tags']) && empty($_GET['search']) && empty($_GET['tags'])) {
@@ -164,9 +156,7 @@ WHERE categories.category = :category';
  $stmt = $db->prepare($sql);
  $stmt->bindValue(':category', $_GET["category"], PDO::PARAM_STR);
  $stmt->execute();
- //var_dump($sql);
- $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
- var_dump($search);
+ //var_dump($sql); 
 }
 //var_dump($stmt);
 //exit;
@@ -178,10 +168,6 @@ if (!empty($_GET['search']) && empty($_GET['category']) && empty($_GET['tags']))
  $stmt->bindValue(':title', '%' . $_GET["search"] . '%', PDO::PARAM_STR);
  $stmt->bindValue(':detail', '%' . $_GET["search"] . '%', PDO::PARAM_STR);
  $stmt->execute();
- //var_dump($stmt);
- $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
- var_dump($search);
- //exit;
 }
 
 if (!empty($_GET['category'] && $_GET['search']) && empty($_GET['tags'])) {
@@ -198,13 +184,18 @@ OR posts.detail like :detail)';
  $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
  $stmt->bindValue(':title', '%' . $_GET['search'] . '%', PDO::PARAM_STR);
  $stmt->bindValue(':detail', '%' . $_GET['search'] . '%', PDO::PARAM_STR);
- //var_dump($stmt);
- $stmt->execute();
- $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
- var_dump($search);
+ //var_dump($stmt); 
 }
+
+//$stmt->execute();
+//$search = $stmt->fetchAll(PDO::FETCH_ASSOC);
+//var_dump($search);
 
 //if (empty($_GET)) {
 if (empty($_GET['search']) && empty($_GET['category']) && empty($_GET['tags'])) {
  echo '結果は０件です';
+} else {
+ $stmt->execute();
+ $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ var_dump($search);
 }

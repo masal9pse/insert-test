@@ -16,8 +16,9 @@
     <table border="1">
       <tr>
         <td>タイトル</td>
-        <td><input type="text" name="title"></td>
+        <td><input type="text" name="title" value="<?php echo htmlspecialchars($_POST['title']) ?>"></td>
         <td>本文</td>
+        <!--XSS対策は後ほど-->
         <td><input type="text" name="detail"></td>
         <td>画像</td>
         <td><input type="file" name="image"></td>
