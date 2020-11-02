@@ -17,8 +17,8 @@ $sql = 'CREATE TABLE post_tag (
  PRIMARY KEY (id)
 )';
 
-$foreign_post_id_sql = 'ALTER table post_tag add foreign key (post_id) references posts(id)';
-$foreign_tag_id_sql = 'ALTER table post_tag add foreign key (tag_id) references tags(id)';
+$foreign_post_id_sql = 'ALTER table post_tag add foreign key (post_id) references posts(id) ON DELETE CASCADE';
+$foreign_tag_id_sql = 'ALTER table post_tag add foreign key (tag_id) references tags(id) ON DELETE CASCADE';
 // SQLを実行
 $res = $db->query($sql);
 $res2 = $db->query($foreign_post_id_sql);
