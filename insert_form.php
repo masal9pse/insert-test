@@ -1,3 +1,9 @@
+<?php
+include('dbconnect.php');
+$tag_sql = 'SELECT * from tags';
+$stmt = $db->query($tag_sql);
+$tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,9 +28,14 @@
         <td><input type="text" name="detail"></td>
         <td>画像</td>
         <td><input type="file" name="image"></td>
+        <td>
+          <?php foreach ($tags as $tag) : ?>
+            <input type="checkbox" name="tags[]" value="<?php echo $tag['tag']; ?>">
+            <label for="<?php echo $tag['tag']; ?>"><?php echo $tag['tag']; ?></label>
+          <?php endforeach; ?>
+        </td>
         <td colspan="2" align="center">
           <input type="submit" value="送信">
-          <!--送信ボタン作成-->
       </tr>
     </table>
   </form>
