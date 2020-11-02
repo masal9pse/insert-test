@@ -20,8 +20,6 @@ $image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);
 $posts_sql = 'INSERT INTO posts(title,detail,image,created_at,updated_at) VALUES (:title,:detail,:image,now(),now())';
 $tag_sql = "INSERT INTO post_tag(post_id,tag_id) VALUES (3,6)";
 $db->beginTransaction();
-$tag_stmt = $db->prepare($tag_sql);
-$tag_stmt->execute();
 try {
  $post_stmt = $db->prepare($posts_sql);
  $post_stmt->bindValue(':title', $_POST['title'], PDO::PARAM_STR);
@@ -44,6 +42,8 @@ try {
   move_uploaded_file($_FILES['image']['tmp_name'], './images/' . $image);
  }
  $post_stmt->execute();
+ $tag_stmt = $db->prepare($tag_sql);
+ $tag_stmt->execute();
  $db->commit();
  echo '投稿に成功しました';
  echo "<img src=\" ./images/$image \">";
