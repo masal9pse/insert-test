@@ -29,7 +29,7 @@ var_dump($post);
       <tr>
         <td>タイトル</td>
         <!-- 空文字判定して変数にまとめる -->
-        <td><input type="text" name="id" value="<?php echo $post['id']; ?>"></td>
+        <td><input type="hidden" name="id" value="<?php echo $post['id']; ?>"></td>
         <td><input type="text" name="title" value="<?php print(htmlspecialchars($_POST['title'])); ?>"></td>
         <td>本文</td>
         <!--XSS対策は後ほど-->

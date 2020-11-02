@@ -5,7 +5,6 @@ require('dbconnect.php');
 //var_dump($_POST);
 //var_dump($tag);
 //exit;
-$count_tags = count($_POST['tags']);
 if (empty($_POST['title'])) {
  exit('タイトルを入力してください');
 }
@@ -21,11 +20,12 @@ try {
  $post_stmt->bindValue(':title', $_POST['title'], PDO::PARAM_STR);
  $post_stmt->bindValue(':detail', $_POST['detail'], PDO::PARAM_STR);
  $post_stmt->bindValue(':image', $image, PDO::PARAM_STR);
+ $now_insert_post_id = $_POST['id'] + 1;
  foreach ($_POST['tags'] as $tag) {
   $tag_stmt = $db->prepare($tag_sql);
   var_dump($tag);
   // 投稿したpostsTableのidを取得したい
-  $tag_stmt->bindValue(':post_id', $_POST['id'] + 1, PDO::PARAM_INT);
+  $tag_stmt->bindValue(':post_id', $now_insert_post_id, PDO::PARAM_INT);
   $tag_stmt->bindValue(':tag_id', $tag, PDO::PARAM_INT);
   $tag_stmt->execute();
  }
