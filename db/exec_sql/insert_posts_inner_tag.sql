@@ -13,3 +13,5 @@ from tags;
 INSERT INTO tags
 VALUES
  (1, '海外');
+
+alter table bbs_thread add foreign key (creator_id) references accounts_user(id);
