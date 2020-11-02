@@ -10,7 +10,7 @@ $tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>投稿フォーム</title>
 </head>
 
 <body>
@@ -18,7 +18,6 @@ $tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <a href="./list.php">一覧表示リンク</a>
   <a href="./search_form.php">検索リンク</a>
   <form action="insert.php" method="post" enctype="multipart/form-data">
-    <!--ファイル、methodの指定-->
     <table border="1">
       <tr>
         <td>タイトル</td>

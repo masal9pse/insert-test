@@ -19,7 +19,7 @@ $update_post = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <body>
  <form action="update.php" method="post" enctype="multipart/form-data">
-  <input type="text" name="id" value="<?php echo $update_post['id'] ?>">
+  <input type="hidden" name="id" value="<?php echo $update_post['id'] ?>">
   <input type="text" name="title" value="<?php echo $update_post['title']; ?>">
   <textarea name="detail" id="" cols="30" rows="10"><?php echo $update_post['detail']; ?></textarea>
   <img src="<?php echo 'images/' . $update_post['image'] ?>" alt="">

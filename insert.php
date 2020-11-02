@@ -1,13 +1,15 @@
 <?php
 require('dbconnect.php');
-var_dump($_FILES);
-//$db->beginTransaction();
+//var_dump($_FILES);
+if (empty($_POST['title'])) {
+ exit('タイトルを入力してください');
+}
 $image = uniqid(mt_rand(), true); //ファイル名をユニーク化
 $image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);
-var_dump($image);
+//var_dump($image);
 //exit;
 $sql = 'INSERT INTO posts(title,detail,image,created_at,updated_at) VALUES (:title,:detail,:image,now(),now())';
-
+$db->beginTransaction();
 try {
  $stmt = $db->prepare($sql);
  $stmt->bindValue(':title', $_POST['title'], PDO::PARAM_STR);
@@ -17,10 +19,12 @@ try {
   move_uploaded_file($_FILES['image']['tmp_name'], './images/' . $image);
  }
  $stmt->execute();
+ $db->commit();
  echo '投稿に成功しました';
  echo "<img src=\" ./images/$image \">";
  echo '<p>' . $_POST['title'] . "のアップロードに成功しました</p>";
  echo "<a href='./insert_form.html'>投稿フォームへ</a>";
 } catch (PDOException $e) {
- echo $e;
+ $db->rollBack();
+ exit($e);
 }
