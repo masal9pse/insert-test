@@ -1,12 +1,9 @@
 <?php
+ini_set('display_errors', "On");
 require('dbconnect.php');
 //var_dump($_FILES);
 //var_dump($_POST);
-//var_dump($count_tags);
-//exit;
-foreach ($_POST['tags'] as $tag) {
- var_dump($tag);
-}
+//var_dump($tag);
 //exit;
 $count_tags = count($_POST['tags']);
 if (empty($_POST['title'])) {
@@ -24,22 +21,14 @@ try {
  $post_stmt->bindValue(':title', $_POST['title'], PDO::PARAM_STR);
  $post_stmt->bindValue(':detail', $_POST['detail'], PDO::PARAM_STR);
  $post_stmt->bindValue(':image', $image, PDO::PARAM_STR);
- //for ($i = 1; $i <= $count_tags; $i++) {
- // $tag_sql = "INSERT INTO post_tag VALUES(:post_id,:tag_id)";
- // $tag_stmt = $db->prepare($tag_sql);
- // $tag_stmt->bindValue(':post_id', 3, PDO::PARAM_INT);
- // $tag_stmt->bindValue(':tag_id', $tag, PDO::PARAM_INT);
- //}
- for ($i = 1; $i <= $count_tags; $i++) {
-  //$tag_sql = "INSERT INTO post_tag VALUES(3,6)";
-  //$tag_stmt = $db->query($tag_sql);
-  //var_dump($tag);
-  //exit;
+ foreach ($_POST['tags'] as $tag) {
   $tag_stmt = $db->prepare($tag_sql);
+  var_dump($tag);
   $tag_stmt->bindValue(':post_id', 3, PDO::PARAM_INT);
   $tag_stmt->bindValue(':tag_id', $tag, PDO::PARAM_INT);
   $tag_stmt->execute();
  }
+ //exit;
  if (!empty($_FILES['image']['name'])) { //ファイルが選択されていれば$imageにファイル名を代入
   move_uploaded_file($_FILES['image']['tmp_name'], './images/' . $image);
  }
