@@ -1,10 +1,7 @@
 <?php
-ini_set('display_errors', "On");
+//ini_set('display_errors', "On");
 require('dbconnect.php');
-//var_dump($_FILES);
-//var_dump($_POST);
-//var_dump($tag);
-//exit;
+
 if (empty($_POST['title'])) {
  exit('タイトルを入力してください');
 }
