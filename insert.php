@@ -24,7 +24,8 @@ try {
  foreach ($_POST['tags'] as $tag) {
   $tag_stmt = $db->prepare($tag_sql);
   var_dump($tag);
-  $tag_stmt->bindValue(':post_id', 3, PDO::PARAM_INT);
+  // 投稿したpostsTableのidを取得したい
+  $tag_stmt->bindValue(':post_id', $_POST['id'] + 1, PDO::PARAM_INT);
   $tag_stmt->bindValue(':tag_id', $tag, PDO::PARAM_INT);
   $tag_stmt->execute();
  }
@@ -33,6 +34,7 @@ try {
   move_uploaded_file($_FILES['image']['tmp_name'], './images/' . $image);
  }
  $post_stmt->execute();
+ var_dump($db->lastInsertId());
  $db->commit();
  echo '投稿に成功しました';
  echo "<img src=\" ./images/$image \">";
