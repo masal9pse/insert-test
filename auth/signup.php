@@ -7,17 +7,20 @@ if (empty($_POST['name'] && $_POST['password'])) {
 }
 
 if (!empty($_POST['name'] && $_POST['password'])) {
- $_SESSION['id'] = $_POST['id'];
- $_SESSION['name'] = $_POST['name'];
- $_SESSION['password'] = $_POST['password'];
- $password = password_hash($_SESSION['password'], PASSWORD_DEFAULT);
- $sql = 'INSERT into users(name, password) values(:name, :password)';
+ $_SESSION['join'] = $_POST;
+ $name = $_POST['name'];
+ $password = $_POST['password'];
+ $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+ $sql = 'INSERT into users(name, password) values (?, ?)';
+ $db = dbConnect();
  $stmt = $db->prepare($sql);
- $stmt->bindValue(':name', $_SESSION['name'], PDO::PARAM_STR);
- $stmt->bindValue(':password', $_SESSION['password'], PDO::PARAM_STR);
- $results = $stmt->execute();
+ $stmt->execute(array($name, $password));
+ $user_id = $db->lastinsertid();
+ $_SESSION['join'] = $user_id;
 
- header('Location: ../list.php');
+ //header('Location: ../list.php');
+ echo '認証成功';
+ var_dump($_SESSION);
  exit();
 }
 ?>
