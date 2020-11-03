@@ -72,3 +72,59 @@ function sanitize($inputs)
   return htmlspecialchars($inputs, ENT_QUOTES, 'UTF-8');
  }
 }
+
+function login($database, $error_message)
+{
+ if (isset($_POST['login'])) {
+  list($password, $row) = execute_login_id($database);
+  // echo $password; // これ付けたら処理が止まった。
+  // var_dump($password);
+  //exit;
+  if (password_verify($password, $row['password'])) {
+   if ($_POST['save'] === 'on') {
+    //cookieにメアドを保存
+    // 2週間
+    setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 14);
+    setcookie('password', $_POST['password'], time() + 60 * 60 * 24 * 14);
+    //セッション変換にパスワードを入れない
+   }
+   //echo '認証成功';
+   header("Location: ../list.php");
+  } else {
+   echo '<p>' . $error_message . '</p>';
+  }
+  return false;
+ }
+}
+
+function execute_login_id($database)
+{
+ $_SESSION['name'] = $_POST['name'];
+ $_SESSION['password'] = $_POST['password'];
+ $name = $_SESSION['name'];
+ $password = $_SESSION['password'];
+ $password = password_hash($password, PASSWORD_DEFAULT);
+ $sql = 'SELECT * from login where name = :name';
+ $stmt = $database->prepare($sql);
+ $stmt->bindParam(':name', $name);
+ $stmt->execute();
+ $row = $stmt->fetch();
+ return [$password, $row];
+}
+
+if (!empty($_POST['name'] && $_POST['password'])) {
+ $_SESSION['name'] = $_POST['name'];
+ $_SESSION['password'] = $_POST['password'];
+ $name = $_SESSION['name'];
+ $password = $_SESSION['password'];
+ $password = password_hash($password, PASSWORD_DEFAULT);
+ $sql = 'INSERT into users(name, password) values (?, ?)';
+ $db = dbConnect();
+ $stmt = $db->prepare($sql);
+ $stmt->execute(array($name, $password));
+ $user_id = $db->lastinsertid();
+ $_SESSION['id'] = $user_id;
+
+ header('Location: ../list.php');
+ exit();
+}
