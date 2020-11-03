@@ -76,13 +76,7 @@ function sanitize($inputs)
 // 記事更新
 function postUpdate($db, $post)
 {
- //$result = getById($db, $_GET['id']);
- $sql = 'SELECT * from posts where id=:id';
- $stmt = $db->prepare($sql);
- $stmt->bindValue(':id', $post['id'], PDO::PARAM_INT);
- $stmt->execute();
- $result = $stmt->fetch(PDO::FETCH_ASSOC);
- $result = sanitize($result);
+ $result = getById($db, $post['id']);
  //exit;
  $new_sql = 'UPDATE posts SET title=:title,detail=:detail,image=:image,created_at=now(),updated_at=now(),user_id=:user_id where id=:id';
  $new_image = uniqid(mt_rand(), true); //ファイル名をユニーク化
