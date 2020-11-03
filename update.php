@@ -17,7 +17,7 @@ $old_result =  $old_stmt->fetch(PDO::FETCH_ASSOC);
 //var_dump($old_result);
 $old_image = $old_result['image'];
 //exit;
-$new_sql = 'UPDATE posts set title=:title,detail=:detail,image=:image,created_at=now(),updated_at=now() where id=:id';
+$new_sql = 'UPDATE posts SET title=:title,detail=:detail,image=:image,created_at=now(),updated_at=now() where id=:id';
 $new_image = uniqid(mt_rand(), true); //ファイル名をユニーク化
 //var_dump($new_image);
 $new_image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);
