@@ -3,6 +3,8 @@ require_once __DIR__ . '/dbconnect.php';
 require_once __DIR__ . '/util.php';
 $db = dbConnect();
 $lists = getAllData($db, 'posts');
+//echo $_SESSION['id'];
+var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="en">
