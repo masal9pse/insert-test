@@ -21,20 +21,17 @@ function postInsert($db, $post)
   move_uploaded_file($_FILES['image']['tmp_name'], './images/' . $image);
  }
  $stmt->execute();
- //var_dump($db->lastInsertId());
 }
 
 function postTagInsert($db, $tags)
 {
  $sql = "INSERT INTO post_tag(post_id,tag_id) VALUES (:post_id,:tag_id)";
- //$now_insert_post_id = $tags['id'] + 1;
- $now_id = $db->lastInsertId();
- var_dump($now_id);
+ $now_post_insert_id = $db->lastInsertId();
+ var_dump($now_post_insert_id);
  foreach ($tags['tags'] as $tag_num) {
   $tag_stmt = $db->prepare($sql);
   //var_dump($tag_num);
-  //$tag_stmt->bindValue(':post_id', $now_insert_post_id, PDO::PARAM_INT);
-  $tag_stmt->bindValue(':post_id', $now_id, PDO::PARAM_INT);
+  $tag_stmt->bindValue(':post_id', $now_post_insert_id, PDO::PARAM_INT);
   $tag_stmt->bindValue(':tag_id', $tag_num, PDO::PARAM_INT);
   $tag_stmt->execute();
  }

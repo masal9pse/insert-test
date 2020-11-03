@@ -3,13 +3,6 @@ include('dbconnect.php');
 $tag_sql = 'SELECT * from tags';
 $stmt = $db->query($tag_sql);
 $tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// 最新のidを一件取得する => タグ付けのpost_tag.post_idにバインドするため
-$posts_sql = 'SELECT * FROM posts ORDER BY id DESC LIMIT 1';
-$stmt = $db->query($posts_sql);
-$post = $stmt->fetch(PDO::FETCH_ASSOC);
-var_dump($post);
-//exit;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +22,6 @@ var_dump($post);
       <tr>
         <td>タイトル</td>
         <!-- 空文字判定して変数にまとめる -->
-        <td><input type="hidden" name="id" value="<?php echo $post['id']; ?>"></td>
         <td><input type="text" name="title" value="<?php print(htmlspecialchars($_POST['title'])); ?>"></td>
         <td>本文</td>
         <!--XSS対策は後ほど-->
