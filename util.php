@@ -30,8 +30,10 @@ function postInsert($db, $post)
  $stmt->bindValue(':detail', $post['detail'], PDO::PARAM_STR);
  if (!empty($_FILES['image']['name'])) {
   move_uploaded_file($_FILES['image']['tmp_name'], './images/' . $image);
+  echo "<img src=\" ./images/$image \">";
  }
  $stmt->execute();
+ echo '<p>' . $post['title'] . "のアップロードに成功しました</p>";
 }
 
 // 記事に紐づいたタグを中間テーブルにインサート
