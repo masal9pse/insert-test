@@ -27,6 +27,3 @@ $update_post = sanitize($update_post);
 </body>
 
 </html>
-<script>
- alert('aa')
-</script>

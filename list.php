@@ -17,7 +17,9 @@ $lists = getAllData($db, 'posts');
  <h1>一覧リスト</h1>
  <a href="./search_form.php">検索リンク</a>
  <a href="./insert_form.php">投稿リンク</a>
- <?php foreach ($lists as $list) : ?>
+ <?php foreach ($lists as $list) :
+  $list = sanitize($list);
+ ?>
   <div>
    <td><?php echo $list['title']; ?></td>
    <td><?php echo $list['detail']; ?></td>

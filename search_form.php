@@ -31,7 +31,9 @@ $tags = getAllData($db, 'tags');
     </select>
     <input type="text" name="search" placeholder="検索したい値" value="<?php echo $get['search']; ?>">
     <br>
-    <?php foreach ($tags as $tag) : ?>
+    <?php foreach ($tags as $tag) :
+      $tag = sanitize($tag);
+    ?>
       <input type="checkbox" name="tags[]" value="<?php echo $tag['tag']; ?>">
       <label for="<?php echo $tag['tag']; ?>"><?php echo $tag['tag']; ?></label>
     <?php endforeach; ?>

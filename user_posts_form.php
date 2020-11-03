@@ -1,6 +1,7 @@
 <?php
 //　/user_posts_form.php?id={num} でアクセスしてください
 include('dbconnect.php');
+include('util.php');
 $db = dbConnect();
 
 $sql = 'SELECT * from posts 
@@ -12,8 +13,8 @@ $stmt = $db->prepare($sql);
 $stmt->bindValue(':user_id', $_GET['id'], PDO::PARAM_INT);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-var_dump($results);
 foreach ($results as $result) {
+ $result = sanitize($result);
  echo $result['title'] . ' ';
  echo $result['detail'] . ' ';
 }
