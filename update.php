@@ -12,7 +12,7 @@ if (empty($_POST['title'])) {
 //exit;
 try {
  $db->beginTransaction();
- postUpdate($db);
+ postUpdate($db, $_POST);
  $db->commit();
  echo '更新に成功しました';
 } catch (PDOException $e) {
