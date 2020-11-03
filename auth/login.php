@@ -37,6 +37,7 @@ if (isset($_COOKIE['name'], $_COOKIE['password'])) {
    <button type="submit" name="login" class="btn btn-success">ログイン</button>
   </form>
   <button type="button" onclick="location.href='./signup_form.php'">新規登録画面へ</button>
+  <button type="button" onclick="location.href='../list.php'">トップページへ</button>
  </body>
 </div>
 

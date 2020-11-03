@@ -15,6 +15,7 @@
   <button type="submit">新規登録</button>
  </form>
  <button type="button" onclick="location.href='./login.php'">ログイン画面へ</button>
+ <button type="button" onclick="location.href='../list.php'">トップページへ</button>
 </body>
 
 </html>

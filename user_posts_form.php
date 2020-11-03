@@ -1,7 +1,9 @@
 <?php
 //　/user_posts_form.php?id={num} でアクセスしてください
+session_start();
 include('dbconnect.php');
 include('util.php');
+auth_check('./auth/login.php');
 $db = dbConnect();
 
 $sql = 'SELECT * from posts 
