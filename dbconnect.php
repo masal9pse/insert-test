@@ -27,6 +27,7 @@ function postInsert($db, $post)
  $stmt->execute();
 }
 
+// 記事に紐づいたタグを中間テーブルにインサート
 function postTagInsert($db, $tags)
 {
  $sql = "INSERT INTO post_tag(post_id,tag_id) VALUES (:post_id,:tag_id)";
