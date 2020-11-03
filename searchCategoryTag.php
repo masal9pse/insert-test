@@ -1,5 +1,7 @@
 <?php
-require('dbconnect.php');
+include('dbconnect.php');
+include('util.php');
+
 $db = dbConnect();
 // tag,category,searchの絞り込み検索 => インジェクション対策はこれから
 if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
@@ -175,7 +177,7 @@ if (!empty($_GET['category'] && $_GET['search']) && empty($_GET['tags'])) {
  ON posts.id = post_category.post_id
  LEFT JOIN categories
  ON categories.id = post_category.category_id
-WHERE categories.category = :category 
+WHERE categories.category = :category
 AND (posts.title like :title 
 OR posts.detail like :detail)';
 
@@ -196,5 +198,6 @@ if (empty($_GET['search']) && empty($_GET['category']) && empty($_GET['tags'])) 
 } else {
  $stmt->execute();
  $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ $search = sanitize($search);
  var_dump($search);
 }

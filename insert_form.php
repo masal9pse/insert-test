@@ -31,9 +31,7 @@ $post = sanitize($_POST);
         <!-- valueを指定したい -->
         <td><input type="file" name="image"></td>
         <td>
-          <?php foreach ($tags as $tag) :
-            $tag = sanitize($tag);
-          ?>
+          <?php foreach ($tags as $tag) : ?>
             <input type="checkbox" name="tags[]" value="<?php echo $tag['id']; ?>">
             <label for="<?php echo $tag['tag']; ?>"><?php echo $tag['tag']; ?></label>
           <?php endforeach; ?>

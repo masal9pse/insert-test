@@ -4,6 +4,7 @@ function getAllData($db, $table_name)
  $sql = "SELECT * from  {$table_name}";
  $stmt = $db->query($sql);
  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ $results = sanitize($results);
  return $results;
  $db = null;
 }
@@ -15,6 +16,7 @@ function getById($db, $id)
  $stmt->bindValue(':id', $id, PDO::PARAM_INT);
  $stmt->execute();
  $update_post = $stmt->fetch(PDO::FETCH_ASSOC);
+ $update_post = sanitize($update_post);
  return $update_post;
 }
 
@@ -51,10 +53,21 @@ function postTagInsert($db, $tags)
  }
 }
 
-function sanitize($before)
+function sanitize($inputs)
 {
- foreach ($before as $key => $value) {
-  $after[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+ if (is_array($inputs)) {
+  $_input = array();
+  foreach ($inputs as $key => $val) {
+   if (is_array($val)) {
+    $key = htmlspecialchars($key, ENT_QUOTES, 'UTF-8');
+    $_input[$key] = sanitize($val);
+   } else {
+    $key = htmlspecialchars($key, ENT_QUOTES, 'UTF-8');
+    $_input[$key] = htmlspecialchars($val, ENT_QUOTES, 'UTF-8');
+   }
+  }
+  return $_input;
+ } else {
+  return htmlspecialchars($inputs, ENT_QUOTES, 'UTF-8');
  }
- return $after;
 }

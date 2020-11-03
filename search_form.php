@@ -23,17 +23,13 @@ $tags = getAllData($db, 'tags');
   <form action="searchCategoryTag.php" method="get">
     <select name="category">
       <option value="">未選択</option>
-      <?php foreach ($categories as $category) :
-        $categories = sanitize($categories);
-      ?>
+      <?php foreach ($categories as $category) : ?>
         <option value="<?php echo $category['category']; ?>"><?php echo $category['category']; ?></option>
       <?php endforeach; ?>
     </select>
     <input type="text" name="search" placeholder="検索したい値" value="<?php echo $get['search']; ?>">
     <br>
-    <?php foreach ($tags as $tag) :
-      $tag = sanitize($tag);
-    ?>
+    <?php foreach ($tags as $tag) : ?>
       <input type="checkbox" name="tags[]" value="<?php echo $tag['tag']; ?>">
       <label for="<?php echo $tag['tag']; ?>"><?php echo $tag['tag']; ?></label>
     <?php endforeach; ?>
