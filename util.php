@@ -105,3 +105,16 @@ function auth_check($redirectPath)
   exit();
  }
 }
+
+function logout($session, $php_file)
+{
+ if (isset($session)) {
+  header("Location: $php_file");
+ }
+ //セッション変数のクリア
+ $session = array();
+
+ //セッションクリア
+ session_destroy();
+ return $session;
+}
