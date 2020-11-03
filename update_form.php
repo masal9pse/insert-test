@@ -1,5 +1,6 @@
 <?php
 include('dbconnect.php');
+$db = dbConnect();
 $sql = 'SELECT * from posts where id=:id';
 $stmt = $db->prepare($sql);
 $stmt->bindValue(':id', $_GET['id'], PDO::PARAM_INT);

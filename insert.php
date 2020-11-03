@@ -1,7 +1,7 @@
 <?php
 //ini_set('display_errors', "On");
 require('dbconnect.php');
-
+$db = dbConnect();
 if (empty($_POST['title'])) {
  exit('タイトルを入力してください');
 }
@@ -31,7 +31,6 @@ try {
   move_uploaded_file($_FILES['image']['tmp_name'], './images/' . $image);
  }
  $post_stmt->execute();
- var_dump($db->lastInsertId());
  $db->commit();
  echo '投稿に成功しました';
  echo "<img src=\" ./images/$image \">";

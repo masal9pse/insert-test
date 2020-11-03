@@ -1,6 +1,6 @@
 <?php
 require('dbconnect.php');
-
+$db = dbConnect();
 // tag,category,searchの絞り込み検索 => インジェクション対策はこれから
 if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
  $category_count = count($_GET['tags']);
@@ -10,8 +10,7 @@ if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
   $where[] = ":tag" . $key;
   $binds[":tag" . $key] = $tag;
  }
- //var_dump($where);
- //var_dump($binds);
+ // explodeが使えるかチェック
  $whereSql = implode(' , ', $where);
  //var_dump($whereSql);
  $sql = "SELECT count(*), posts.*

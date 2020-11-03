@@ -1,7 +1,7 @@
 <!-- カテゴリーをselectboxにしたい -->
 <?php
 require('dbconnect.php');
-
+$db = dbConnect();
 $category_sql = 'SELECT * from categories';
 $stmt = $db->query($category_sql);
 $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);

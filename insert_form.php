@@ -1,5 +1,6 @@
 <?php
 include('dbconnect.php');
+$db = dbConnect();
 $tag_sql = 'SELECT * from tags';
 $stmt = $db->query($tag_sql);
 $tags = $stmt->fetchAll(PDO::FETCH_ASSOC);

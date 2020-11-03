@@ -1,6 +1,8 @@
 <?php
 //　/user_posts_form.php?id={num} でアクセスしてください
 include('dbconnect.php');
+$db = dbConnect();
+
 $sql = 'SELECT * from posts 
 inner join users 
 on posts.user_id = users.id
