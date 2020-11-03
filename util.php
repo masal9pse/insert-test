@@ -76,9 +76,15 @@ function sanitize($inputs)
 // 記事更新
 function postUpdate($db, $post)
 {
- $result = getById($db, $_GET['id']);
+ //$result = getById($db, $_GET['id']);
+ $sql = 'SELECT * from posts where id=:id';
+ $stmt = $db->prepare($sql);
+ $stmt->bindValue(':id', $post['id'], PDO::PARAM_INT);
+ $stmt->execute();
+ $result = $stmt->fetch(PDO::FETCH_ASSOC);
+ $result = sanitize($result);
  //exit;
- $new_sql = 'UPDATE posts SET title=:title,detail=:detail,image=:image,created_at=now(),updated_at=now() where id=:id';
+ $new_sql = 'UPDATE posts SET title=:title,detail=:detail,image=:image,created_at=now(),updated_at=now(),user_id=:user_id where id=:id';
  $new_image = uniqid(mt_rand(), true); //ファイル名をユニーク化
  //var_dump($new_image);
  $new_image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);
@@ -86,6 +92,7 @@ function postUpdate($db, $post)
  $new_stmt->bindValue(':title', $post['title'], PDO::PARAM_STR);
  $new_stmt->bindValue(':detail', $post['detail'], PDO::PARAM_STR);
  $new_stmt->bindValue(':image', $new_image, PDO::PARAM_STR);
+ $new_stmt->bindValue(':user_id', $_SESSION['id'], PDO::PARAM_INT);
  $new_stmt->bindValue(':id', $post['id'], PDO::PARAM_INT);
  if (!empty($_FILES['image']['name'])) {
   unlink('./images/' . $result['image']);
