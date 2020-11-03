@@ -23,9 +23,3 @@ if (!empty($_POST['name'] && $_POST['password'])) {
  header('Location: ../list.php');
  exit();
 }
-?>
-
-<body>
- <button type="button" onclick="location.href='./login_form.php'">ログインページへ</button>
- <button type="button" onclick="location.href='./signup_form.php'">新規登録画面へ</button>
-</body>
