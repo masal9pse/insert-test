@@ -15,6 +15,6 @@ $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 foreach ($results as $result) {
  $result = sanitize($result);
- echo $result['title'] . ' ';
+ echo $result['title'] . '<br>';
  echo $result['detail'] . ' ';
 }

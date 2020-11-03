@@ -28,6 +28,7 @@ var_dump($_SESSION);
   </div>
  <?php endforeach ?>
  <button type="button" onclick="location.href='./auth/signup_form.php'">新規登録画面へ</button>
+ <button type="button" onclick="location.href='./user_posts_form.php?id=<?php echo $_SESSION['id'] ?>'">マイページ</button>
 </body>
 
 </html>
