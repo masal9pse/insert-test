@@ -29,14 +29,14 @@ if (isset($_COOKIE['name'], $_COOKIE['password'])) {
    } ?>
    名前<input type="text" name="name" value="<?php print(htmlspecialchars($name, ENT_QUOTES)); ?>"><br />
    パスワード<input type="text" name="password" value="<?php print(htmlspecialchars($password, ENT_QUOTES)); ?>"><br />
-   <dd>
+   <!--<dd>
 
     <input id="save" type="checkbox" name="save" value="on">
     <label for="save">次回からは自動的にログインする</label>
-   </dd>
+   </dd>-->
    <button type="submit" name="login" class="btn btn-success">ログイン</button>
   </form>
-  <button type="button" onclick="location.href='./register_form.php'">新規登録画面へ</button>
+  <button type="button" onclick="location.href='./signup_form.php'">新規登録画面へ</button>
  </body>
 </div>
 

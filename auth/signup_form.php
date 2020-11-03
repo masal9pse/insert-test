@@ -14,7 +14,7 @@
   パスワード<input type="text" name="password" value="<?php print(htmlspecialchars($_POST['password'], ENT_QUOTES)); ?>"><br />
   <button type="submit">新規登録</button>
  </form>
- <button type="button" onclick="location.href='./login_form.php'">ログイン画面へ</button>
+ <button type="button" onclick="location.href='./login.php'">ログイン画面へ</button>
 </body>
 
 </html>

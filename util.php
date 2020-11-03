@@ -73,58 +73,35 @@ function sanitize($inputs)
  }
 }
 
-function login($database, $error_message)
+function login($db, $err_msg)
 {
  if (isset($_POST['login'])) {
-  list($password, $row) = execute_login_id($database);
   // echo $password; // これ付けたら処理が止まった。
+  $sql = 'SELECT * from users where name = :name';
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
   // var_dump($password);
   //exit;
-  if (password_verify($password, $row['password'])) {
-   if ($_POST['save'] === 'on') {
-    //cookieにメアドを保存
-    // 2週間
-    setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 14);
-    setcookie('password', $_POST['password'], time() + 60 * 60 * 24 * 14);
-    //セッション変換にパスワードを入れない
-   }
+  if (password_verify($_POST['password'], $row['password'])) {
    //echo '認証成功';
+   $_SESSION['name'] = $_POST['name'];
+   $_SESSION['password'] = $_POST['password'];
+   $_SESSION['id'] = $row['id'];
    header("Location: ../list.php");
   } else {
-   echo '<p>' . $error_message . '</p>';
+   echo '<p>' . $err_msg . '</p>';
   }
-  return false;
+  //return false;
  }
 }
 
-function execute_login_id($database)
+function auth_check($redirectPath)
 {
- $_SESSION['name'] = $_POST['name'];
- $_SESSION['password'] = $_POST['password'];
- $name = $_SESSION['name'];
- $password = $_SESSION['password'];
- $password = password_hash($password, PASSWORD_DEFAULT);
- $sql = 'SELECT * from login where name = :name';
- $stmt = $database->prepare($sql);
- $stmt->bindParam(':name', $name);
- $stmt->execute();
- $row = $stmt->fetch();
- return [$password, $row];
-}
-
-if (!empty($_POST['name'] && $_POST['password'])) {
- $_SESSION['name'] = $_POST['name'];
- $_SESSION['password'] = $_POST['password'];
- $name = $_SESSION['name'];
- $password = $_SESSION['password'];
- $password = password_hash($password, PASSWORD_DEFAULT);
- $sql = 'INSERT into users(name, password) values (?, ?)';
- $db = dbConnect();
- $stmt = $db->prepare($sql);
- $stmt->execute(array($name, $password));
- $user_id = $db->lastinsertid();
- $_SESSION['id'] = $user_id;
-
- header('Location: ../list.php');
- exit();
+ if (!isset($_SESSION['name'])) {
+  // if (empty($_SESSION['join'])) {
+  header("Location: $redirectPath");
+  exit();
+ }
 }

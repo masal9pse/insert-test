@@ -2,6 +2,7 @@
 session_start();
 include('dbconnect.php');
 include('util.php');
+auth_check('./auth/login.php');
 $db = dbConnect();
 $tags = getAllData($db, 'tags');
 $post = sanitize($_POST);
