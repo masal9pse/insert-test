@@ -1,6 +1,6 @@
 <?php
-include('dbconnect.php');
-include('util.php');
+require_once __DIR__ . '/dbconnect.php';
+require_once __DIR__ . '/util.php';
 $db = dbConnect();
 $lists = getAllData($db, 'posts');
 ?>

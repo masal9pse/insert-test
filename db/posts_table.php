@@ -16,8 +16,7 @@ $sql = 'CREATE TABLE posts (
  PRIMARY KEY (id)
 )';
 
-$add_sql = 'ALTER TABLE posts
-ADD user_id INT';
+$add_sql = 'ALTER TABLE posts ADD user_id INT';
 
 
 
