@@ -11,11 +11,11 @@ $db->beginTransaction();
 try {
  postInsert($db, $_POST);
  postTagInsert($db, $_POST);
- $db->commit();
  echo '投稿に成功しました';
  echo "<img src=\" ./images/$image \">";
  echo '<p>' . $_POST['title'] . "のアップロードに成功しました</p>";
  echo "<a href='./insert_form.php'>投稿フォームへ</a>";
+ $db->commit();
 } catch (PDOException $e) {
  $db->rollBack();
  exit($e);
