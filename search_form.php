@@ -4,6 +4,7 @@ include('dbconnect.php');
 include('util.php');
 $db = dbConnect();
 $categories = getAllData($db, 'categories');
+$get = sanitize($_GET);
 $tags = getAllData($db, 'tags');
 ?>
 
@@ -19,15 +20,16 @@ $tags = getAllData($db, 'tags');
   <h1>検索フォーム</h1>
   <a href="./list.php">全件表示リンク</a>
   <a href="./insert_form.php">投稿リンク</a>
-  <!--<form action="search.php" method="get">-->
   <form action="searchCategoryTag.php" method="get">
     <select name="category">
       <option value="">未選択</option>
-      <?php foreach ($categories as $category) : ?>
+      <?php foreach ($categories as $category) :
+        $categories = sanitize($categories);
+      ?>
         <option value="<?php echo $category['category']; ?>"><?php echo $category['category']; ?></option>
       <?php endforeach; ?>
     </select>
-    <input type="text" name="search" placeholder="検索したい値">
+    <input type="text" name="search" placeholder="検索したい値" value="<?php echo $get['search']; ?>">
     <br>
     <?php foreach ($tags as $tag) : ?>
       <input type="checkbox" name="tags[]" value="<?php echo $tag['tag']; ?>">

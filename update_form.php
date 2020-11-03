@@ -3,6 +3,7 @@ include('dbconnect.php');
 include('util.php');
 $db = dbConnect();
 $update_post = getById($db, $_GET['id']);
+$update_post = sanitize($update_post);
 ?>
 
 <!DOCTYPE html>
@@ -26,3 +27,6 @@ $update_post = getById($db, $_GET['id']);
 </body>
 
 </html>
+<script>
+ alert('aa')
+</script>

@@ -3,6 +3,7 @@ include('dbconnect.php');
 include('util.php');
 $db = dbConnect();
 $tags = getAllData($db, 'tags');
+$post = sanitize($_POST);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,11 +23,12 @@ $tags = getAllData($db, 'tags');
       <tr>
         <td>タイトル</td>
         <!-- 空文字判定して変数にまとめる -->
-        <td><input type="text" name="title" value="<?php print(htmlspecialchars($_POST['title'])); ?>"></td>
+        <td><input type="text" name="title" value="<?php print($post['title']); ?>"></td>
         <td>本文</td>
         <!--XSS対策は後ほど-->
-        <td><input type="text" name="detail"></td>
+        <td><input type="text" name="detail" value="<?php print($post['title']); ?>"></td>
         <td>画像</td>
+        <!-- valueを指定したい -->
         <td><input type="file" name="image"></td>
         <td>
           <?php foreach ($tags as $tag) : ?>
