@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('../dbconnect.php');
 //var_dump($_POST);
 //exit();
@@ -7,20 +8,19 @@ if (empty($_POST['name'] && $_POST['password'])) {
 }
 
 if (!empty($_POST['name'] && $_POST['password'])) {
- $_SESSION['join'] = $_POST;
- $name = $_POST['name'];
- $password = $_POST['password'];
- $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+ $_SESSION['name'] = $_POST['name'];
+ $_SESSION['password'] = $_POST['password'];
+ $name = $_SESSION['name'];
+ $password = $_SESSION['password'];
+ $password = password_hash($password, PASSWORD_DEFAULT);
  $sql = 'INSERT into users(name, password) values (?, ?)';
  $db = dbConnect();
  $stmt = $db->prepare($sql);
  $stmt->execute(array($name, $password));
  $user_id = $db->lastinsertid();
- $_SESSION['join'] = $user_id;
+ $_SESSION['id'] = $user_id;
 
- //header('Location: ../list.php');
- echo '認証成功';
- var_dump($_SESSION);
+ header('Location: ../list.php');
  exit();
 }
 ?>

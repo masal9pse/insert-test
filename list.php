@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once __DIR__ . '/dbconnect.php';
 require_once __DIR__ . '/util.php';
 $db = dbConnect();
@@ -26,6 +27,7 @@ var_dump($_SESSION);
    <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
   </div>
  <?php endforeach ?>
+ <button type="button" onclick="location.href='./auth/signup_form.php'">新規登録画面へ</button>
 </body>
 
 </html>
