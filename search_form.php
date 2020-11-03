@@ -1,15 +1,10 @@
 <!-- カテゴリーをselectboxにしたい -->
 <?php
-require('dbconnect.php');
+include('dbconnect.php');
+include('util.php');
 $db = dbConnect();
-$category_sql = 'SELECT * from categories';
-$stmt = $db->query($category_sql);
-$categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$tag_sql = 'SELECT * from tags';
-$stmt = $db->query($tag_sql);
-$tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//var_dump($categories);
+$categories = getAllData($db, 'categories');
+$tags = getAllData($db, 'tags');
 ?>
 
 <!DOCTYPE html>

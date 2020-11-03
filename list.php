@@ -1,16 +1,8 @@
 <?php
-require('dbconnect.php');
-
-function getAllData()
-{
- $db = dbConnect();
- $sql = 'SELECT * from posts';
- $stmt = $db->query($sql);
- $lists = $stmt->fetchAll(PDO::FETCH_ASSOC);
- return $lists;
- $db = null;
-}
-$lists = getAllData($db);
+include('dbconnect.php');
+include('util.php');
+$db = dbConnect();
+$lists = getAllData($db, 'posts');
 ?>
 <!DOCTYPE html>
 <html lang="en">
