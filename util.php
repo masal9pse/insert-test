@@ -147,3 +147,21 @@ function empty_check($key, $name)
   print($key[$name]);
  }
 }
+
+function isGood($p_id, $u_id)
+{
+ try {
+  $db = dbConnect();
+  $sql = 'SELECT * FROM likes WHERE post_id = :p_id AND user_id = :u_id';
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':p_id', $p_id, PDO::PARAM_INT);
+  $stmt->bindValue(':u_id', $u_id, PDO::PARAM_INT);
+  $stmt->execute();
+  $results = $stmt->fetchAll();
+  var_dump($results);
+  return $results;
+  //return true;
+ } catch (Exception $e) {
+  error_log('エラー発生:' . $e->getMessage());
+ }
+}

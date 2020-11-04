@@ -5,25 +5,7 @@ require_once __DIR__ . '/util.php';
 $db = dbConnect();
 $lists = getAllData($db, 'posts');
 //echo $_SESSION['auth_id'];
-function isGood($p_id, $u_id)
-{
- try {
-  $db = dbConnect();
-  $sql = 'SELECT * FROM likes WHERE post_id = :p_id AND user_id = :u_id';
-  $stmt = $db->prepare($sql);
-  $stmt->bindValue(':p_id', $p_id, PDO::PARAM_INT);
-  $stmt->bindValue(':u_id', $u_id, PDO::PARAM_INT);
-  $stmt->execute();
-  $results = $stmt->fetchAll();
-  var_dump($results);
-  return $results;
-  //return true;
- } catch (Exception $e) {
-  error_log('エラー発生:' . $e->getMessage());
- }
-}
-
-var_dump($_SESSION);
+//var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,14 +43,14 @@ var_dump($_SESSION);
    <td><?php echo $list['detail']; ?></td>
    <form action="like.php" method="post" style="display:inline;">
     <?php if (isGood($list['id'], $_SESSION['auth_id'])) : ?>
-     <button type="submit" name="rm_like" class="btn p-0 border-0">
+     <button type="submit" class="btn p-0 border-0">
       <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
       <i class="fas fa-heart fa-fw text-danger"></i>
      </button>
    </form>
   <?php else : ?>
    <form action="like.php" method="post" style="display:inline;">
-    <button type=" submit" name="add_like" class="btn p-0 border-0">
+    <button type=" submit" class="btn p-0 border-0">
      <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
      <i class="fas fa-heart"></i>
     </button>
