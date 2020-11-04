@@ -30,7 +30,7 @@ var_dump($_SESSION);
    <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
   </div>
  <?php endforeach ?>
- <button type="button" onclick="location.href='./user_posts_form.php?id=<?php echo $_SESSION['id'] ?>'">マイページ</button>
+ <button type="button" onclick="location.href='./mypage.php?id=<?php echo $_SESSION['id'] ?>'">マイページ</button>
 </body>
 
 </html>
