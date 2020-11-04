@@ -17,9 +17,11 @@ $sql = 'CREATE TABLE posts (
 )';
 
 $add_sql = 'ALTER TABLE posts ADD user_id INT';
+$add_like_count_column = 'ALTER TABLE posts ADD like_count INT';
 
 
 
 // SQLを実行
 $res = $db->query($sql);
 $add_columd_res = $db->query($add_sql);
+$add_like_count_column_res = $db->query($add_like_count_column);
