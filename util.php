@@ -140,3 +140,10 @@ function logout($session, $php_file)
  session_destroy();
  return $session;
 }
+
+function empty_check($key, $name)
+{
+ if (!empty($key[$name])) {
+  print($key[$name]);
+ }
+}

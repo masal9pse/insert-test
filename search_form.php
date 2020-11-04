@@ -1,4 +1,3 @@
-<!-- カテゴリーをselectboxにしたい -->
 <?php
 include('dbconnect.php');
 include('util.php');
@@ -27,7 +26,7 @@ $tags = getAllData($db, 'tags');
         <option value="<?php echo $category['category']; ?>"><?php echo $category['category']; ?></option>
       <?php endforeach; ?>
     </select>
-    <input type="text" name="search" placeholder="検索したい値" value="<?php echo $get['search']; ?>">
+    <input type="text" name="search" placeholder="検索したい値" value="<?php empty_check($get, 'search') ?>">
     <br>
     <?php foreach ($tags as $tag) : ?>
       <input type="checkbox" name="tags[]" value="<?php echo $tag['tag']; ?>">
