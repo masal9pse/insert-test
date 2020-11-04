@@ -1,7 +1,7 @@
 <?php
 function getAllData($db, $table_name)
 {
- $sql = "SELECT * from  {$table_name}";
+ $sql = "SELECT * from  {$table_name} order by id desc";
  $stmt = $db->query($sql);
  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
  $results = sanitize($results);
