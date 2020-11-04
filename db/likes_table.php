@@ -18,5 +18,8 @@ $sql = 'CREATE TABLE likes (
  updated_at TIMESTAMP,
  PRIMARY KEY (id)
 )';
+// バルクインサートで値を挿入
+$insert_sql = 'INSERT INTO likes values (1,2,3),(2,3,1),(3,10,11)';
 // SQLを実行
 $res = $db->query($sql);
+$inser_res = $db->query($insert_sql);
