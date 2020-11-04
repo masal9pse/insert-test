@@ -61,15 +61,19 @@ var_dump($_SESSION);
    <td><?php echo $list['detail']; ?></td>
    <form action="like.php" method="post">
     <?php if (isGood($list['id'], $_SESSION['auth_id'])) : ?>
-     <i class="fas fa-heart fa-fw text-danger"></i>
+     <button type="submit" name="submit" class="btn p-0 border-0">
+      <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
+      <i class="fas fa-heart fa-fw text-danger"></i>
+     </button>
     <?php else : ?>
-     <i class="fas fa-heart"></i>
-     <!--<button type="submit" class="btn p-0 border-0 text-danger">-->
-     <!--</button>-->
+     <button type="submit" name="submit" class="btn p-0 border-0">
+      <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
+      <i class="fas fa-heart"></i>
+     </button>
     <?php endif; ?>
     <?php echo $list['like_count']; ?>
-
    </form>
+
    <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
   </div>
  <?php endforeach ?>
