@@ -59,21 +59,24 @@ var_dump($_SESSION);
    <td><?php echo $list['id']; ?></td>
    <td><?php echo $list['title']; ?></td>
    <td><?php echo $list['detail']; ?></td>
-   <form action="like.php" method="post">
+   <form action="like.php" method="post" style="display:inline;">
     <?php if (isGood($list['id'], $_SESSION['auth_id'])) : ?>
-     <button type="submit" name="submit" class="btn p-0 border-0">
+     <button type="submit" name="rm_like" class="btn p-0 border-0">
       <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
       <i class="fas fa-heart fa-fw text-danger"></i>
      </button>
-    <?php else : ?>
-     <button type="submit" name="submit" class="btn p-0 border-0">
-      <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
-      <i class="fas fa-heart"></i>
-     </button>
-    <?php endif; ?>
-    <?php echo $list['like_count']; ?>
    </form>
-
+  <?php else : ?>
+   <form action="like.php" method="post" style="display:inline;">
+    <button type=" submit" name="add_like" class="btn p-0 border-0">
+     <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
+     <i class="fas fa-heart"></i>
+    </button>
+   <?php endif; ?>
+   </form>
+   <span>
+    <?php echo $list['like_count']; ?>
+   </span>
    <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
   </div>
  <?php endforeach ?>
