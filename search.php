@@ -4,7 +4,8 @@ include('util.php');
 
 $db = dbConnect();
 // tag,category,searchの絞り込み検索 => インジェクション対策はこれから
-if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
+//if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
+if (isset($_GET['tags'], $_GET['search'], $_GET['category'])) {
  $category_count = count($_GET['tags']);
  $where = [];
  $binds = [];
@@ -45,7 +46,7 @@ if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
 }
 
 // tagとカテゴリーの絞り込み検索
-if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
+if (isset($_GET['tags'], $_GET['category']) && empty($_GET['search'])) {
  $category_count = count($_GET['tags']);
  $where = [];
  $binds = [];
@@ -82,7 +83,8 @@ if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
  //exit;
 }
 
-if (!empty($_GET['tags'] && $_GET['search']) && empty($_GET['category'])) {
+//if (!empty($_GET['tags'] && $_GET['search']) && empty($_GET['category'])) {
+if (isset($_GET['tags'], $_GET['search']) && empty($_GET['category'])) {
  $first_sql = "SELECT p.*
 FROM post_tag pt, posts p, tags t
 WHERE pt.tag_id = t.id
@@ -201,3 +203,5 @@ if (empty($_GET['search']) && empty($_GET['category']) && empty($_GET['tags'])) 
  $search = sanitize($search);
  var_dump($search);
 }
+?>
+<a href="./list.php">トップページへ</a>

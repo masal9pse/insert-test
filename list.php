@@ -24,6 +24,8 @@ var_dump($_SESSION);
  <?php if (empty($_SESSION['id'])) : ?>
   <form action="./auth/login.php" method="get">
    <button type="submit" class="btn btn-danger">ログイン</button>
+  </form>
+  <form action="./auth/signup_form.php" method="get">
    <button type="submit" class="btn btn-danger">新規投稿</button>
   </form>
  <?php else : ?>
