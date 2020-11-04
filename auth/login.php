@@ -4,15 +4,15 @@ require('../dbconnect.php');
 require('../util.php');
 $err_msg = "";
 $db = dbConnect();
+$post = sanitize($_POST);
 login($db, $err_msg);
-
-if (isset($_POST['name'], $_POST['password'])) {
+if (isset($post['name'], $post['password'])) {
  $err_msg = '未入力の項目があります。';
 }
-if (isset($_COOKIE['name'], $_COOKIE['password'])) {
- $name = $_COOKIE['name'];
- $password = $_COOKIE['password'];
-}
+//if (isset($_COOKIE['name'], $_COOKIE['password'])) {
+// $name = $_COOKIE['name'];
+// $password = $_COOKIE['password'];
+//}
 ?>
 <html>
 
@@ -27,8 +27,8 @@ if (isset($_COOKIE['name'], $_COOKIE['password'])) {
    <?php if ($err_msg !== null && $err_msg !== '') {
     echo $err_msg . "<br>";
    } ?>
-   名前<input type="text" name="name" value="<?php print(htmlspecialchars($name, ENT_QUOTES)); ?>"><br />
-   パスワード<input type="text" name="password" value="<?php print(htmlspecialchars($password, ENT_QUOTES)); ?>"><br />
+   名前<input type="text" name="name" value="<?php print(empty_check($post, 'name')); ?>"><br />
+   パスワード<input type="text" name="password" value="<?php print(empty_check($post, 'name')); ?>"><br />
    <!--<dd>
 
     <input id="save" type="checkbox" name="save" value="on">
