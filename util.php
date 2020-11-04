@@ -86,7 +86,7 @@ function postUpdate($db, $post)
  $new_stmt->bindValue(':title', $post['title'], PDO::PARAM_STR);
  $new_stmt->bindValue(':detail', $post['detail'], PDO::PARAM_STR);
  $new_stmt->bindValue(':image', $new_image, PDO::PARAM_STR);
- $new_stmt->bindValue(':user_id', $_SESSION['id'], PDO::PARAM_INT);
+ $new_stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
  $new_stmt->bindValue(':id', $post['id'], PDO::PARAM_INT);
  if (!empty($_FILES['image']['name'])) {
   unlink('./images/' . $result['image']);
@@ -110,7 +110,7 @@ function login($db, $err_msg)
    //echo '認証成功';
    $_SESSION['name'] = $_POST['name'];
    $_SESSION['password'] = $_POST['password'];
-   $_SESSION['id'] = $row['id'];
+   $_SESSION['auth_id'] = $row['id'];
    header("Location: ../list.php");
   } else {
    echo '<p>' . $err_msg . '</p>';

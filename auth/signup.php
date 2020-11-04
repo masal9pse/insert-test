@@ -18,7 +18,7 @@ if (!empty($_POST['name'] && $_POST['password'])) {
  $stmt = $db->prepare($sql);
  $stmt->execute(array($name, $password));
  $user_id = $db->lastinsertid();
- $_SESSION['id'] = $user_id;
+ $_SESSION['auth_id'] = $user_id;
 
  header('Location: ../list.php');
  exit();
