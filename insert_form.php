@@ -20,15 +20,23 @@ $post = sanitize($_POST);
   <h1>投稿フォーム</h1>
   <a href="./list.php">一覧表示リンク</a>
   <a href="./search_form.php">検索リンク</a>
+  <?php
+  function empty_check($name)
+  {
+    if (!empty($post[$name])) {
+      print($post[$name]);
+    }
+  }
+  ?>
   <form action="insert.php" method="post" enctype="multipart/form-data">
     <table border="1">
       <tr>
         <td>タイトル</td>
         <!-- 空文字判定して変数にまとめる -->
-        <td><input type="text" name="title" value="<?php print($post['title']); ?>"></td>
+        <td><input type="text" name="title" value="<?php empty_check('title') ?>"></td>
         <td>本文</td>
         <!--XSS対策は後ほど-->
-        <td><input type="text" name="detail" value="<?php print($post['title']); ?>"></td>
+        <td><input type="text" name="detail" value="<?php empty_check('detail') ?>"></td>
         <td>画像</td>
         <!-- valueを指定したい -->
         <td><input type="file" name="image"></td>
