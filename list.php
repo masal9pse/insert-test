@@ -9,6 +9,13 @@ var_dump($_SESSION);
 if (empty($_SESSION)) {
  $_SESSION['auth_id'] = "名無しのごんべ";
 }
+//if (!empty($_POST['logout'])) {
+// $logout = $_POST['logout'];
+//}
+//if (isset($logout)) {
+if (isset($_POST['logout'])) {
+ logout($_SESSION, 'list.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +41,8 @@ if (empty($_SESSION)) {
    <button type="submit" class="btn btn-danger">新規投稿</button>
   </form>
  <?php else : ?>
-  <form action="./auth/logout.php" method="post">
+  <!--<form action="./auth/logout.php" method="post">-->
+  <form action="" method="post">
    <button type="submit" name="logout" class="btn btn-danger">ログアウト</button>
   </form>
  <?php endif; ?>

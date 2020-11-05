@@ -18,6 +18,9 @@ $post = sanitize($_POST);
 
 <body>
   <h1>投稿フォーム</h1>
+  <form action="./auth/logout.php" method="post">
+    <button type="submit" name="logout" class="btn btn-danger">ログアウト</button>
+  </form>
   <a href="./list.php">一覧表示リンク</a>
   <a href="./search_form.php">検索リンク</a>
   <form action="insert.php" method="post" enctype="multipart/form-data">
