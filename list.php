@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/dbconnect.php';
 require_once __DIR__ . '/util.php';
 $db = dbConnect();
-$lists = getAllData($db, 'posts');
+$lists = getAllData('posts');
 //echo $_SESSION['auth_id'];
 var_dump($_SESSION);
 if (empty($_SESSION['auth_id'])) {

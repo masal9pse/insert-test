@@ -2,9 +2,9 @@
 include('dbconnect.php');
 include('util.php');
 $db = dbConnect();
-$categories = getAllData($db, 'categories');
+$categories = getAllData('categories');
 $get = sanitize($_GET);
-$tags = getAllData($db, 'tags');
+$tags = getAllData('tags');
 ?>
 
 <!DOCTYPE html>

@@ -4,21 +4,7 @@ session_start();
 include('dbconnect.php');
 include('util.php');
 auth_check('./auth/login.php');
-$db = dbConnect();
-
-//$sql = 'SELECT * from posts 
-$sql = 'SELECT posts.* from posts 
-inner join users 
-on posts.user_id = users.id
-where users.id=:user_id';
-
-$stmt = $db->prepare($sql);
-$stmt->bindValue(':user_id', $_GET['id'], PDO::PARAM_INT);
-$stmt->execute();
-$lists = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// 基本テキストフォームはないのでXSS対策はやる必要ないかも
-$lists = sanitize($lists);
-//var_dump($lists);
+$lists = myPageList();
 ?>
 <!DOCTYPE html>
 <html lang="en">

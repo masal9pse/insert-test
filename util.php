@@ -1,7 +1,9 @@
 <?php
 // 引数でdbconnectしない
-function getAllData($db, $table_name)
+//require('dbconnect.php');
+function getAllData($table_name)
 {
+ $db = dbConnect();
  $sql = "SELECT * from  {$table_name} order by id desc";
  $stmt = $db->query($sql);
  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -96,8 +98,9 @@ function postUpdate($db, $post)
  $new_stmt->execute();
 }
 
-function login($db, $err_msg)
+function login($err_msg)
 {
+ $db = dbConnect();
  if (isset($_POST['login'])) {
   // echo $password; // これ付けたら処理が止まった。
   $sql = 'SELECT * from users where name = :name';
@@ -185,4 +188,22 @@ function getLike($post_id)
  } catch (Exception $e) {
   exit('エラー発生：' . $e->getMessage());
  }
+}
+
+function myPageList()
+{
+ $db = dbConnect();
+ $sql = 'SELECT posts.* from posts 
+ inner join users 
+ on posts.user_id = users.id
+ where users.id=:user_id';
+
+ $stmt = $db->prepare($sql);
+ $stmt->bindValue(':user_id', $_GET['id'], PDO::PARAM_INT);
+ $stmt->execute();
+ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ // 基本テキストフォームはないのでXSS対策はやる必要ないかも
+ $results = sanitize($results);
+ //var_dump($results);
+ return $results;
 }

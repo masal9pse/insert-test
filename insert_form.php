@@ -4,7 +4,7 @@ include('dbconnect.php');
 include('util.php');
 auth_check('./auth/login.php');
 $db = dbConnect();
-$tags = getAllData($db, 'tags');
+$tags = getAllData('tags');
 $post = sanitize($_POST);
 ?>
 <!DOCTYPE html>
