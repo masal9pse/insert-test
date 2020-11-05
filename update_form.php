@@ -1,7 +1,8 @@
 <?php
 session_start();
 include('util.php');
-$db = dbConnect();
+//$db = dbConnect();
+auth_check('./auth/login.php');
 $update_post = getById($_GET['id']);
 ?>
 

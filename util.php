@@ -91,7 +91,7 @@ function sanitize($inputs)
 // 記事更新
 function postUpdate($db, $post)
 {
- $result = getById($db, $post['id']);
+ $result = getById($post['id']);
  //exit;
  $new_sql = 'UPDATE posts SET title=:title,detail=:detail,image=:image,created_at=now(),updated_at=now(),user_id=:user_id where id=:id';
  $new_image = uniqid(mt_rand(), true); //ファイル名をユニーク化
