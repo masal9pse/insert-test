@@ -5,7 +5,10 @@ require_once __DIR__ . '/util.php';
 $db = dbConnect();
 $lists = getAllData($db, 'posts');
 //echo $_SESSION['auth_id'];
-//var_dump($_SESSION);
+var_dump($_SESSION);
+if (empty($_SESSION)) {
+ $_SESSION['auth_id'] = "名無しのごんべ";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +26,7 @@ $lists = getAllData($db, 'posts');
  <a href="./search_form.php">検索リンク</a>
  <a href="./insert_form.php">投稿リンク</a>
 
- <?php if (empty($_SESSION['auth_id'])) : ?>
+ <?php if (is_string($_SESSION['auth_id'])) : ?>
   <form action="./auth/login.php" method="get">
    <button type="submit" class="btn btn-danger">ログイン</button>
   </form>
@@ -62,7 +65,7 @@ $lists = getAllData($db, 'posts');
    <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
   </div>
  <?php endforeach ?>
- <?php if (!empty($_SESSION['auth_id'])) : ?>
+ <?php if (is_int($_SESSION['auth_id'])) : ?>
   <button type="button" onclick="location.href='./mypage.php?id=<?php echo $_SESSION['auth_id'] ?>'">マイページ</button>
  <?php endif; ?>
 </body>
