@@ -1,4 +1,5 @@
 <?php
+// 引数でdbconnectしない
 function getAllData($db, $table_name)
 {
  $sql = "SELECT * from  {$table_name} order by id desc";

@@ -1,3 +1,5 @@
+-- likesテーブルからレコードを削除する
+DELETE FROM likes WHERE post_id = 3 AND user_id = 14
 
 --数をカウントする
 select *, count(post_id)
