@@ -1,5 +1,4 @@
 <?php
-ini_set('display_errors', "On");
 include('../util.php');
 $post = sanitize($_POST);
 ?>

@@ -1,6 +1,7 @@
 <?php
 session_start();
-require('../dbconnect.php');
+require('../util.php');
+//$db = dbConnect();
 //var_dump($_POST);
 //exit();
 if (empty($_POST['name'] && $_POST['password'])) {
@@ -18,7 +19,7 @@ if (!empty($_POST['name'] && $_POST['password'])) {
  $stmt = $db->prepare($sql);
  $stmt->execute(array($name, $password));
  $user_id = $db->lastinsertid();
- $_SESSION['auth_id'] = $user_id;
+ $_SESSION['auth_id'] = (int)$user_id;
 
  header('Location: ../list.php');
  exit();

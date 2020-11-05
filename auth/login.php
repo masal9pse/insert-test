@@ -1,11 +1,9 @@
 <?php
 session_start();
-require('../dbconnect.php');
 require('../util.php');
 $err_msg = "";
-$db = dbConnect();
 $post = sanitize($_POST);
-login($db, $err_msg);
+login($err_msg);
 if (isset($post['name'], $post['password'])) {
  $err_msg = '未入力の項目があります。';
 }
