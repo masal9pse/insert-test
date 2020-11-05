@@ -1,18 +1,15 @@
 <?php
 session_start();
-require_once __DIR__ . '/dbconnect.php';
+//require_once __DIR__ . '/dbconnect.php';
 require_once __DIR__ . '/util.php';
-$db = dbConnect();
+//$db = dbConnect();
 $lists = getAllData('posts');
 //echo $_SESSION['auth_id'];
 var_dump($_SESSION);
 if (empty($_SESSION['auth_id'])) {
   $_SESSION['auth_id'] = "名無しのごんべ";
 }
-//if (!empty($_POST['logout'])) {
-// $logout = $_POST['logout'];
-//}
-//if (isset($logout)) {
+
 if (isset($_POST['logout'])) {
   logout($_SESSION, 'list.php');
 }
@@ -45,6 +42,9 @@ if (isset($_POST['logout'])) {
     <form action="" method="post">
       <button type="submit" name="logout" class="btn btn-danger">ログアウト</button>
     </form>
+    <?php if (is_int($_SESSION['auth_id'])) : ?>
+      <button type="button" onclick="location.href='./mypage.php?id=<?php echo $_SESSION['auth_id'] ?>'">マイページ</button>
+    <?php endif; ?>
   <?php endif; ?>
 
   <?php foreach ($lists as $list) : ?>
@@ -73,9 +73,6 @@ if (isset($_POST['logout'])) {
       <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
     </div>
   <?php endforeach ?>
-  <?php if (is_int($_SESSION['auth_id'])) : ?>
-    <button type="button" onclick="location.href='./mypage.php?id=<?php echo $_SESSION['auth_id'] ?>'">マイページ</button>
-  <?php endif; ?>
 </body>
 
 </html>
