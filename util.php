@@ -149,32 +149,32 @@ function empty_check($key, $name)
  }
 }
 // いいねしているか判定する
-function isLike($p_id, $u_id)
+function isLike($post_id, $user_id)
 {
  try {
   $db = dbConnect();
-  $sql = 'SELECT * FROM likes WHERE post_id = :p_id AND user_id = :u_id';
+  $sql = 'SELECT * FROM likes WHERE post_id = :post_id AND user_id = :user_id';
   $stmt = $db->prepare($sql);
-  $stmt->bindValue(':p_id', $p_id, PDO::PARAM_INT);
-  $stmt->bindValue(':u_id', $u_id, PDO::PARAM_INT);
+  $stmt->bindValue(':post_id', $post_id, PDO::PARAM_INT);
+  $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
   $stmt->execute();
   $results = $stmt->fetchAll();
-  var_dump($results);
+  //var_dump($results);
   return $results;
   //return true;
  } catch (Exception $e) {
   error_log('エラー発生:' . $e->getMessage());
  }
 }
-// いいねのカウント実装
-function getLike($p_id)
+// いいねのカウント数を数える
+function getLike($post_id)
 {
  try {
   $db = dbConnect();
-  $sql = 'SELECT * FROM likes WHERE post_id = :p_id';
+  $sql = 'SELECT * FROM likes WHERE post_id = :post_id';
   $stmt = $db->prepare($sql);
   // クエリ実行
-  $stmt->bindValue(':p_id', $p_id, PDO::PARAM_INT);
+  $stmt->bindValue(':post_id', $post_id, PDO::PARAM_INT);
   $stmt->execute();
 
   if ($stmt) {
