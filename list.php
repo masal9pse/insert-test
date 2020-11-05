@@ -9,7 +9,7 @@ $lists = getAllData('posts');
 //var_dump($_SERVER);
 var_dump($_SESSION);
 if (empty($_SESSION['auth_id'])) {
-  $_SESSION['auth_id'] = "名無しのごんべ";
+  (string)$_SESSION['auth_id'] = "名無しのごんべ";
 }
 if (isset($_POST['logout'])) {
   logout($_SESSION, 'list.php');

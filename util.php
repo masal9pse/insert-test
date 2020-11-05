@@ -2,8 +2,8 @@
 // 引数でdbconnectしない
 function dbConnect()
 {
+ ini_set('display_errors', "On");
  try {
-  ini_set('display_errors', "On");
   $db = new PDO('pgsql:dbname=offshoa_db;host=127.0.0.1;port=5432;', 'yamamotohiroto', '');
   //echo '接続成功です';
  } catch (PDOException $e) {
@@ -12,7 +12,7 @@ function dbConnect()
  return $db;
 }
 
-function getAllData($table_name)
+function getAllData(string $table_name)
 {
  $db = dbConnect();
  $sql = "SELECT * from  {$table_name} order by id desc";
@@ -23,7 +23,7 @@ function getAllData($table_name)
  $db = null;
 }
 
-function getById($id)
+function getById(int $id)
 {
  $db = dbConnect();
  $sql = 'SELECT * from posts where id=:id';
@@ -113,7 +113,7 @@ function postUpdate($post)
  $new_stmt->execute();
 }
 
-function login($err_msg)
+function login(string $err_msg)
 {
  $db = dbConnect();
  if (isset($_POST['login'])) {
@@ -130,8 +130,14 @@ function login($err_msg)
    $_SESSION['name'] = $_POST['name'];
    $_SESSION['password'] = $_POST['password'];
    $_SESSION['auth_id'] = $row['id'];
-   $url = $_SESSION['return'];
-   header("Location: $url");
+   if (!empty($_SESSION['return'])) {
+    $url = $_SESSION['return'];
+    header("Location: $url");
+    exit;
+   } else {
+    header("Location: ../list.php"); // 戻るページがない場合、トップページへ
+    exit;
+   }
   } else {
    echo '<p>' . $err_msg . '</p>';
   }
@@ -141,6 +147,7 @@ function login($err_msg)
 function auth_check($redirectPath)
 {
  if (!isset($_SESSION['name'])) {
+  // ログインする前にそのページのurlを取得する
   $_SESSION['return'] = $_SERVER["REQUEST_URI"];
   header("Location: $redirectPath");
   exit();
@@ -157,6 +164,7 @@ function logout($session, $php_file)
 
  //セッションクリア
  session_destroy();
+ (string)$session['auth_id'] = "名無しのごんべ";
  return $session;
 }
 
