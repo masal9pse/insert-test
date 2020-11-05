@@ -1,6 +1,5 @@
 <?php
 session_start();
-include('dbconnect.php');
 include('util.php');
 auth_check('./auth/login.php');
 $db = dbConnect();

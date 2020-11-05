@@ -1,7 +1,5 @@
 <?php
-include('dbconnect.php');
 include('util.php');
-
 $db = dbConnect();
 // tag,category,searchの絞り込み検索 => インジェクション対策はこれから
 //if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {

@@ -1,6 +1,5 @@
 <?php
 session_start();
-include('dbconnect.php');
 include('util.php');
 $db = dbConnect();
 //var_dump($_POST);

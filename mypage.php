@@ -1,7 +1,6 @@
 <?php
 //　/user_posts_form.php?id={num} でアクセスしてください
 session_start();
-include('dbconnect.php');
 include('util.php');
 auth_check('./auth/login.php');
 $lists = myPageList();
@@ -18,6 +17,7 @@ $lists = myPageList();
 </head>
 
 <body>
+ <h1>マイページ</h1>
  <?php foreach ($lists as $list) : ?>
   <div>
    <td><?php echo $list['id']; ?></td>

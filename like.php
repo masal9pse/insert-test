@@ -1,5 +1,4 @@
 <?php
-require('dbconnect.php');
 require('util.php');
 session_start();
 auth_check('./auth/login.php');

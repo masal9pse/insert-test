@@ -1,7 +1,6 @@
 <?php
-include('dbconnect.php');
 include('util.php');
-$db = dbConnect();
+//$db = dbConnect();
 $categories = getAllData('categories');
 $get = sanitize($_GET);
 $tags = getAllData('tags');

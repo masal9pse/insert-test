@@ -1,10 +1,9 @@
 <?php
 // 引数でdbconnectしない
-//require('dbconnect.php');
 function dbConnect()
 {
  try {
-  //ini_set('display_errors', "On");
+  ini_set('display_errors', "On");
   $db = new PDO('pgsql:dbname=offshoa_db;host=127.0.0.1;port=5432;', 'yamamotohiroto', '');
   //echo '接続成功です';
  } catch (PDOException $e) {
@@ -24,8 +23,9 @@ function getAllData($table_name)
  $db = null;
 }
 
-function getById($db, $id)
+function getById($id)
 {
+ $db = dbConnect();
  $sql = 'SELECT * from posts where id=:id';
  $stmt = $db->prepare($sql);
  $stmt->bindValue(':id', $id, PDO::PARAM_INT);

@@ -1,9 +1,8 @@
 <?php
 session_start();
-include('dbconnect.php');
 include('util.php');
 $db = dbConnect();
-$update_post = getById($db, $_GET['id']);
+$update_post = getById($_GET['id']);
 ?>
 
 <!DOCTYPE html>
