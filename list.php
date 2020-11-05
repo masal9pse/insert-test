@@ -5,11 +5,11 @@ require_once __DIR__ . '/util.php';
 //$db = dbConnect();
 $lists = getAllData('posts');
 //echo $_SESSION['auth_id'];
+var_dump($_SERVER["REQUEST_URI"]);
 var_dump($_SESSION);
 if (empty($_SESSION['auth_id'])) {
   $_SESSION['auth_id'] = "名無しのごんべ";
 }
-
 if (isset($_POST['logout'])) {
   logout($_SESSION, 'list.php');
 }

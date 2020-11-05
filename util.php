@@ -130,18 +130,18 @@ function login($err_msg)
    $_SESSION['name'] = $_POST['name'];
    $_SESSION['password'] = $_POST['password'];
    $_SESSION['auth_id'] = $row['id'];
-   header("Location: ../list.php");
+   $url = $_SESSION['return'];
+   header("Location: $url");
   } else {
    echo '<p>' . $err_msg . '</p>';
   }
-  //return false;
  }
 }
 
 function auth_check($redirectPath)
 {
  if (!isset($_SESSION['name'])) {
-  // if (empty($_SESSION['join'])) {
+  $_SESSION['return'] = $_SERVER["REQUEST_URI"];
   header("Location: $redirectPath");
   exit();
  }
