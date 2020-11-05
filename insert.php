@@ -12,8 +12,8 @@ if (empty($_POST['title'])) {
 
 $db->beginTransaction();
 try {
- postInsert($db, $_POST);
- postTagInsert($db, $_POST);
+ postInsert($_POST);
+ postTagInsert($_POST);
 
  echo '投稿に成功しました';
  // 空の場合
