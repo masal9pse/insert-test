@@ -147,8 +147,8 @@ function empty_check($key, $name)
   print($key[$name]);
  }
 }
-
-function isGood($p_id, $u_id)
+// いいねしているか判定する
+function isLike($p_id, $u_id)
 {
  try {
   $db = dbConnect();
@@ -163,5 +163,25 @@ function isGood($p_id, $u_id)
   //return true;
  } catch (Exception $e) {
   error_log('エラー発生:' . $e->getMessage());
+ }
+}
+// いいねのカウント実装
+function getLike($p_id)
+{
+ try {
+  $db = dbConnect();
+  $sql = 'SELECT * FROM likes WHERE post_id = :p_id';
+  $stmt = $db->prepare($sql);
+  // クエリ実行
+  $stmt->bindValue(':p_id', $p_id, PDO::PARAM_INT);
+  $stmt->execute();
+
+  if ($stmt) {
+   return $stmt->fetchAll();
+  } else {
+   return false;
+  }
+ } catch (Exception $e) {
+  exit('エラー発生：' . $e->getMessage());
  }
 }

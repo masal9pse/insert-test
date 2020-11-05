@@ -1,3 +1,10 @@
+
+--数をカウントする
+select *, count(post_id)
+from likes
+where post_id=10
+group by likes.id;
+
 INSERT INTO posts
  (title,detail,image,created_at,updated_at)
 VALUES
