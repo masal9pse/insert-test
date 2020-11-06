@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('util.php');
+//require('util.php');
 auth_check('./auth/login.php');
 var_dump($_POST);
 // issetが空文字でもtrueであるか調べる
@@ -11,7 +11,7 @@ var_dump($_SESSION);
 class Like
 {
 
- private function dbConnect()
+ public function dbConnect()
  {
   ini_set('display_errors', "On");
   try {
@@ -23,7 +23,7 @@ class Like
   return $db;
  }
 
- private function isLike($post_id, $user_id)
+ public function isLike($post_id, $user_id)
  {
   try {
    $db = $this->dbConnect();
