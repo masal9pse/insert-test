@@ -1,9 +1,10 @@
 <?php
+ini_set('display_errors', "On");
 session_start();
-include('util.php');
-//$db = dbConnect();
-auth_check('./auth/login.php');
-$update_post = getById($_GET['id']);
+require('./Classes/Function/PostClass.php');
+$postInstance = new PostClass();
+$postInstance->auth_check('./auth/login.php');
+$update_post = $postInstance->getById($_GET['id']);
 ?>
 
 <!DOCTYPE html>

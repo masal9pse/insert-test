@@ -1,7 +1,9 @@
 <?php
+ini_set('display_errors', "On");
 session_start();
-include('util.php');
-$db = dbConnect();
+include('./Classes/Function/PostClass.php');
+$postInstance = new PostClass();
+$db = $postInstance->dbConnect();
 //var_dump($_POST);
 //var_dump($_FILES);
 if (empty($_POST['title'])) {
@@ -12,7 +14,7 @@ if (empty($_POST['title'])) {
 //exit;
 try {
  $db->beginTransaction();
- postUpdate($_POST);
+ $postInstance->postUpdate($_POST);
  $db->commit();
  echo '更新に成功しました';
 } catch (PDOException $e) {
