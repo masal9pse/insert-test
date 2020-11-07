@@ -1,11 +1,11 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require('../util.php');
-$util = new Util();
+require_once('LoginClass.php');
+$loginInstance = new LoginClass();
 $err_msg = "";
-$post = $util->sanitize($_POST);
-$util->login($err_msg);
+$post = $loginInstance->sanitize($_POST);
+$loginInstance->login($err_msg);
 if (isset($post['name'], $post['password'])) {
  $err_msg = '未入力の項目があります。';
 }
@@ -27,8 +27,8 @@ if (isset($post['name'], $post['password'])) {
    <?php if ($err_msg !== null && $err_msg !== '') {
     echo $err_msg . "<br>";
    } ?>
-   名前<input type="text" name="name" value="<?php print($util->empty_check($post, 'name')); ?>"><br />
-   パスワード<input type="text" name="password" value="<?php print($util->empty_check($post, 'name')); ?>"><br />
+   名前<input type="text" name="name" value="<?php print($loginInstance->empty_check($post, 'name')); ?>"><br />
+   パスワード<input type="text" name="password" value="<?php print($loginInstance->empty_check($post, 'name')); ?>"><br />
    <!--<dd>
 
     <input id="save" type="checkbox" name="save" value="on">
