@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', "On");
-require_once('./Classes/CategoryClass.php');
-require_once('./Classes/TagClass.php');
+require_once('./Classes/Function/CategoryClass.php');
+require_once('./Classes/Function/TagClass.php');
 $categoryInstance = new CategoryClass();
 $categories = $categoryInstance->getAllData();
 //var_dump($categories);

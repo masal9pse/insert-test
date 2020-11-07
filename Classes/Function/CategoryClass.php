@@ -1,5 +1,5 @@
 <?php
-require('UtilClass.php');
+require_once dirname(__FILE__) . '/../UtilClass.php';
 
 class CategoryClass extends UtilClass
 {

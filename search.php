@@ -1,6 +1,6 @@
 <?php
 ini_set('display_errors', "On");
-include('util.php');
+require('./Classes/UtilClass.php');
 $util = new UtilClass;
 $db = $util->dbConnect();
 // tag,category,searchの絞り込み検索 => インジェクション対策はこれから
