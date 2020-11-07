@@ -125,20 +125,6 @@ class Util
   }
  }
 
- function logout($session, $php_file)
- {
-  if (isset($session)) {
-   header("Location: $php_file");
-  }
-  //セッション変数のクリア
-  $session = array();
-
-  //セッションクリア
-  session_destroy();
-  (string)$session['auth_id'] = "名無しのごんべ";
-  return $session;
- }
-
  function empty_check($key, $name)
  {
   if (!empty($key[$name])) {

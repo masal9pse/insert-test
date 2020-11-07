@@ -1,7 +1,6 @@
 <?php
-require('../util.php');
-
-class LoginClass extends Util
+require_once dirname(__FILE__) . '/../util.php';
+class AuthClass extends Util
 {
  function login(string $err_msg)
  {
@@ -32,5 +31,19 @@ class LoginClass extends Util
     echo '<p>' . $err_msg . '</p>';
    }
   }
+ }
+
+ function logout($session, $php_file)
+ {
+  if (isset($session)) {
+   header("Location: $php_file");
+  }
+  //セッション変数のクリア
+  $session = array();
+
+  //セッションクリア
+  session_destroy();
+  (string)$session['auth_id'] = "名無しのごんべ";
+  return $session;
  }
 }

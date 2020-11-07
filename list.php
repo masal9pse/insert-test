@@ -2,7 +2,7 @@
 ini_set('display_errors', "On");
 session_start();
 require('PostClass.php');
-$postInstance = new PostClass;
+$postInstance = new PostClass();
 $lists = $postInstance->getAllData();
 //var_dump($lists);
 //exit;
@@ -10,9 +10,10 @@ var_dump($_SESSION);
 if (empty($_SESSION['auth_id'])) {
   (string)$_SESSION['auth_id'] = "名無しのごんべ";
 }
+require('./auth/AuthClass.php');
+$authInstance = new AuthClass();
 if (isset($_POST['logout'])) {
-  // utilを継承しているのでPostClassからlogoutメソッドを実行できる
-  $postInstance->logout($_SESSION, 'list.php');
+  $authInstance->logout($_SESSION, 'list.php');
 }
 ?>
 <!DOCTYPE html>

@@ -1,8 +1,8 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require_once('LoginClass.php');
-$loginInstance = new LoginClass();
+require_once('AuthClass.php');
+$loginInstance = new AuthClass();
 $err_msg = "";
 $post = $loginInstance->sanitize($_POST);
 $loginInstance->login($err_msg);
