@@ -2,22 +2,17 @@
 ini_set('display_errors', "On");
 require_once('CategoryClass.php');
 require_once('TagClass.php');
-//$db = dbConnect();
-//$categoryInstance = new Category\CategoryClass();
-//$categoryInstance = new CategoryClass();
 $categoryInstance = new CategoryClass();
 $categories = $categoryInstance->getAllData();
-var_dump($categories);
+//var_dump($categories);
 //exit;
 
-
-//$TagInstance = new TagClass();
 $TagInstance = new TagClass();
 $tags = $TagInstance->getAllData();
-var_dump($tags);
-exit;
-$get = sanitize($_GET);
-$tags = getAllData('tags');
+//var_dump($tags);
+//exit;
+//$get = $TagInstance->sanitize($_GET);
+$get = $TagInstance->sanitize($_GET);
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +34,7 @@ $tags = getAllData('tags');
         <option value="<?php echo $category['category']; ?>"><?php echo $category['category']; ?></option>
       <?php endforeach; ?>
     </select>
-    <input type="text" name="search" placeholder="検索したい値" value="<?php empty_check($get, 'search') ?>">
+    <input type="text" name="search" placeholder="検索したい値" value="<?php $TagInstance->empty_check($get, 'search') ?>">
     <br>
     <?php foreach ($tags as $tag) : ?>
       <input type="checkbox" name="tags[]" value="<?php echo $tag['tag']; ?>">
