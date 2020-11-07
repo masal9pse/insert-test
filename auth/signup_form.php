@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', "On");
 include('../util.php');
-$util = new Util;
+$util = new UtilClass;
 $post = $util->sanitize($_POST);
 ?>
 <!DOCTYPE html>

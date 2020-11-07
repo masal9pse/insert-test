@@ -2,7 +2,7 @@
 ini_set('display_errors', "On");
 session_start();
 require('../util.php');
-$util = new Util;
+$util = new UtilClass;
 //var_dump($_POST);
 //exit();
 if (empty($_POST['name'] && $_POST['password'])) {

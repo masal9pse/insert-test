@@ -4,7 +4,7 @@ session_start();
 var_dump($_POST);
 //exit;
 include('util.php');
-$util = new Util;
+$util = new UtilClass;
 $db = $util->dbConnect();
 
 if (empty($_POST['title'])) {

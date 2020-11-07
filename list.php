@@ -1,9 +1,9 @@
 <?php
 ini_set('display_errors', "On");
 session_start();
-require('PostClass.php');
-require('./auth/AuthClass.php');
-require('LikeClass.php');
+require('./Classes/auth/AuthClass.php');
+require('./Classes/Function/PostClass.php');
+require('./Classes/Function/LikeClass.php');
 
 $postInstance = new PostClass();
 $lists = $postInstance->getAllData();
@@ -13,11 +13,12 @@ var_dump($_SESSION);
 if (empty($_SESSION['auth_id'])) {
   (string)$_SESSION['auth_id'] = "名無しのごんべ";
 }
+
 $authInstance = new AuthClass();
-$likeInstance = new LikeClass();
 if (isset($_POST['logout'])) {
   $authInstance->logout($_SESSION, 'list.php');
 }
+$likeInstance = new LikeClass();
 ?>
 <!DOCTYPE html>
 <html lang="en">

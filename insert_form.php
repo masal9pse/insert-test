@@ -1,9 +1,9 @@
 <?php
 ini_set('display_errors', "On");
 session_start();
-include('TagClass.php');
+include('./Classes/TagClass.php');
 $tagInstance = new TagClass;
-// TagClassはUtilクラスを継承しているためutilクラスのメソッドが使用できる
+// TagClassはUtilClassクラスを継承しているためutilクラスのメソッドが使用できる
 $tagInstance->auth_check('./auth/login.php');
 $tags = $tagInstance->getAllData();
 $post = $tagInstance->sanitize($_POST);

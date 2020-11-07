@@ -1,5 +1,5 @@
 <?php
-class Util
+class UtilClass
 {
  protected $table_name;
 

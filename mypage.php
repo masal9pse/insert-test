@@ -2,7 +2,7 @@
 ini_set('display_errors', "On");
 session_start();
 include('util.php');
-$util = new Util;
+$util = new UtilClass;
 $util->auth_check('./auth/login.php');
 $lists = $util->myPageList();
 if (isset($_POST['logout'])) {

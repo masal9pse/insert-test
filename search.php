@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', "On");
 include('util.php');
-$util = new Util;
+$util = new UtilClass;
 $db = $util->dbConnect();
 // tag,category,searchの絞り込み検索 => インジェクション対策はこれから
 if (isset($_GET['tags'], $_GET['search'], $_GET['category'])) {

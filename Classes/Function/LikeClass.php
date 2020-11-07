@@ -1,7 +1,7 @@
 <?php
-require_once('util.php');
+require_once dirname(__FILE__) . '/../UtilClass.php';
 
-class LikeClass extends Util
+class LikeClass extends UtilClass
 {
  // いいねしているか判定する
  function isLike($post_id, $user_id)

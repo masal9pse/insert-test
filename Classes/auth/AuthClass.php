@@ -1,6 +1,7 @@
 <?php
-require_once dirname(__FILE__) . '/../util.php';
-class AuthClass extends Util
+require_once dirname(__FILE__) . '/../UtilClass.php';
+
+class AuthClass extends UtilClass
 {
  function login(string $err_msg)
  {
