@@ -1,10 +1,11 @@
 <?php
-//ini_set('display_errors', "On");
+ini_set('display_errors', "On");
 session_start();
 var_dump($_POST);
 //exit;
 include('util.php');
-$db = dbConnect();
+$util = new Util;
+$db = $util->dbConnect();
 
 if (empty($_POST['title'])) {
  exit('タイトルを入力してください');

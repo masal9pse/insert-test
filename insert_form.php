@@ -1,12 +1,15 @@
 <?php
+ini_set('display_errors', "On");
 session_start();
-include('util.php');
-auth_check('./auth/login.php');
-$db = dbConnect();
-$tags = getAllData('tags');
-$post = sanitize($_POST);
+include('TagClass.php');
+$tagInstance = new TagClass;
+// TagClassはUtilクラスを継承しているためutilクラスのメソッドが使用できる
+$tagInstance->auth_check('./auth/login.php');
+$tags = $tagInstance->getAllData();
+$post = $tagInstance->sanitize($_POST);
 ?>
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -27,10 +30,10 @@ $post = sanitize($_POST);
       <tr>
         <td>タイトル</td>
         <!-- 空文字判定して変数にまとめる -->
-        <td><input type="text" name="title" value="<?php empty_check($post, 'title') ?>"></td>
+        <td><input type="text" name="title" value="<?php $tagInstance->empty_check($post, 'title') ?>"></td>
         <td>本文</td>
         <!--XSS対策は後ほど-->
-        <td><input type="text" name="detail" value="<?php empty_check($post, 'detail') ?>"></td>
+        <td><input type="text" name="detail" value="<?php $tagInstance->empty_check($post, 'detail') ?>"></td>
         <td>画像</td>
         <!-- valueを指定したい -->
         <td><input type="file" name="image"></td>
