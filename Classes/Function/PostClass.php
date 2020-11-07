@@ -5,6 +5,7 @@ require_once dirname(__FILE__) . '/../UtilClass.php';
 class PostClass extends UtilClass
 {
  protected $table_name = 'posts';
+ protected $sort = 'desc';
 
  // 記事投稿
  function postInsert($post)

@@ -2,6 +2,7 @@
 class UtilClass
 {
  protected $table_name;
+ protected $sort;
 
  function dbConnect()
  {
@@ -18,7 +19,7 @@ class UtilClass
  function getAllData()
  {
   $db = $this->dbConnect();
-  $sql = "SELECT * from $this->table_name order by id desc";
+  $sql = "SELECT * from $this->table_name order by id $this->sort";
   $stmt = $db->query($sql);
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $results = $this->sanitize($results);
