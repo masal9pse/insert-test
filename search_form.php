@@ -1,14 +1,17 @@
 <?php
 ini_set('display_errors', "On");
 require_once('CategoryClass.php');
-//require_once('TagClass.php');
+require_once('TagClass.php');
 //$db = dbConnect();
+//$categoryInstance = new Category\CategoryClass();
+//$categoryInstance = new CategoryClass();
 $categoryInstance = new CategoryClass();
 $categories = $categoryInstance->getAllData();
 var_dump($categories);
 //exit;
-require_once('TagClass.php');
 
+
+//$TagInstance = new TagClass();
 $TagInstance = new TagClass();
 $tags = $TagInstance->getAllData();
 var_dump($tags);

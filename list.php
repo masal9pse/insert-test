@@ -1,7 +1,8 @@
 <?php
+ini_set('display_errors', "On");
 session_start();
 require('PostClass.php');
-$postInstance = new postClass;
+$postInstance = new PostClass;
 $lists = $postInstance->getAllData();
 //var_dump($lists);
 //exit;

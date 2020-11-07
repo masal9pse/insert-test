@@ -1,7 +1,10 @@
 <?php
-require('PostClass.php');
 
-class CategoryClass extends PostClass
+require('util.php');
+//require('PostClass.php');
+
+//namespace Category;
+class CategoryClass extends Util
 {
  protected $table_name = 'categories';
 }
