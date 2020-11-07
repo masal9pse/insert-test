@@ -1,5 +1,5 @@
 <?php
-
+ini_set('display_errors', "On");
 class Util
 {
  protected $table_name;

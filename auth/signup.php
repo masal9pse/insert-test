@@ -1,7 +1,8 @@
 <?php
+ini_set('display_errors', "On");
 session_start();
 require('../util.php');
-//$db = dbConnect();
+$util = new Util;
 //var_dump($_POST);
 //exit();
 if (empty($_POST['name'] && $_POST['password'])) {
@@ -15,7 +16,7 @@ if (!empty($_POST['name'] && $_POST['password'])) {
  $password = $_SESSION['password'];
  $password = password_hash($password, PASSWORD_DEFAULT);
  $sql = 'INSERT into users(name, password) values (?, ?)';
- $db = dbConnect();
+ $db = $util->dbConnect();
  $stmt = $db->prepare($sql);
  $stmt->execute(array($name, $password));
  $user_id = $db->lastinsertid();

@@ -1,6 +1,8 @@
 <?php
+ini_set('display_errors', "On");
 include('../util.php');
-$post = sanitize($_POST);
+$util = new Util;
+$post = $util->sanitize($_POST);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -13,8 +15,8 @@ $post = sanitize($_POST);
 
 <body>
  <form action="signup.php" method="post">
-  名前<input type="text" name="name" value="<?php print(empty_check($post, 'name')); ?>"><br />
-  パスワード<input type="text" name="password" value="<?php print(empty_check($post, 'password')); ?>"><br />
+  名前<input type="text" name="name" value="<?php print($util->empty_check($post, 'name')); ?>"><br />
+  パスワード<input type="text" name="password" value="<?php print($util->empty_check($post, 'password')); ?>"><br />
   <button type="submit">新規登録</button>
  </form>
  <button type="button" onclick="location.href='./login.php'">ログイン画面へ</button>
