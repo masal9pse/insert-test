@@ -4,13 +4,14 @@ class Util
 {
  protected $table_name;
 
- protected function dbConnect()
+ function dbConnect()
  {
-  ini_set('display_errors', "On");
   try {
+   ini_set('display_errors', "On");
    $db = new PDO('pgsql:dbname=offshoa_db;host=127.0.0.1;port=5432;', 'yamamotohiroto', '');
    //echo '接続成功です';
   } catch (PDOException $e) {
+   ini_set('display_errors', "On");
    echo $e . 'エラーです';
   }
   return $db;

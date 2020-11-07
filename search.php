@@ -1,8 +1,9 @@
 <?php
+ini_set('display_errors', "On");
 include('util.php');
-$db = dbConnect();
+$util = new Util;
+$db = $util->dbConnect();
 // tag,category,searchの絞り込み検索 => インジェクション対策はこれから
-//if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
 if (isset($_GET['tags'], $_GET['search'], $_GET['category'])) {
  $category_count = count($_GET['tags']);
  $where = [];
@@ -198,7 +199,7 @@ if (empty($_GET['search']) && empty($_GET['category']) && empty($_GET['tags'])) 
 } else {
  $stmt->execute();
  $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
- $search = sanitize($search);
+ $search = $util->sanitize($search);
  var_dump($search);
 }
 ?>
