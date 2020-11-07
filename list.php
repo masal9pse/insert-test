@@ -6,13 +6,13 @@ $postInstance = new PostClass;
 $lists = $postInstance->getAllData();
 //var_dump($lists);
 //exit;
-//echo $_SESSION['auth_id'];
 var_dump($_SESSION);
 if (empty($_SESSION['auth_id'])) {
   (string)$_SESSION['auth_id'] = "名無しのごんべ";
 }
 if (isset($_POST['logout'])) {
-  logout($_SESSION, 'list.php');
+  // utilを継承しているのでPostClassからlogoutメソッドを実行できる
+  $postInstance->logout($_SESSION, 'list.php');
 }
 ?>
 <!DOCTYPE html>
