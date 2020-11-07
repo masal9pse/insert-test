@@ -1,14 +1,11 @@
 <?php
 session_start();
-require_once __DIR__ . '/util.php';
-$util = new Util;
-$lists = $util->getAllData('posts');
+require('PostClass.php');
+$postInstance = new postClass;
+$lists = $postInstance->getAllData();
 //var_dump($lists);
 //exit;
-//$lists = getAllData('posts');
 //echo $_SESSION['auth_id'];
-//var_dump($_SERVER["REQUEST_URI"]);
-//var_dump($_SERVER);
 var_dump($_SESSION);
 if (empty($_SESSION['auth_id'])) {
   (string)$_SESSION['auth_id'] = "名無しのごんべ";

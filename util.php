@@ -1,8 +1,9 @@
 <?php
 class Util
 {
- // 引数でdbconnectしない
- function dbConnect()
+ protected $table_name;
+
+ protected function dbConnect()
  {
   ini_set('display_errors', "On");
   try {
@@ -14,10 +15,10 @@ class Util
   return $db;
  }
 
- function getAllData(string $table_name)
+ function getAllData()
  {
   $db = $this->dbConnect();
-  $sql = "SELECT * from  {$table_name} order by id desc";
+  $sql = "SELECT * from $this->table_name order by id desc";
   $stmt = $db->query($sql);
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $results = $this->sanitize($results);
@@ -28,7 +29,7 @@ class Util
  function getById(int $id)
  {
   $db = dbConnect();
-  $sql = 'SELECT * from posts where id=:id';
+  $sql = "SELECT * from $this->table_name where id=:id";
   $stmt = $db->prepare($sql);
   $stmt->bindValue(':id', $id, PDO::PARAM_INT);
   $stmt->execute();
