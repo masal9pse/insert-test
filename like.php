@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', "On");
 session_start();
-require('./classes/LikeClass.php');
+require('./Classes/Function/LikeClass.php');
 $likeInstance = new LikeClass();
 $likeInstance->auth_check('./auth/login.php');
 var_dump($_POST);
