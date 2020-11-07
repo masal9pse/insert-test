@@ -1,5 +1,4 @@
 <?php
-ini_set('display_errors', "On");
 class Util
 {
  protected $table_name;
@@ -29,7 +28,7 @@ class Util
 
  function getById(int $id)
  {
-  $db = dbConnect();
+  $db = $this->dbConnect();
   $sql = "SELECT * from $this->table_name where id=:id";
   $stmt = $db->prepare($sql);
   $stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -200,7 +199,7 @@ class Util
  function getLike($post_id)
  {
   try {
-   $db = dbConnect();
+   $db = $this->dbConnect();
    $sql = 'SELECT * FROM likes WHERE post_id = :post_id';
    $stmt = $db->prepare($sql);
    // クエリ実行
@@ -219,7 +218,7 @@ class Util
 
  function myPageList()
  {
-  $db = dbConnect();
+  $db = $this->dbConnect();
   $sql = 'SELECT posts.* from posts 
  inner join users 
  on posts.user_id = users.id
@@ -230,7 +229,7 @@ class Util
   $stmt->execute();
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
   // 基本テキストフォームはないのでXSS対策はやる必要ないかも
-  $results = sanitize($results);
+  $results = $this->sanitize($results);
   //var_dump($results);
   return $results;
  }

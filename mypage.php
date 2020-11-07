@@ -1,9 +1,10 @@
 <?php
-//　/user_posts_form.php?id={num} でアクセスしてください
+ini_set('display_errors', "On");
 session_start();
 include('util.php');
-auth_check('./auth/login.php');
-$lists = myPageList();
+$util = new Util;
+$util->auth_check('./auth/login.php');
+$lists = $util->myPageList();
 if (isset($_POST['logout'])) {
   logout($_SESSION, 'list.php');
 }
@@ -30,7 +31,7 @@ if (isset($_POST['logout'])) {
       <td><?php echo $list['title']; ?></td>
       <td><?php echo $list['detail']; ?></td>
       <form action="like.php" method="post" style="display:inline;">
-        <?php if (isLike($list['id'], $_SESSION['auth_id'])) : ?>
+        <?php /* if (isLike($list['id'], $_SESSION['auth_id'])) : ?>
           <button type="submit" class="btn p-0 border-0">
             <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
             <i class="fas fa-heart fa-fw text-danger"></i>
@@ -42,10 +43,10 @@ if (isset($_POST['logout'])) {
           <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
           <i class="fas fa-heart"></i>
         </button>
-      <?php endif; ?>
+      <?php endif; */ ?>
       </form>
       <span>
-        <?php echo count(getLike($list['id'])); ?>
+        <?php /* echo count(getLike($list['id'])); */ ?>
       </span>
       <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
     </div>
