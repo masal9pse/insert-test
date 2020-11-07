@@ -3,9 +3,9 @@ ini_set('display_errors', "On");
 session_start();
 var_dump($_POST);
 //exit;
-include('util.php');
-$util = new UtilClass;
-$db = $util->dbConnect();
+require('./Classes/Function/PostClass.php');
+$postInstance = new PostClass;
+$db = $postInstance->dbConnect();
 
 if (empty($_POST['title'])) {
  exit('タイトルを入力してください');
@@ -13,8 +13,8 @@ if (empty($_POST['title'])) {
 
 $db->beginTransaction();
 try {
- $util->postInsert($_POST);
- $util->postTagInsert($_POST);
+ $postInstance->postInsert($_POST);
+ $postInstance->postTagInsert($_POST);
 
  echo '投稿に成功しました';
  // 空の場合
