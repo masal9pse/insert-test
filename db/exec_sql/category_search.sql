@@ -1,3 +1,18 @@
+SELECT count(*), posts.*
+FROM posts
+ INNER JOIN post_category
+ ON posts.id = post_category.post_id
+ INNER JOIN categories
+ ON categories.id = post_category.category_id
+ JOIN post_tag
+ ON posts.id = post_tag.post_id
+ JOIN tags
+ ON post_tag.tag_id = tags.id
+WHERE categories.category = 'アニメ'
+ AND tags.tag IN ('面白い')
+GROUP BY posts.id
+HAVING COUNT(posts.id) = 2;
+
 SELECT posts.*
 FROM posts
  LEFT JOIN post_category

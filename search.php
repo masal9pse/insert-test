@@ -3,8 +3,9 @@ ini_set('display_errors', "On");
 require('./Classes/UtilClass.php');
 $util = new UtilClass;
 $db = $util->dbConnect();
+var_dump($_GET);
 // tag,category,searchの絞り込み検索 => インジェクション対策はこれから
-if (isset($_GET['tags'], $_GET['search'], $_GET['category'])) {
+if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
  $category_count = count($_GET['tags']);
  $where = [];
  $binds = [];
@@ -40,12 +41,13 @@ if (isset($_GET['tags'], $_GET['search'], $_GET['category'])) {
  }
  $stmt->bindValue(':title', "%{$_GET['search']}%", PDO::PARAM_STR);
  $stmt->bindValue(':detail', "%{$_GET['search']}%", PDO::PARAM_STR);
- $stmt->bindValue(':category_count', $category_count, PDO::PARAM_INT);
+ //$stmt->bindValue(':category_count', $category_count, PDO::PARAM_INT);
+ $stmt->bindValue(':category_count', count($whereSql), PDO::PARAM_INT);
  //exit;
 }
 
 // tagとカテゴリーの絞り込み検索
-if (isset($_GET['tags'], $_GET['category']) && empty($_GET['search'])) {
+if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
  $category_count = count($_GET['tags']);
  $where = [];
  $binds = [];
@@ -57,7 +59,7 @@ if (isset($_GET['tags'], $_GET['category']) && empty($_GET['search'])) {
  //var_dump($where);
  $sql = "SELECT count(*), posts.*
  FROM posts
-  LEFT JOIN post_category
+  INNER JOIN post_category
   ON posts.id = post_category.post_id
   LEFT JOIN categories
   ON categories.id = post_category.category_id
@@ -70,10 +72,11 @@ if (isset($_GET['tags'], $_GET['category']) && empty($_GET['search'])) {
  GROUP BY posts.id
  HAVING COUNT(posts.id) = :category_count";
 
- //var_dump($sql);
+ var_dump($sql);
  //$stmt = $db->query($sql);
  $stmt = $db->prepare($sql);
  $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
+ // タグ検索
  foreach ($binds as $whereSql => $val) {
   $stmt->bindValue($whereSql, $val, PDO::PARAM_STR);
  }
@@ -83,7 +86,7 @@ if (isset($_GET['tags'], $_GET['category']) && empty($_GET['search'])) {
 }
 
 //if (!empty($_GET['tags'] && $_GET['search']) && empty($_GET['category'])) {
-if (isset($_GET['tags'], $_GET['search']) && empty($_GET['category'])) {
+if (!empty($_GET['tags'] && $_GET['search']) && empty($_GET['category'])) {
  $first_sql = "SELECT p.*
 FROM post_tag pt, posts p, tags t
 WHERE pt.tag_id = t.id
@@ -119,7 +122,7 @@ HAVING COUNT( p.id )= ";
  $stmt->execute();
 }
 
-if (!empty($_GET['tags']) && empty($_GET['search']) && empty($_GET['tags'])) {
+if (!empty($_GET['tags']) && empty($_GET['search']) && empty($_GET['category'])) {
  $first_sql = "SELECT p.*
 FROM post_tag pt, posts p, tags t
 WHERE pt.tag_id = t.id
@@ -140,7 +143,7 @@ HAVING COUNT( p.id )= ";
  $whereSql = implode(' , ', $where);
  $sql = $first_sql . $whereSql . '))' . ' ' .  $second_sql . count($_GET['tags']);
  //$sql .= $whereSql;
- var_dump($sql);
+ //var_dump($sql);
  $stmt = $db->query($sql);
  $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
  var_dump($search);
@@ -155,10 +158,10 @@ if (!empty($_GET['category'] && empty($_GET['search']) && empty($_GET['tags'])))
  ON categories.id = post_category.category_id
 WHERE categories.category = :category';
 
+ var_dump($sql);
  $stmt = $db->prepare($sql);
  $stmt->bindValue(':category', $_GET["category"], PDO::PARAM_STR);
  $stmt->execute();
- //var_dump($sql); 
 }
 //var_dump($stmt);
 //exit;
@@ -181,7 +184,7 @@ if (!empty($_GET['category'] && $_GET['search']) && empty($_GET['tags'])) {
 WHERE categories.category = :category
 AND (posts.title like :title 
 OR posts.detail like :detail)';
-
+ var_dump($sql);
  $stmt = $db->prepare($sql);
  $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
  $stmt->bindValue(':title', '%' . $_GET['search'] . '%', PDO::PARAM_STR);
