@@ -1,7 +1,18 @@
 <?php
-include('util.php');
+ini_set('display_errors', "On");
+require_once('CategoryClass.php');
+//require_once('TagClass.php');
 //$db = dbConnect();
-$categories = getAllData('categories');
+$categoryInstance = new CategoryClass();
+$categories = $categoryInstance->getAllData();
+var_dump($categories);
+//exit;
+require_once('TagClass.php');
+
+$TagInstance = new TagClass();
+$tags = $TagInstance->getAllData();
+var_dump($tags);
+exit;
 $get = sanitize($_GET);
 $tags = getAllData('tags');
 ?>

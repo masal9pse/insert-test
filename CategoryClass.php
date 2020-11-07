@@ -1,7 +1,4 @@
 <?php
-
-namespace B1;
-
 require('PostClass.php');
 
 class CategoryClass extends PostClass
