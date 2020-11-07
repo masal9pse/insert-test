@@ -42,7 +42,7 @@ class Util
  // 記事投稿
  function postInsert($post)
  {
-  $db = dbConnect();
+  $db = $this->dbConnect();
   $sql = 'INSERT INTO posts(title,detail,image,created_at,updated_at,user_id) VALUES (:title,:detail,:image,now(),now(),:user_id)';
   $image = uniqid(mt_rand(), true);
   $image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);
@@ -62,7 +62,7 @@ class Util
  // 記事に紐づいたタグを中間テーブルにインサート
  function postTagInsert($tags)
  {
-  $db = dbConnect();
+  $db = $this->dbConnect();
   $sql = "INSERT INTO post_tag(post_id,tag_id) VALUES (:post_id,:tag_id)";
   $now_post_insert_id = $db->lastInsertId();
   var_dump($now_post_insert_id);

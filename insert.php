@@ -13,8 +13,8 @@ if (empty($_POST['title'])) {
 
 $db->beginTransaction();
 try {
- postInsert($_POST);
- postTagInsert($_POST);
+ $util->postInsert($_POST);
+ $util->postTagInsert($_POST);
 
  echo '投稿に成功しました';
  // 空の場合
