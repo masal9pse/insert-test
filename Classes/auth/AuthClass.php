@@ -25,7 +25,7 @@ class AuthClass extends UtilClass
      header("Location: $url");
      exit;
     } else {
-     header("Location: ../list.php"); // 戻るページがない場合、トップページへ
+     header("Location: ../index.php"); // 戻るページがない場合、トップページへ
      exit;
     }
    } else {

@@ -52,7 +52,7 @@ class LikeClass extends UtilClass
    $stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
    $stmt->execute();
    echo 'いいねを削除しました';
-   //header("Location: ./list.php");
+   //header("Location: ./index.php");
   } else {
    $sql = 'INSERT INTO likes(post_id,user_id) values (:post_id,:user_id)';
    $stmt = $db->prepare($sql);
@@ -60,7 +60,7 @@ class LikeClass extends UtilClass
    $stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
    $stmt->execute();
    echo 'いいねしました';
-   //header("Location: ./list.php");
+   //header("Location: ./index.php");
   }
  }
 }

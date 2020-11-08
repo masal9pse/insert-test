@@ -22,6 +22,6 @@ if (!empty($_POST['name'] && $_POST['password'])) {
  $user_id = $db->lastinsertid();
  $_SESSION['auth_id'] = (int)$user_id;
 
- header('Location: ../list.php');
+ header('Location: ../index.php');
  exit();
 }

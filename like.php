@@ -11,4 +11,4 @@ var_dump($_SESSION);
 //var_dump($list);
 $likeInstance->likeCount();
 ?>
-<a href="list.php">トップページへ</a>
+<a href="index.php">トップページへ</a>

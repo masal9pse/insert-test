@@ -24,7 +24,7 @@ $get = $TagInstance->sanitize($_GET);
 
 <body>
   <h1>検索フォーム</h1>
-  <a href="./list.php">全件表示リンク</a>
+  <a href="./index.php">全件表示リンク</a>
   <a href="./insert_form.php">投稿リンク</a>
   <form action="search.php" method="get">
     <select name="category">

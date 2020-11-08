@@ -12,4 +12,4 @@ $searchInstance->textSearch();
 $searchInstance->categoryTextSearch();
 $searchInstance->AllNotSearch();
 ?>
-<a href="./list.php">トップページへ</a>
+<a href="./index.php">トップページへ</a>

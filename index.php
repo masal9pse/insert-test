@@ -16,7 +16,7 @@ if (empty($_SESSION['auth_id'])) {
 
 $authInstance = new AuthClass();
 if (isset($_POST['logout'])) {
-  $authInstance->logout($_SESSION, 'list.php');
+  $authInstance->logout($_SESSION, 'index.php');
 }
 $likeInstance = new LikeClass();
 ?>

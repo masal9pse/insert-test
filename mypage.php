@@ -9,7 +9,7 @@ $mypageInstance->auth_check('./auth/login.php');
 
 $lists = $mypageInstance->myPageList();
 if (isset($_POST['logout'])) {
-  logout($_SESSION, 'list.php');
+  logout($_SESSION, 'index.php');
 }
 ?>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@ if (isset($_POST['logout'])) {
       <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
     </div>
   <?php endforeach ?>
-  <a href="list.php">トップページへ</a>
+  <a href="index.php">トップページへ</a>
 </body>
 
 </html>
