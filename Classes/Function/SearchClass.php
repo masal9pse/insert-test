@@ -6,17 +6,14 @@ class SearchClass extends UtilClass
   public function AllSearch()
   {
     if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
-      $category_count = count($_GET['tags']);
-      $where = [];
-      $binds = [];
       foreach ($_GET['tags'] as $key =>  $tag) {
-        $where[] = ":tag" . $key;
-        $binds[":tag" . $key] = $tag;
+        $tag_where[] = ":tag" . $key;
+        $tag_binds[":tag" . $key] = $tag;
       }
       // explodeが使えるかチェック
-      $whereSql = implode(' , ', $where);
+      $whereSql = implode(' , ', $tag_where);
       //var_dump($whereSql);
-      $sql = "SELECT count(*), posts.*
+      $sql = "SELECT distinct posts.*
    FROM posts
     LEFT JOIN post_category
     ON posts.id = post_category.post_id
@@ -28,21 +25,20 @@ class SearchClass extends UtilClass
     ON post_tag.tag_id = tags.id
    WHERE  categories.category = :category
     AND tags.tag IN ($whereSql)  
-    AND (posts.title like :title OR posts.detail like :detail )
-   GROUP BY posts.id
-   HAVING COUNT(posts.id) = :category_count";
+    AND (posts.title like :title OR posts.detail like :detail )";
       //{$_GET['category']}
       var_dump($sql);
-      //$stmt = $db->query($sql);
       $db = $this->dbConnect();
       $stmt = $db->prepare($sql);
       $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
-      foreach ($binds as $whereSql => $val) {
-        $stmt->bindValue($whereSql, $val, PDO::PARAM_STR);
+
+      // タグ検索 $tag_bindsのキーと$whereSqlは同じ
+      foreach ($tag_binds as $key => $val) {
+        $stmt->bindValue($key, $val, PDO::PARAM_STR);
       }
+
       $stmt->bindValue(':title', "%{$_GET['search']}%", PDO::PARAM_STR);
       $stmt->bindValue(':detail', "%{$_GET['search']}%", PDO::PARAM_STR);
-      $stmt->bindValue(':category_count', $category_count, PDO::PARAM_INT);
       $this->queryPost($stmt);
     }
   }
@@ -51,14 +47,16 @@ class SearchClass extends UtilClass
   public function tagCategorySearch()
   {
     if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
-      $where = [];
-      $binds = [];
+      $tag_where = [];
+      $tag_binds = [];
       foreach ($_GET['tags'] as $key =>  $tag) {
-        $where[] = ":tag" . $key;
-        $binds[":tag" . $key] = $tag;
+        $tag_where[] = ":tag" . $key;
+        $tag_binds[":tag" . $key] = $tag;
       }
-      $whereSql = implode(' , ', $where);
+      var_dump($tag_binds);
+      $whereSql = implode(' , ', $tag_where);
       var_dump($whereSql);
+
       $sql = "SELECT distinct posts.*
    FROM posts
     INNER JOIN post_category
@@ -76,9 +74,10 @@ class SearchClass extends UtilClass
       $db = $this->dbConnect();
       $stmt = $db->prepare($sql);
       $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
-      // タグ検索
-      foreach ($binds as $whereSql => $val) {
-        $stmt->bindValue($whereSql, $val, PDO::PARAM_STR);
+      // タグ検索 $tag_bindsのキーと$whereSqlは同じ
+      foreach ($tag_binds as $key => $val) {
+        var_dump($key);
+        $stmt->bindValue($key, $val, PDO::PARAM_STR);
       }
       $this->queryPost($stmt);
     }
@@ -99,23 +98,23 @@ class SearchClass extends UtilClass
   GROUP BY p.id
   HAVING COUNT( p.id )= ";
 
-      $where = [];
-      $binds = [];
+      $tag_where = [];
+      $tag_binds = [];
       foreach ($_GET['tags'] as $key =>  $tag) {
-        $where[] = ":tag" . $key;
-        $binds[":tag" . $key] = $tag;
+        $tag_where[] = ":tag" . $key;
+        $tag_binds[":tag" . $key] = $tag;
       }
-      //var_dump($where);
-      //$whereSql = implode(' OR ', $where);
-      $whereSql = implode(' , ', $where);
+      //var_dump($tag_where);
+      //$whereSql = implode(' OR ', $tag_where);
+      $whereSql = implode(' , ', $tag_where);
       $sql = $first_sql . $whereSql . '))' . ' ' .  $second_sql . ':category_count';
       //$sql .= $whereSql;
       var_dump($sql);
       $category_count = count($_GET['tags']);
       $db = $this->dbConnect();
       $stmt = $db->prepare($sql);
-      foreach ($binds as $whereSql => $val) {
-        $stmt->bindValue($whereSql, $val, PDO::PARAM_STR);
+      foreach ($tag_binds as $key => $val) {
+        $stmt->bindValue($key, $val, PDO::PARAM_STR);
       }
       $stmt->bindValue(':title', "%{$_GET['search']}%", PDO::PARAM_STR);
       $stmt->bindValue(':detail', "%{$_GET['search']}%", PDO::PARAM_STR);
@@ -134,21 +133,21 @@ class SearchClass extends UtilClass
 
       $second_sql = "AND p.id = pt.post_id";
 
-      $where = [];
-      $binds = [];
+      $tag_where = [];
+      $tag_binds = [];
       foreach ($_GET['tags'] as $key =>  $tag) {
-        $where[] = ":tag" . $key;
-        $binds[":tag" . $key] = $tag;
+        $tag_where[] = ":tag" . $key;
+        $tag_binds[":tag" . $key] = $tag;
       }
-      //var_dump($where);
-      //$whereSql = implode(' OR ', $where);
-      $whereSql = implode(' , ', $where);
+      //var_dump($tag_where);
+      //$whereSql = implode(' OR ', $tag_where);
+      $whereSql = implode(' , ', $tag_where);
       $sql = $first_sql . $whereSql . '))' . ' ' .  $second_sql;
       //$sql .= $whereSql;
       var_dump($sql);
       $db = $this->dbConnect();
       $stmt = $db->prepare($sql);
-      foreach ($binds as $key => $val) {
+      foreach ($tag_binds as $key => $val) {
         $stmt->bindValue($key, $val, PDO::PARAM_STR);
       }
       $this->queryPost($stmt);
