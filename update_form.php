@@ -5,6 +5,7 @@ require('./Classes/Function/PostClass.php');
 $postInstance = new PostClass();
 $postInstance->auth_check('./auth/login.php');
 $update_post = $postInstance->getById($_GET['id']);
+$postInstance->saveCsrf();
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +19,7 @@ $update_post = $postInstance->getById($_GET['id']);
 
 <body>
  <form action="update.php" method="post" enctype="multipart/form-data">
+  <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
   <input type="hidden" name="id" value="<?php echo $update_post['id'] ?>">
   <input type="text" name="title" value="<?php echo $update_post['title']; ?>">
   <textarea name="detail" id="" cols="30" rows="10"><?php echo $update_post['detail']; ?></textarea>

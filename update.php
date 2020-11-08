@@ -4,7 +4,7 @@ session_start();
 include('./Classes/Function/PostClass.php');
 $postInstance = new PostClass();
 $db = $postInstance->dbConnect();
-//var_dump($_POST);
+var_dump($_POST);
 //var_dump($_FILES);
 if (empty($_POST['title'])) {
  echo "<a href='./index.php'>一覧フォームへ</a>";
@@ -12,13 +12,21 @@ if (empty($_POST['title'])) {
 }
 //var_dump($new_image);
 //exit;
-try {
- $db->beginTransaction();
- $postInstance->postUpdate($_POST);
- $db->commit();
- echo '更新に成功しました';
-} catch (PDOException $e) {
- $db->rollBack();
- echo $e . '更新できませんでした';
+
+if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_token']) {
+ echo "正常なリクエストです。";
+ try {
+  $db->beginTransaction();
+  $postInstance->postUpdate($_POST);
+  $db->commit();
+  echo '更新に成功しました';
+ } catch (PDOException $e) {
+  $db->rollBack();
+  echo $e . '更新できませんでした';
+ }
+} else {
+ echo "不正なリクエストです。";
 }
+
+
 echo "<a href='./index.php'>一覧フォームへ</a>";
