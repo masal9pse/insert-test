@@ -19,6 +19,7 @@ if (isset($_POST['logout'])) {
   $authInstance->logout($_SESSION, 'index.php');
 }
 $likeInstance = new LikeClass();
+$likeInstance->saveCsrf();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,21 +59,23 @@ $likeInstance = new LikeClass();
       <td><?php echo $list['id']; ?></td>
       <td><?php echo $list['title']; ?></td>
       <td><?php echo $list['detail']; ?></td>
-      <form action="like.php" method="post" style="display:inline;">
-        <?php if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) : ?>
+      <?php if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) : ?>
+        <form action="like.php" method="post" style="display:inline;">
+          <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+          <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
           <button type="submit" class="btn p-0 border-0">
-            <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
             <i class="fas fa-heart fa-fw text-danger"></i>
           </button>
-      </form>
-    <?php else : ?>
-      <form action="like.php" method="post" style="display:inline;">
-        <button type="submit" class="btn p-0 border-0">
+        </form>
+      <?php else : ?>
+        <form action="like.php" method="post" style="display:inline;">
+          <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
           <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
-          <i class="fas fa-heart"></i>
-        </button>
+          <button type="submit" class="btn p-0 border-0">
+            <i class="fas fa-heart"></i>
+          </button>
+        </form>
       <?php endif;  ?>
-      </form>
 
       <span>
         <?php echo count($likeInstance->getLike($list['id']));  ?>

@@ -58,6 +58,14 @@ class UtilClass
   }
  }
 
+ public function saveCsrf()
+ {
+  $toke_byte = openssl_random_pseudo_bytes(16);
+  $csrf_token = bin2hex($toke_byte);
+  // 生成したトークンをセッションに保存します
+  $_SESSION['csrf_token'] = $csrf_token;
+ }
+
  function auth_check($redirectPath)
  {
   if (!isset($_SESSION['name'])) {

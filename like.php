@@ -9,6 +9,14 @@ var_dump($_POST);
 var_dump($_SESSION);
 //exit;
 //var_dump($list);
-$likeInstance->likeCount();
+if (
+ isset($_POST["csrf_token"])
+ && $_POST["csrf_token"] === $_SESSION['csrf_token']
+) {
+ echo "正常なリクエストです。";
+ $likeInstance->likeCount();
+} else {
+ echo "不正なリクエストです。";
+}
 ?>
 <a href="index.php">トップページへ</a>
