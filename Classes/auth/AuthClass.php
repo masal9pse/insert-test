@@ -40,6 +40,38 @@ class AuthClass extends UtilClass
   }
  }
 
+ function signUp()
+ {
+  // 重複ユーザーのチェック
+  $result = $this->duplicateCheck();
+  if ($result > 0) {
+   exit('重複しています');
+  }
+
+  // バリデーション
+  if (empty($_POST['name'] && $_POST['password'])) {
+   exit('未入力の箇所があります');
+  }
+
+  // サインアップ処理
+  if (!empty($_POST['name'] && $_POST['password'])) {
+   $_SESSION['name'] = $_POST['name'];
+   $_SESSION['password'] = $_POST['password'];
+   $name = $_SESSION['name'];
+   $password = $_SESSION['password'];
+   $password = password_hash($password, PASSWORD_DEFAULT);
+   $sql = 'INSERT into users(name, password) values (?, ?)';
+   $db = $this->dbConnect();
+   $stmt = $db->prepare($sql);
+   $stmt->execute(array($name, $password));
+   $user_id = $db->lastinsertid();
+   $_SESSION['auth_id'] = (int)$user_id;
+
+   header('Location: ../index.php');
+   exit();
+  }
+ }
+
  function logout($session, $php_file)
  {
   if (isset($session)) {
