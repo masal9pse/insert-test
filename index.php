@@ -18,6 +18,8 @@ $authInstance = new AuthClass();
 if (isset($_POST['logout'])) {
   $authInstance->logout($_SESSION, 'index.php');
 }
+// ログイン画面だけ表示
+//var_dump($_COOKIE);
 $likeInstance = new LikeClass();
 $likeInstance->saveCsrf();
 ?>

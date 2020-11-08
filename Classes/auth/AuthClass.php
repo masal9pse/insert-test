@@ -20,6 +20,8 @@ class AuthClass extends UtilClass
     $_SESSION['name'] = $_POST['name'];
     $_SESSION['password'] = $_POST['password'];
     $_SESSION['auth_id'] = $row['id'];
+    setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 14);
+    setcookie('password', $_POST['password'], time() + 60 * 60 * 24 * 14);
     if (!empty($_SESSION['return'])) {
      $url = $_SESSION['return'];
      header("Location: $url");

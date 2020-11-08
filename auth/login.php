@@ -5,15 +5,19 @@ require_once dirname(__FILE__) . '/../Classes/auth/AuthClass.php';
 
 $loginInstance = new AuthClass();
 $err_msg = "";
-$post = $loginInstance->sanitize($_POST);
+var_dump($_COOKIE);
+
 $loginInstance->login($err_msg);
+$post = $loginInstance->sanitize($_POST);
+
+if (isset($_COOKIE['name'], $_COOKIE['password'])) {
+ $post['name'] = $_COOKIE['name'];
+ $post['password'] = $_COOKIE['password'];
+}
+
 if (isset($post['name'], $post['password'])) {
  $err_msg = '未入力の項目があります。';
 }
-//if (isset($_COOKIE['name'], $_COOKIE['password'])) {
-// $name = $_COOKIE['name'];
-// $password = $_COOKIE['password'];
-//}
 ?>
 <html>
 
@@ -29,12 +33,7 @@ if (isset($post['name'], $post['password'])) {
     echo $err_msg . "<br>";
    } ?>
    名前<input type="text" name="name" value="<?php print($loginInstance->empty_check($post, 'name')); ?>"><br />
-   パスワード<input type="text" name="password" value="<?php print($loginInstance->empty_check($post, 'name')); ?>"><br />
-   <!--<dd>
-
-    <input id="save" type="checkbox" name="save" value="on">
-    <label for="save">次回からは自動的にログインする</label>
-   </dd>-->
+   パスワード<input type="text" name="password" value="<?php print($loginInstance->empty_check($post, 'password')); ?>"><br />
    <button type="submit" name="login" class="btn btn-success">ログイン</button>
   </form>
   <button type="button" onclick="location.href='./signup_form.php'">新規登録画面へ</button>
