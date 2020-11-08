@@ -6,6 +6,7 @@ class AuthClass extends UtilClass
  function login(string $err_msg)
  {
   $db = $this->dbConnect();
+
   if (isset($_POST['login'])) {
    // echo $password; // これ付けたら処理が止まった。
    $sql = 'SELECT * from users where name = :name';
@@ -20,8 +21,11 @@ class AuthClass extends UtilClass
     $_SESSION['name'] = $_POST['name'];
     $_SESSION['password'] = $_POST['password'];
     $_SESSION['auth_id'] = $row['id'];
+
+    // クッキーに保存
     setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 14);
     setcookie('password', $_POST['password'], time() + 60 * 60 * 24 * 14);
+
     if (!empty($_SESSION['return'])) {
      $url = $_SESSION['return'];
      header("Location: $url");
@@ -48,5 +52,16 @@ class AuthClass extends UtilClass
   session_destroy();
   (string)$session['auth_id'] = "名無しのごんべ";
   return $session;
+ }
+
+ private function duplicateCheck()
+ {
+  $db = $this->dbConnect();
+  $stmt = $db->prepare('SELECT * FROM users WHERE name = :name limit 1');
+  $stmt->bindValue(':name', $_POST['name'], PDO::PARAM_STR);
+  $stmt->execute();
+
+  $result = $stmt->fetch();
+  return $result;
  }
 }

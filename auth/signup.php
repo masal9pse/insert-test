@@ -1,10 +1,19 @@
 <?php
 ini_set('display_errors', "On");
 session_start();
-require('../util.php');
+require_once dirname(__FILE__) . '/../Classes/UtilClass.php';
 $util = new UtilClass;
 //var_dump($_POST);
 //exit();
+$db = $util->dbConnect();
+$stmt = $db->prepare('SELECT * FROM users WHERE name = :name limit 1');
+$stmt->bindValue(':name', $_POST['name'], PDO::PARAM_STR);
+$stmt->execute();
+$result = $stmt->fetch();
+
+if ($result > 0) {
+ exit('重複しています');
+}
 if (empty($_POST['name'] && $_POST['password'])) {
  exit('未入力の箇所があります');
 }
