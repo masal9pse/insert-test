@@ -15,7 +15,6 @@ class MypageClass extends UtilClass
   $stmt->bindValue(':user_id', $_GET['id'], PDO::PARAM_INT);
   $stmt->execute();
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  // 基本テキストフォームはないのでXSS対策はやる必要ないかも
   $results = $this->sanitize($results);
   //var_dump($results);
   return $results;
