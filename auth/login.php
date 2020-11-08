@@ -6,9 +6,9 @@ require_once dirname(__FILE__) . '/../Classes/auth/AuthClass.php';
 $loginInstance = new AuthClass();
 $err_msg = "";
 var_dump($_COOKIE);
-
-$loginInstance->login($err_msg);
+var_dump($_SESSION);
 $post = $loginInstance->sanitize($_POST);
+$loginInstance->login($err_msg);
 
 if (isset($_COOKIE['name'], $_COOKIE['password'])) {
  $post['name'] = $_COOKIE['name'];
@@ -38,6 +38,7 @@ if (isset($post['name'], $post['password'])) {
   </form>
   <button type="button" onclick="location.href='./signup_form.php'">新規登録画面へ</button>
   <button type="button" onclick="location.href='../index.php'">トップページへ</button>
+  <button type="button" onclick="location.href='./admin_form.php'">管理ユーザーログイン</button>
  </body>
 </div>
 
