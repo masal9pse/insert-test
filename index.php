@@ -38,7 +38,9 @@ $likeInstance->saveCsrf();
   <h1>一覧リスト</h1>
   <a href="./search_form.php">検索リンク</a>
   <a href="./insert_form.php">投稿リンク</a>
-
+  <form action="./auth/admin_form.php" method="get">
+    <button type="submit" class="btn btn-danger">管理画面</button>
+  </form>
   <?php if (is_string($_SESSION['auth_id'])) : ?>
     <form action="./auth/login.php" method="get">
       <button type="submit" class="btn btn-danger">ログイン</button>

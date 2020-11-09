@@ -3,9 +3,12 @@ session_start();
 ini_set('display_errors', "On");
 require_once dirname(__FILE__) . '/../Classes/auth/AdminClass.php';
 
-//var_dump($_SESSION);
+var_dump($_SESSION);
 $admin = new AdminClass();
 $post = $admin->sanitize($_POST);
+if (isset($post['admin-logout'])) {
+ $admin->adminLogout();
+}
 ?>
 <html>
 
@@ -21,6 +24,9 @@ $post = $admin->sanitize($_POST);
    名前<input type="text" name="name" value="<?php print($admin->empty_check($post, 'name')); ?>"><br />
    パスワード<input type="text" name="password" value="<?php print($admin->empty_check($post, 'password')); ?>"><br />
    <button type="submit" name="admin" class="btn btn-success">ログイン</button>
+  </form>
+  <form action="" method="post">
+   <input type="submit" name="admin-logout" value="ログアウト">
   </form>
   <button type="button" onclick="location.href='../index.php'">トップページへ</button>
  </body>

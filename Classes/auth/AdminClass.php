@@ -6,7 +6,7 @@ class AdminClass extends AuthClass
  function adminLogin()
  {
   try {
-   var_dump($_POST);
+   //var_dump($_POST);
    $db = $this->dbConnect();
    $sql = "SELECT * from admins where name = :name and password = :password";
    $stmt = $db->prepare($sql);
@@ -24,5 +24,18 @@ class AdminClass extends AuthClass
 
   $_SESSION['admin'] = $_POST;
   header("Location: ./login.php"); // 戻るページがない場合、トップページへ
+ }
+ function adminLogout()
+ {
+  if (isset($_SESSION["admin"])) {
+   echo 'Logoutしました。';
+  } else {
+   echo 'SessionがTimeoutしました。';
+  }
+  //セッション変数のクリア
+  $_SESSION['admin'] = array();
+  //セッションクッキーも削除   
+  //セッションクリア
+  @session_destroy();
  }
 }
