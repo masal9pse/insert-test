@@ -6,12 +6,8 @@ class SearchClass extends UtilClass
   public function AllSearch()
   {
     if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
-      foreach ($_GET['tags'] as $key =>  $tag) {
-        $tag_where[] = ":tag" . $key;
-        $tag_binds[":tag" . $key] = $tag;
-      }
+      list($tag_binds, $whereSql) = $this->tagWhere();
       // explodeが使えるかチェック
-      $whereSql = implode(' , ', $tag_where);
       //var_dump($whereSql);
       $sql = "SELECT distinct posts.*
               FROM posts
@@ -33,32 +29,11 @@ class SearchClass extends UtilClass
       $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
 
       // タグ検索 $tag_bindsのキーと$whereSqlは同じ
-      foreach ($tag_binds as $key => $val) {
-        $stmt->bindValue($key, $val, PDO::PARAM_STR);
-      }
+      $this->tagBinds($tag_binds, $stmt);
 
       $stmt->bindValue(':title', "%{$_GET['search']}%", PDO::PARAM_STR);
       $stmt->bindValue(':detail', "%{$_GET['search']}%", PDO::PARAM_STR);
       $this->queryPost($stmt);
-    }
-  }
-
-  private function tagWhere()
-  {
-    $tag_where = [];
-    $tag_binds = [];
-    foreach ($_GET['tags'] as $key =>  $tag) {
-      $tag_where[] = ":tag" . $key;
-      $tag_binds[":tag" . $key] = $tag;
-    }
-    return [$tag_where, $tag_binds];
-  }
-
-  private function tagBinds($tag_binds, $stmt)
-  {
-    foreach ($tag_binds as $key => $val) {
-      var_dump($key);
-      $stmt->bindValue($key, $val, PDO::PARAM_STR);
     }
   }
 
@@ -67,8 +42,7 @@ class SearchClass extends UtilClass
   {
     if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
 
-      list($tag_where, $tag_binds) = $this->tagWhere();
-      $whereSql = implode(' , ', $tag_where);
+      list($tag_binds, $whereSql) = $this->tagWhere();
       var_dump($whereSql);
 
       $sql = "SELECT distinct posts.*
@@ -97,14 +71,7 @@ class SearchClass extends UtilClass
   public function tagTextSearch()
   {
     if (!empty($_GET['tags'] && $_GET['search']) && empty($_GET['category'])) {
-      $tag_where = [];
-      $tag_binds = [];
-      foreach ($_GET['tags'] as $key =>  $tag) {
-        $tag_where[] = ":tag" . $key;
-        $tag_binds[":tag" . $key] = $tag;
-      }
-      var_dump($tag_binds);
-      $whereSql = implode(' , ', $tag_where);
+      list($tag_binds, $whereSql) = $this->tagWhere();
       var_dump($whereSql);
 
       $sql = "SELECT distinct posts.*
@@ -125,10 +92,7 @@ class SearchClass extends UtilClass
       $db = $this->dbConnect();
       $stmt = $db->prepare($sql);
       // タグ検索 $tag_bindsのキーと$whereSqlは同じ
-      foreach ($tag_binds as $key => $val) {
-        //var_dump($key);
-        $stmt->bindValue($key, $val, PDO::PARAM_STR);
-      }
+      $this->tagBinds($tag_binds, $stmt);
       $stmt->bindValue(':title', '%' . $_GET["search"] . '%', PDO::PARAM_STR);
       $stmt->bindValue(':detail', '%' . $_GET["search"] . '%', PDO::PARAM_STR);
       $this->queryPost($stmt);
@@ -145,23 +109,14 @@ class SearchClass extends UtilClass
 
       $second_sql = "AND p.id = pt.post_id";
 
-      $tag_where = [];
-      $tag_binds = [];
-      foreach ($_GET['tags'] as $key =>  $tag) {
-        $tag_where[] = ":tag" . $key;
-        $tag_binds[":tag" . $key] = $tag;
-      }
-      //var_dump($tag_where);
-      //$whereSql = implode(' OR ', $tag_where);
-      $whereSql = implode(' , ', $tag_where);
+      list($tag_binds, $whereSql) = $this->tagWhere();
+
       $sql = $first_sql . $whereSql . '))' . ' ' .  $second_sql;
       //$sql .= $whereSql;
       var_dump($sql);
       $db = $this->dbConnect();
       $stmt = $db->prepare($sql);
-      foreach ($tag_binds as $key => $val) {
-        $stmt->bindValue($key, $val, PDO::PARAM_STR);
-      }
+      $this->tagBinds($tag_binds, $stmt);
       $this->queryPost($stmt);
     }
   }
@@ -190,7 +145,6 @@ class SearchClass extends UtilClass
   public function textSearch()
   {
     if (!empty($_GET['search']) && empty($_GET['category']) && empty($_GET['tags'])) {
-      //if (!empty($_GET['search'])) {
       $sql = 'SELECT * FROM posts 
               WHERE posts.title LIKE :title OR posts.detail LIKE :detail';
 
@@ -232,11 +186,24 @@ class SearchClass extends UtilClass
     }
   }
 
-  private function queryPost($stmt)
+  private function tagWhere()
   {
-    $stmt->execute();
-    $search = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $search = $this->sanitize($search);
-    var_dump($search);
+    $tag_where = [];
+    $tag_binds = [];
+    foreach ($_GET['tags'] as $key =>  $tag) {
+      $tag_where[] = ":tag" . $key;
+      $tag_binds[":tag" . $key] = $tag;
+    }
+    $whereSql = implode(' , ', $tag_where);
+    var_dump($whereSql);
+    return [$tag_binds, $whereSql];
+  }
+
+  private function tagBinds($tag_binds, $stmt)
+  {
+    foreach ($tag_binds as $key => $val) {
+      var_dump($key);
+      $stmt->bindValue($key, $val, PDO::PARAM_STR);
+    }
   }
 }

@@ -82,4 +82,12 @@ class UtilClass
    print($key[$name]);
   }
  }
+
+ protected function queryPost($stmt)
+ {
+  $stmt->execute();
+  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $results = $this->sanitize($results);
+  var_dump($results);
+ }
 }
