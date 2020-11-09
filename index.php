@@ -64,7 +64,7 @@ $likeInstance->saveCsrf();
       <td><?php echo $list['title']; ?></td>
       <td><?php echo $list['detail']; ?></td>
       <?php if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) : ?>
-        <form action="like.php" method="post" style="display:inline;">
+        <form action="rmLike.php" method="post" style="display:inline;">
           <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
           <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
           <button type="submit" class="btn p-0 border-0">
@@ -72,7 +72,7 @@ $likeInstance->saveCsrf();
           </button>
         </form>
       <?php else : ?>
-        <form action="like.php" method="post" style="display:inline;">
+        <form action="addLike.php" method="post" style="display:inline;">
           <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
           <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
           <button type="submit" class="btn p-0 border-0">

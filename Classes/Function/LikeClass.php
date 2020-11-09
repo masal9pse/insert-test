@@ -42,7 +42,21 @@ class LikeClass extends UtilClass
   }
  }
 
- public function likeCount()
+ public function addLike()
+ {
+  $db = $this->dbConnect();
+  if (!$this->isLike($_POST['post_id'], $_SESSION['auth_id'])) {
+   $sql = 'INSERT INTO likes(post_id,user_id) values (:post_id,:user_id)';
+   $stmt = $db->prepare($sql);
+   $stmt->bindValue(':post_id', $_POST['post_id'], PDO::PARAM_INT);
+   $stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
+   $stmt->execute();
+   echo 'いいねしました';
+   //header("Location: ./index.php");
+  }
+ }
+
+ public function rmLike()
  {
   $db = $this->dbConnect();
   if ($this->isLike($_POST['post_id'], $_SESSION['auth_id'])) {
@@ -52,15 +66,6 @@ class LikeClass extends UtilClass
    $stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
    $stmt->execute();
    echo 'いいねを削除しました';
-   //header("Location: ./index.php");
-  } else {
-   $sql = 'INSERT INTO likes(post_id,user_id) values (:post_id,:user_id)';
-   $stmt = $db->prepare($sql);
-   $stmt->bindValue(':post_id', $_POST['post_id'], PDO::PARAM_INT);
-   $stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
-   $stmt->execute();
-   echo 'いいねしました';
-   //header("Location: ./index.php");
   }
  }
 }
