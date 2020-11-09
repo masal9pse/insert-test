@@ -13,7 +13,7 @@ class LikeClass extends UtilClass
    $stmt->bindValue(':post_id', $post_id, PDO::PARAM_INT);
    $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
    $stmt->execute();
-   $results = $stmt->fetchAll();
+   $results = $stmt->fetch();
    //var_dump($results);
    return $results;
    //return true;
