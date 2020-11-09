@@ -25,6 +25,7 @@ class AdminClass extends AuthClass
   $_SESSION['admin'] = $_POST;
   header("Location: ./login.php"); // 戻るページがない場合、トップページへ
  }
+
  function adminLogout()
  {
   if (isset($_SESSION["admin"])) {
@@ -33,9 +34,7 @@ class AdminClass extends AuthClass
    echo 'SessionがTimeoutしました。';
   }
   //セッション変数のクリア
-  $_SESSION['admin'] = array();
-  //セッションクッキーも削除   
-  //セッションクリア
-  @session_destroy();
+  //$_SESSION['admin'] = array();
+  unset($_SESSION["admin"]);
  }
 }
