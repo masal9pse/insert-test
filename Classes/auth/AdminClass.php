@@ -1,8 +1,7 @@
 <?php
-//require('AuthClass.php');
-require_once dirname(__FILE__) . '/../UtilClass.php';
+require_once dirname(__FILE__) . '/./AuthClass.php';
 
-class AdminClass extends UtilClass
+class AdminClass extends AuthClass
 {
  function adminLogin()
  {
