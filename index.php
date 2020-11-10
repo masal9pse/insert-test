@@ -88,7 +88,7 @@ $likeInstance->saveCsrf();
 
       <!-- フォロー機能 -->
       <?php $followInstance = new FollowClass; ?>
-      <form action="follow.php" method="post">
+      <form action="follow.php" method="post" style="display:inline;">
         <input type="hidden" name="follower_id" value="<?= $list['id']; ?>">
         <input type="hidden" name="follow_id" value="<?= $_SESSION['auth_id']; ?>">
         <?php if ($followInstance->check_follow($_SESSION['auth_id'], $list['id'])) : ?>
@@ -97,7 +97,7 @@ $likeInstance->saveCsrf();
           <button class="btn btn-primary" type="submit" name="follow">フォロー</button>
         <?php endif; ?>
       </form>
-
+      <?php echo count($followInstance->getFollow($list['id'])); ?>
       <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
     </div>
   <?php endforeach ?>

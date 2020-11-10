@@ -18,6 +18,26 @@ class FollowClass extends AuthClass
   return  $stmt->fetch();
  }
 
+ function getFollow($follower_id)
+ {
+  try {
+   $db = $this->dbConnect();
+   $sql = 'SELECT * FROM follows WHERE follower_id = :follower_id';
+   $stmt = $db->prepare($sql);
+   // クエリ実行
+   $stmt->bindValue(':follower_id', $follower_id, PDO::PARAM_INT);
+   $stmt->execute();
+
+   if ($stmt) {
+    return $stmt->fetchAll();
+   } else {
+    return false;
+   }
+  } catch (Exception $e) {
+   exit('エラー発生：' . $e->getMessage());
+  }
+ }
+
  public function follow()
  {
   $db = $this->dbConnect();
