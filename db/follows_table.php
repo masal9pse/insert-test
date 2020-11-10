@@ -12,7 +12,7 @@ try {
 $sql = 'CREATE TABLE follows (
  id SERIAL NOT NULL primary key, 
  follow_id INT not null references  users(id) ON DELETE CASCADE ON Update CASCADE,
- follower_id INT not null references users(id) ON DELETE CASCADE ON Update CASCADE,
+ follower_id INT not null references posts(id) ON DELETE CASCADE ON Update CASCADE,
  created_at TIMESTAMP,
  updated_at TIMESTAMP,
  UNIQUE(follow_id, follower_id))';

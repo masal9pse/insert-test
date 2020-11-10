@@ -40,7 +40,7 @@ $likeInstance->saveCsrf();
   <a href="./search_form.php">検索リンク</a>
   <a href="./insert_form.php">投稿リンク</a>
   <form action="./auth/admin_form.php" method="get">
-    <button type="submit" class="btn btn-danger">管理画面</button>
+    <button type="submit" class="btn btn-success">管理画面</button>
   </form>
   <?php if (is_string($_SESSION['auth_id'])) : ?>
     <form action="./auth/login.php" method="get">
@@ -90,6 +90,7 @@ $likeInstance->saveCsrf();
       <?php $followInstance = new FollowClass; ?>
       <form action="follow.php" method="post">
         <input type="hidden" name="follower_id" value="<?= $list['id']; ?>">
+        <input type="hidden" name="follow_id" value="<?= $_SESSION['auth_id']; ?>">
         <?php if ($followInstance->check_follow($_SESSION['auth_id'], $list['id'])) : ?>
           <button class="btn btn-danger" type="submit" name="follow">フォロー中</button>
         <?php else : ?>

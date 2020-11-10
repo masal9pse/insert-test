@@ -17,4 +17,27 @@ class FollowClass extends AuthClass
   ));
   return  $stmt->fetch();
  }
+
+ public function follow()
+ {
+  $db = $this->dbConnect();
+  $sql = 'INSERT INTO follows(follow_id,follower_id) values (:follow_id,:follower_id)';
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':follow_id', $_POST['follow_id'], PDO::PARAM_INT);
+  $stmt->bindValue(':follower_id', $_POST['follower_id'], PDO::PARAM_INT);
+  $stmt->execute();
+  echo 'フォローしました';
+  //header("Location: ./index.php");
+ }
+
+ public function unfollow()
+ {
+  $db = $this->dbConnect();
+  $sql = 'DELETE FROM follows WHERE follow_id = :follow_id AND follower_id = :follower_id';
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':follow_id', $_POST['follow_id'], PDO::PARAM_INT);
+  $stmt->bindValue(':follower_id', $_POST['follower_id'], PDO::PARAM_INT);
+  $stmt->execute();
+  echo 'フォローを解除しました';
+ }
 }
