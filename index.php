@@ -4,6 +4,7 @@ session_start();
 require('./Classes/auth/AuthClass.php');
 require('./Classes/Function/PostClass.php');
 require('./Classes/Function/LikeClass.php');
+require('./Classes/Function/FollowClass.php');
 
 $postInstance = new PostClass();
 $lists = $postInstance->getAllData();
@@ -63,6 +64,7 @@ $likeInstance->saveCsrf();
       <td><?php echo $list['id']; ?></td>
       <td><?php echo $list['title']; ?></td>
       <td><?php echo $list['detail']; ?></td>
+      <!-- いいね機能 -->
       <?php if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) : ?>
         <form action="rmLike.php" method="post" style="display:inline;">
           <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
@@ -80,10 +82,21 @@ $likeInstance->saveCsrf();
           </button>
         </form>
       <?php endif;  ?>
-
       <span>
         <?php echo count($likeInstance->getLike($list['id']));  ?>
       </span>
+
+      <!-- フォロー機能 -->
+      <?php $followInstance = new FollowClass; ?>
+      <form action="follow.php" method="post">
+        <input type="hidden" name="follower_id" value="<?= $list['id']; ?>">
+        <?php if ($followInstance->check_follow($_SESSION['auth_id'], $list['id'])) : ?>
+          <button class="btn btn-danger" type="submit" name="follow">フォロー中</button>
+        <?php else : ?>
+          <button class="btn btn-primary" type="submit" name="follow">フォロー</button>
+        <?php endif; ?>
+      </form>
+
       <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
     </div>
   <?php endforeach ?>
