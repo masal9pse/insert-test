@@ -1,7 +1,7 @@
 <?php
-require_once dirname(__FILE__) . '/../auth/AuthClass.php';
+require_once dirname(__FILE__) . '/../auth/AbstractAuthClass.php';
 
-class FollowClass extends AuthClass
+class FollowClass extends AbstractAuthClass
 {
  function check_follow($follow_user, $follower_user)
  {
@@ -18,7 +18,7 @@ class FollowClass extends AuthClass
   return  $stmt->fetch();
  }
 
- function getFollow($follower_id)
+ public function getFollow($follower_id)
  {
   try {
    $db = $this->dbConnect();
