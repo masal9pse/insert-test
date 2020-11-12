@@ -14,8 +14,9 @@ if (empty($_POST['title'])) {
 $db->beginTransaction();
 try {
  $postInstance->postInsert($_POST);
- $postInstance->postTagInsert($_POST);
-
+ if (!empty($_POST['tags'])) {
+  $postInstance->postTagInsert($_POST);
+ }
  echo '投稿に成功しました';
  // 空の場合
  echo "<a href='./insert_form.php'>投稿フォームへ</a>";
