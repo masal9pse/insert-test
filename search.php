@@ -1,7 +1,8 @@
 <?php
-//ini_set('display_errors', "On");
+ini_set('display_errors', "On");
 require('./Classes/Function/SearchClass.php');
 $searchInstance = new SearchClass;
+
 var_dump($_GET);
 $searchInstance->AllSearch();
 $searchInstance->tagCategorySearch();

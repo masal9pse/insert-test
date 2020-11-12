@@ -35,11 +35,11 @@ $get = $TagInstance->sanitize($_GET);
   </select>
   <input type="text" name="search" placeholder="検索したい値" value="<?php $TagInstance->empty_check($get, 'search') ?>">
   <br>
+  <input type="hidden" name="tags" value="">
   <?php foreach ($tags as $tag) : ?>
    <input type="checkbox" name="tags[]" value="<?php echo $tag['tag']; ?>">
    <label for="<?php echo $tag['tag']; ?>"><?php echo $tag['tag']; ?></label>
   <?php endforeach; ?>
-  <input type="hidden" name="tags" value="">
   </select>
   <input type="submit" value="送信" />
  </form>

@@ -39,11 +39,11 @@ $post = $tagInstance->sanitize($_POST);
     <td><input type="file" name="image"></td>
     <td><input type="hidden" name="user_id" value="<?php print(htmlspecialchars($_SESSION['auth_id'])); ?>"></td>
     <td>
+     <input type="hidden" name="tags" value="">
      <?php foreach ($tags as $tag) : ?>
       <input type="checkbox" name="tags[]" value="<?php echo $tag['id']; ?>">
       <label for="<?php echo $tag['tag']; ?>"><?php echo $tag['tag']; ?></label>
      <?php endforeach; ?>
-     <input type="hidden" name="tags" value="">
     </td>
     <td colspan="2" align="center">
      <input type="submit" value="送信">
