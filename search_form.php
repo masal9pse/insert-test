@@ -20,6 +20,7 @@ $get = $TagInstance->sanitize($_GET);
 <head>
  <metacharset="utf-8">
   <title>検索機能</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -46,3 +47,6 @@ $get = $TagInstance->sanitize($_GET);
 </body>
 
 </html>
+<script>
+
+</script>
