@@ -37,12 +37,6 @@ $likeInstance->saveCsrf();
 
 <body>
  <h1>一覧リスト</h1>
- <?php
- ////require('./Api/isLikeApiTest.php');
- //$like = new LikeClass;
- //$result_data = $like->isLikeApi(2, 14);
- //echo $result_data;
- ?>
  <a href="./search_form.php">検索リンク</a>
  <a href="./insert_form.php">投稿リンク</a>
  <form action="./auth/admin_form.php" method="get">
