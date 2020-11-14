@@ -2,12 +2,37 @@
 //POST REQUEST
 
 $(document).ready(function() {
- $('#likeMessage').click(function(e) {
+ $('#likeForm').click(function(e) {
   e.preventDefault();
 
+  function serializePost(form) {
+   var data = {};
+   form = $(form).serializeArray();
+   for (var i = form.length; i--;) {
+    var name = form[i].name;
+    var value = form[i].value;
+    var index = name.indexOf('[]');
+    if (index > -1) {
+     name = name.substring(0, index);
+     if (!(name in data)) {
+      data[name] = [];
+     }
+     data[name].Push(value);
+    }
+    else
+     data[name] = value;
+   }
+   return data;
+  }
   //serialize form data
+  //var url = $('#likeForm[name=my-text]').serialize();
   var url = $('#likeForm').serialize();
-  console.log(url)
+  let test = serializePost(url)
+
+  //var url = $('#likeForm').serializeArray();
+  //console.log(url)
+  console.log(test)
+  exit
   function getUrlVars(url) {
    var hash;
    var myJson = {};
@@ -23,7 +48,7 @@ $(document).ready(function() {
 
   //pass serialized data to function
   var stringData = getUrlVars(url);
-
+  console.log(stringData);
   //post with ajax
   $.ajax({
    type: "POST",
@@ -34,10 +59,16 @@ $(document).ready(function() {
    success: function() {
     //alert('successfully posted');
     //$(this).toggleClass("text-danger");
-    $('i').toggleClass("text-danger");
+    $this.children('i').toggleClass('far'); //空洞ハート
+    // いいね押した時のスタイル
+    $this.children('i').toggleClass('fas'); //塗りつぶしハート
+    $this.children('i').toggleClass('active');
    },
    error: function() {
-    alert('Could not be posted');
+    $this.children('i').toggleClass('far'); //空洞ハート
+    // いいね押した時のスタイル
+    $this.children('i').toggleClass('fas'); //塗りつぶしハート
+    $this.children('i').toggleClass('active');
    }
   });
  });
