@@ -21,9 +21,7 @@ class PostInsert extends PostClass
  public function create()
  {
   // postgresはset使えない説？
-  // Create query
-  //$sql = 'INSERT INTO ' . $this->table_name . ' SET title = :title, detail = :detail, image = :image, user_id = :user_id';
-  //$sql = 'INSERT INTO ' . $this->table_name . ' SET title = :title, detail = :detail, user_id = :user_id';
+  // Create query  
   $sql = 'INSERT INTO posts(title,detail,user_id) VALUES (:title,:detail,:user_id)';
 
   // Prepare statement
@@ -40,7 +38,7 @@ class PostInsert extends PostClass
   $stmt->bindValue(':detail', $this->detail);
   //$stmt->bindValue(':image', $this->image);
   $stmt->bindValue(':user_id', $this->user_id);
-
+  //$stmt->execute();
   // Execute query
   if ($stmt->execute()) {
    return true;

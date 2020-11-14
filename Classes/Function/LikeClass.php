@@ -1,8 +1,15 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
+
 require_once dirname(__FILE__) . '/../UtilClass.php';
+require_once dirname(__FILE__) . '/./TraitLikeApi.php';
 
 class LikeClass extends UtilClass
 {
+ use LikeApi;
  // いいねしているか判定する
  function isLike($post_id, $user_id)
  {
