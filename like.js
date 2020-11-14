@@ -8,5 +8,35 @@ $(document).ready(function() {
   //serialize form data
   var url = $('#likeForm').serialize();
   console.log(url)
+  function getUrlVars(url) {
+   var hash;
+   var myJson = {};
+   var hashes = url.slice(url.indexOf('?') + 1).split('&');
+   //console.log(hashes)
+   for (var i = 0; i < hashes.length; i++) {
+    hash = hashes[i].split('=');
+    myJson[hash[0]] = hash[1];
+   }
+   console.log(myJson);
+   return JSON.stringify(myJson);
+  }
+
+  //pass serialized data to function
+  var test = getUrlVars(url);
+
+  //post with ajax
+  $.ajax({
+   type: "POST",
+   url: "/offshoa-intern/Api/Like.php",
+   data: test,
+   ContentType: "application/json",
+
+   success: function() {
+    alert('successfully posted');
+   },
+   error: function() {
+    alert('Could not be posted');
+   }
+  });
  });
 });
