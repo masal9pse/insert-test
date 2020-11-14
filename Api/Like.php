@@ -16,8 +16,10 @@ $likeApi->user_id = $data->user_id;
 
 if (!$likeApi->isLike($likeApi->post_id, $likeApi->user_id)) {
  $likeApi->addLikeApi();
+ echo count($likeApi->getLike($likeApi->post_id));
  echo json_encode(array('message' => 'いいねしました'));
 } else {
  $likeApi->rmLikeApi();
+ echo count($likeApi->getLike($likeApi->post_id));
  echo json_encode(array('message' => 'いいねを削除しました'));
 }
