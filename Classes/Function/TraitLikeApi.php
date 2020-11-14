@@ -16,15 +16,25 @@ trait LikeApi
   $stmt = $db->prepare($sql);
   $stmt->bindValue(':post_id', $this->post_id, PDO::PARAM_INT);
   $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
-
+  $stmt->execute();
   // Execute query
-  if ($stmt->execute()) {
-   return true;
-  }
-  // Print error if something goes wrong
-  printf("Error: %s.\n", $stmt->error);
-
-  return false;
+  //if ($stmt->execute()) {
+  // return true;
   //}
+  //// Print error if something goes wrong
+  //printf("Error: %s.\n", $stmt->error);
+
+  //return false;
+  //}
+ }
+
+ public function rmLikeApi()
+ {
+  $db = $this->dbConnect();
+  $sql = 'DELETE FROM likes WHERE post_id = :post_id AND user_id = :user_id';
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':post_id', $this->post_id, PDO::PARAM_INT);
+  $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+  $stmt->execute();
  }
 }

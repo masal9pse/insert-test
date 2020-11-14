@@ -11,11 +11,8 @@ $likeApi->user_id = $data->user_id;
 
 if (!$likeApi->isLike($likeApi->post_id, $likeApi->user_id)) {
  $likeApi->addLikeApi();
- echo json_encode(
-  array('message' => 'Like Created')
- );
+ echo json_encode(array('message' => 'いいねしました'));
 } else {
- echo json_encode(
-  array('message' => 'Like Not Created because theLike already exist')
- );
+ $likeApi->rmLikeApi();
+ echo json_encode(array('message' => 'いいねを削除しました'));
 }
