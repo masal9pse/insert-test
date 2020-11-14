@@ -28,24 +28,7 @@ class LikeClass extends UtilClass
    error_log('エラー発生:' . $e->getMessage());
   }
  }
- // いいねしているか判定する
- function isLikeApi($post_id, $user_id)
- {
-  try {
-   $db = $this->dbConnect();
-   $sql = 'SELECT * FROM likes WHERE post_id = :post_id AND user_id = :user_id';
-   $stmt = $db->prepare($sql);
-   $stmt->bindValue(':post_id', $post_id, PDO::PARAM_INT);
-   $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-   $stmt->execute();
-   $results = $stmt->fetch(PDO::FETCH_ASSOC);
-   //var_dump($results);
-   return json_encode($results);
-   //return true;
-  } catch (Exception $e) {
-   error_log('エラー発生:' . $e->getMessage());
-  }
- }
+
  // いいねのカウント数を数える
  function getLike($post_id)
  {
