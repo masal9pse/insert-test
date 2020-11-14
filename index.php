@@ -64,6 +64,7 @@ $likeInstance->saveCsrf();
    <td><?php echo $list['id']; ?></td>
    <td><?php echo $list['title']; ?></td>
    <td><?php echo $list['detail']; ?></td>
+
    <!-- いいね機能 -->
    <?php if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) : ?>
     <form action="rmLike.php" method="post" style="display:inline;">
@@ -82,6 +83,7 @@ $likeInstance->saveCsrf();
      </button>
     </form>
    <?php endif;  ?>
+
    <span>
     <?php echo count($likeInstance->getLike($list['id']));  ?>
    </span>
