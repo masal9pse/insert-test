@@ -22,17 +22,19 @@ $(document).ready(function() {
   }
 
   //pass serialized data to function
-  var test = getUrlVars(url);
+  var stringData = getUrlVars(url);
 
   //post with ajax
   $.ajax({
    type: "POST",
    url: "/offshoa-intern/Api/Like.php",
-   data: test,
+   data: stringData,
    ContentType: "application/json",
 
    success: function() {
-    alert('successfully posted');
+    //alert('successfully posted');
+    //$(this).toggleClass("text-danger");
+    $('i').toggleClass("text-danger");
    },
    error: function() {
     alert('Could not be posted');
