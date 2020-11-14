@@ -61,17 +61,17 @@ if (isset($_POST['logout'])) {
    <!-- いいね機能 -->
    <td>
 
-    <form id="likeForm" style="display:inline;">
+    <section class="post" data-postid="<?php echo $likeInstance->sanitize($list['id']); ?>">
      <!-- nameだとserializeArrayで一番上しか取得できない -->
-     <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
-     <input type="hidden" name="user_id" autocomplete="on" value="<?php echo $_SESSION['auth_id']; ?>">
-     <i class=" fa-heart fa-lg px-16 <?php
-                                     if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) {
-                                      echo ' active fas';
-                                     } else { //いいねを取り消したらハートのスタイルが取り消される
-                                      echo ' far';
-                                     }; ?>"></i>
-    </form>
+     <div class="btn-good <?php if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) echo 'active'; ?>">
+      <i class=" fa-heart fa-lg px-16 <?php
+                                      if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) {
+                                       echo ' active fas';
+                                      } else { //いいねを取り消したらハートのスタイルが取り消される
+                                       echo ' far';
+                                      }; ?>"></i>
+     </div>
+    </section>
     <span><?php echo count($likeInstance->getLike($list['id'])); ?></span>
   </div>
   </td>
