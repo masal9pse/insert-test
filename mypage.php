@@ -61,7 +61,7 @@ if (isset($_POST['logout'])) {
    <!-- いいね機能 -->
    <td>
 
-    <section class="post" data-postid="<?php echo $likeInstance->sanitize($list['id']); ?>">
+    <section class="post_id" data-postid="<?php echo $likeInstance->sanitize($list['id']); ?>" data-userid="<?php echo $_SESSION['auth_id']; ?>">
      <!-- nameだとserializeArrayで一番上しか取得できない -->
      <div class="btn-good <?php if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) echo 'active'; ?>">
       <i class=" fa-heart fa-lg px-16 <?php

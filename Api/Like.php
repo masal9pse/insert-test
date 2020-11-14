@@ -1,4 +1,5 @@
 <?php
+session_start();
 // APIを実行するファイルにheaderを定義する
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -8,10 +9,17 @@ require('../Classes/Function/LikeClass.php');
 
 $likeApi = new LikeClass;
 
+if (isset($_POST['postId'])) {
+ $data = $_POST['postId'];
+}
 $data = json_decode(file_get_contents("php://input"));
+//$data = json_decode($_POST['post_id']);
+//$data2 = json_decode($_SESSION['auth_id']);
 
-$likeApi->post_id = $data->post_id;
-$likeApi->user_id = $data->user_id;
+//$likeApi->post_id = $data->post_id;
+$likeApi->post_id = $_POST['post_id'];
+//$likeApi->user_id = $data2->user_id;
+$likeApi->user_id = $_SESSION['auth_id'];
 
 
 if (!$likeApi->isLike($likeApi->post_id, $likeApi->user_id)) {
