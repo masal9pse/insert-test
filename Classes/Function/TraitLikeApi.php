@@ -13,7 +13,7 @@ trait LikeApi
   $sql = 'INSERT INTO likes(post_id,user_id) values (:post_id,:user_id)';
   $stmt = $db->prepare($sql);
   $stmt->bindValue(':post_id', $this->post_id, PDO::PARAM_INT);
-  $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+  $stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
   $stmt->execute();
  }
 
@@ -23,7 +23,7 @@ trait LikeApi
   $sql = 'DELETE FROM likes WHERE post_id = :post_id AND user_id = :user_id';
   $stmt = $db->prepare($sql);
   $stmt->bindValue(':post_id', $this->post_id, PDO::PARAM_INT);
-  $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+  $stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
   $stmt->execute();
  }
 }

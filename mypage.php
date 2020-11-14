@@ -61,7 +61,7 @@ if (isset($_POST['logout'])) {
    <!-- いいね機能 -->
    <td>
 
-    <section class="post_id" data-postid="<?php echo $likeInstance->sanitize($list['id']); ?>" data-userid="<?php echo $_SESSION['auth_id']; ?>">
+    <section class="post_id" data-postid="<?php echo $likeInstance->sanitize($list['id']); ?>">
      <!-- nameだとserializeArrayで一番上しか取得できない -->
      <div class="btn-good <?php if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) echo 'active'; ?>">
       <i class=" fa-heart fa-lg px-16 <?php
@@ -69,10 +69,9 @@ if (isset($_POST['logout'])) {
                                        echo ' active fas';
                                       } else { //いいねを取り消したらハートのスタイルが取り消される
                                        echo ' far';
-                                      }; ?>"></i>
+                                      }; ?>"></i><span><?php echo count($likeInstance->getLike($list['id'])); ?></span>
      </div>
     </section>
-    <span><?php echo count($likeInstance->getLike($list['id'])); ?></span>
   </div>
   </td>
   <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
