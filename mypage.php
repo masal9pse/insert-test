@@ -50,16 +50,18 @@ if (isset($_POST['logout'])) {
 
    <!-- いいね機能 -->
    <?php if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) : ?>
-    <form action="rmLike.php" method="post" style="display:inline;">
+    <form id="likeForm" style="display:inline;">
      <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
-     <button type="submit" class="btn p-0 border-0">
+     <input type="hidden" name="user_id" autocomplete="on" value="<?php echo $_SESSION['auth_id']; ?>">
+     <button id="likeMessage" class="btn p-0 border-0">
       <i class="fas fa-heart fa-fw text-danger"></i>
      </button>
     </form>
    <?php else : ?>
-    <form action="addLike.php" method="post" style="display:inline;">
+    <form id="likeForm" style="display:inline;">
      <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
-     <button type="submit" class="btn p-0 border-0">
+     <input type="hidden" name="user_id" autocomplete="on" value="<?php echo $_SESSION['auth_id']; ?>">
+     <button id="likeMessage" class="btn p-0 border-0">
       <i class="fas fa-heart"></i>
      </button>
     </form>
