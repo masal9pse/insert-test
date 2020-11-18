@@ -20,7 +20,7 @@ class AuthClass extends UtilClass
    //exit;
    if (password_verify($_POST['password'], $row['password'])) {
     //echo '認証成功';    
-    $this->sessionStore($row);
+    $this->sessionStore($row['id']);
     // クッキーに保存
     setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 14);
     setcookie('password', $_POST['password'], time() + 60 * 60 * 24 * 14);
@@ -43,7 +43,7 @@ class AuthClass extends UtilClass
  {
   $_SESSION['name'] = $_POST['name'];
   $_SESSION['password'] = $_POST['password'];
-  $_SESSION['auth_id'] = $row['id'];
+  $_SESSION['auth_id'] = (int)$row;
  }
 
  function signUp()
@@ -61,17 +61,21 @@ class AuthClass extends UtilClass
 
   // サインアップ処理
   if (!empty($_POST['name'] && $_POST['password'])) {
-   $_SESSION['name'] = $_POST['name'];
-   $_SESSION['password'] = $_POST['password'];
-   $name = $_SESSION['name'];
-   $password = $_SESSION['password'];
+   $name = $_POST['name'];
+   $password = $_POST['password'];
    $password = password_hash($password, PASSWORD_DEFAULT);
    $sql = 'INSERT into ' . $this->table_name . '(name, password) values (?, ?)';
    $db = $this->dbConnect();
    $stmt = $db->prepare($sql);
    $stmt->execute(array($name, $password));
    $user_id = $db->lastinsertid();
-   $_SESSION['auth_id'] = (int)$user_id;
+
+   // データをクッキーに保存
+   setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 14);
+   setcookie('password', $_POST['password'], time() + 60 * 60 * 24 * 14);
+
+   // セッションにログイン情報を保存
+   $this->sessionStore($user_id);
 
    header('Location: ../index.php');
    exit();
