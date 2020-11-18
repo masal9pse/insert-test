@@ -23,7 +23,7 @@ class AdminClass extends AuthClass
   }
 
   $_SESSION['admin'] = $_POST;
-  header("Location: ./login.php"); // 戻るページがない場合、トップページへ
+  header("Location: ../../auth/admin_user.php"); // 戻るページがない場合、トップページへ
  }
 
  function adminLogout()
