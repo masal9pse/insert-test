@@ -3,13 +3,15 @@ require_once dirname(__FILE__) . '/../UtilClass.php';
 
 class AuthClass extends UtilClass
 {
+ protected $table_name = 'users';
+
  function login(string $err_msg)
  {
   $db = $this->dbConnect();
 
   if (isset($_POST['login'])) {
    // echo $password; // これ付けたら処理が止まった。
-   $sql = 'SELECT * from users where name = :name';
+   $sql = 'SELECT * from ' . $this->table_name . ' where name = :name';
    $stmt = $db->prepare($sql);
    $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
    $stmt->execute();
@@ -17,11 +19,8 @@ class AuthClass extends UtilClass
    // var_dump($password);
    //exit;
    if (password_verify($_POST['password'], $row['password'])) {
-    //echo '認証成功';
-    $_SESSION['name'] = $_POST['name'];
-    $_SESSION['password'] = $_POST['password'];
-    $_SESSION['auth_id'] = $row['id'];
-
+    //echo '認証成功';    
+    $this->sessionStore($row);
     // クッキーに保存
     setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 14);
     setcookie('password', $_POST['password'], time() + 60 * 60 * 24 * 14);
@@ -38,6 +37,13 @@ class AuthClass extends UtilClass
     echo '<p>' . $err_msg . '</p>';
    }
   }
+ }
+
+ private function sessionStore($row)
+ {
+  $_SESSION['name'] = $_POST['name'];
+  $_SESSION['password'] = $_POST['password'];
+  $_SESSION['auth_id'] = $row['id'];
  }
 
  function signUp()
@@ -60,7 +66,7 @@ class AuthClass extends UtilClass
    $name = $_SESSION['name'];
    $password = $_SESSION['password'];
    $password = password_hash($password, PASSWORD_DEFAULT);
-   $sql = 'INSERT into users(name, password) values (?, ?)';
+   $sql = 'INSERT into ' . $this->table_name . '(name, password) values (?, ?)';
    $db = $this->dbConnect();
    $stmt = $db->prepare($sql);
    $stmt->execute(array($name, $password));
@@ -89,7 +95,7 @@ class AuthClass extends UtilClass
  private function duplicateCheck()
  {
   $db = $this->dbConnect();
-  $stmt = $db->prepare('SELECT * FROM users WHERE name = :name limit 1');
+  $stmt = $db->prepare('SELECT * FROM ' . $this->table_nane . ' WHERE name = :name limit 1');
   $stmt->bindValue(':name', $_POST['name'], PDO::PARAM_STR);
   $stmt->execute();
 

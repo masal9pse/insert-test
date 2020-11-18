@@ -3,18 +3,27 @@ require_once dirname(__FILE__) . '/./AuthClass.php';
 
 class AdminClass extends AuthClass
 {
+
+ protected $table_name = 'admins';
+
+ private function sessionStore($row)
+ {
+  $_SESSION['admin'] = $_POST;
+  $_SESSION['admin_id'] = $row['id'];
+ }
+
  function adminLogin()
  {
   try {
    //var_dump($_POST);
    $db = $this->dbConnect();
-   $sql = "SELECT * from admins where name = :name and password = :password";
+   $sql = "SELECT * from $this->table_name where name = :name and password = :password";
    $stmt = $db->prepare($sql);
-   $_SESSION['admin'] = $_POST;
    $stmt->bindValue(':name', $_POST['name'], PDO::PARAM_STR);
    $stmt->bindValue(':password', $_POST['password'], PDO::PARAM_STR);
    $stmt->execute();
    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+   $this->sessionStore($result);
   } catch (\Exception $e) {
    echo $e->getMessage();
   }
@@ -23,7 +32,6 @@ class AdminClass extends AuthClass
    exit('メールアドレス又はパスワードが間違っています。');
   }
 
-  //header("Location: /../../auth/admin_user.php"); // 戻るページがない場合、トップページへ
   header("Location: ../auth/admin_user.php"); // 戻るページがない場合、トップページへ
  }
 
@@ -35,8 +43,8 @@ class AdminClass extends AuthClass
    echo 'SessionがTimeoutしました。';
   }
   //セッション変数のクリア
-  //$_SESSION['admin'] = array();
   unset($_SESSION["admin"]);
+  unset($_SESSION["admin_id"]);
  }
 
  function admin_check($redirectPath)
