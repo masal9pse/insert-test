@@ -15,7 +15,6 @@ class AdminClass extends AuthClass
  function adminLogin()
  {
   try {
-   //var_dump($_POST);
    $db = $this->dbConnect();
    $sql = "SELECT * from $this->table_name where name = :name and password = :password";
    $stmt = $db->prepare($sql);

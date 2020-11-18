@@ -8,7 +8,10 @@ $err_msg = "";
 var_dump($_COOKIE);
 var_dump($_SESSION);
 $post = $loginInstance->sanitize($_POST);
-$loginInstance->login($err_msg);
+
+if (isset($_POST['login'])) {
+ $loginInstance->login($err_msg);
+}
 
 if (isset($_COOKIE['name'], $_COOKIE['password'])) {
  $post['name'] = $_COOKIE['name'];

@@ -8,38 +8,40 @@ class AuthClass extends UtilClass
  function login(string $err_msg)
  {
   $db = $this->dbConnect();
+  $sql = 'SELECT * from ' . $this->table_name . ' where name = :name';
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  // var_dump($password);
+  //exit;
+  if (password_verify($_POST['password'], $row['password'])) {
+   $this->sessionStore($row['id']);
 
-  if (isset($_POST['login'])) {
-   // echo $password; // これ付けたら処理が止まった。
-   $sql = 'SELECT * from ' . $this->table_name . ' where name = :name';
-   $stmt = $db->prepare($sql);
-   $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
-   $stmt->execute();
-   $row = $stmt->fetch(PDO::FETCH_ASSOC);
-   // var_dump($password);
-   //exit;
-   if (password_verify($_POST['password'], $row['password'])) {
-    //echo '認証成功';    
-    $this->sessionStore($row['id']);
-    // クッキーに保存
-    setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 14);
-    setcookie('password', $_POST['password'], time() + 60 * 60 * 24 * 14);
+   // クッキーに保存
+   $this->cookieStore();
 
-    if (!empty($_SESSION['return'])) {
-     $url = $_SESSION['return'];
-     header("Location: $url");
-     exit;
-    } else {
-     header("Location: ../index.php"); // 戻るページがない場合、トップページへ
-     exit;
-    }
+   if (!empty($_SESSION['return'])) {
+    $url = $_SESSION['return'];
+    header("Location: $url");
+    exit;
    } else {
-    echo '<p>' . $err_msg . '</p>';
+    header("Location: ../index.php"); // 戻るページがない場合、トップページへ
+    exit;
    }
+  } else {
+   echo '<p>' . $err_msg . '</p>';
   }
  }
 
- private function sessionStore($row)
+ protected function cookieStore()
+ {
+  // クッキーに保存
+  setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 14);
+  setcookie('password', $_POST['password'], time() + 60 * 60 * 24 * 14);
+ }
+
+ protected function sessionStore($row)
  {
   $_SESSION['name'] = $_POST['name'];
   $_SESSION['password'] = $_POST['password'];
