@@ -14,24 +14,29 @@ class AuthClass extends UtilClass
   $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
-  // var_dump($password);
-  //exit;
+
   if (password_verify($_POST['password'], $row['password'])) {
    $this->sessionStore($row['id']);
 
    // クッキーに保存
    $this->cookieStore();
 
-   if (!empty($_SESSION['return'])) {
-    $url = $_SESSION['return'];
-    header("Location: $url");
-    exit;
-   } else {
-    header("Location: $this->redirect"); // 戻るページがない場合、トップページへ
-    exit;
-   }
+   // リダイレクト処理
+   $this->getRedirect();
   } else {
    echo '<p>' . $err_msg . '</p>';
+  }
+ }
+
+ private function getRedirect()
+ {
+  if (!empty($_SESSION['return'])) {
+   $url = $_SESSION['return'];
+   header("Location: $url");
+   exit;
+  } else {
+   header("Location: $this->redirect");
+   exit;
   }
  }
 
