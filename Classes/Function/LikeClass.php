@@ -71,4 +71,15 @@ class LikeClass extends UtilClass
    echo 'いいねを削除しました';
   }
  }
+
+ public function like_user_list()
+ {
+  $db = $this->dbConnect();
+  $sql = "SELECT * from posts inner join likes on posts.id = likes.post_id where likes.user_id = :id";
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
+  $stmt->execute();
+  $results = $stmt->fetchAll();
+  return $results;
+ }
 }

@@ -10,6 +10,7 @@ class AdminClass extends AuthClass
    $db = $this->dbConnect();
    $sql = "SELECT * from admins where name = :name and password = :password";
    $stmt = $db->prepare($sql);
+   $_SESSION['admin'] = $_POST;
    $stmt->bindValue(':name', $_POST['name'], PDO::PARAM_STR);
    $stmt->bindValue(':password', $_POST['password'], PDO::PARAM_STR);
    $stmt->execute();
@@ -22,8 +23,8 @@ class AdminClass extends AuthClass
    exit('メールアドレス又はパスワードが間違っています。');
   }
 
-  $_SESSION['admin'] = $_POST;
-  header("Location: ../../auth/admin_user.php"); // 戻るページがない場合、トップページへ
+  //header("Location: /../../auth/admin_user.php"); // 戻るページがない場合、トップページへ
+  header("Location: ../auth/admin_user.php"); // 戻るページがない場合、トップページへ
  }
 
  function adminLogout()
@@ -36,5 +37,15 @@ class AdminClass extends AuthClass
   //セッション変数のクリア
   //$_SESSION['admin'] = array();
   unset($_SESSION["admin"]);
+ }
+
+ function admin_check($redirectPath)
+ {
+  if (!isset($_SESSION['admin'])) {
+   // ログインする前にそのページのurlを取得する
+   $_SESSION['return'] = $_SERVER["REQUEST_URI"];
+   header("Location: $redirectPath");
+   exit();
+  }
  }
 }
