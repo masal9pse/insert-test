@@ -5,7 +5,7 @@ class AuthClass extends UtilClass
 {
  protected $table_name = 'users';
 
- function login(string $err_msg)
+ function login(string $err_msg = null)
  {
   $db = $this->dbConnect();
   $sql = 'SELECT * from ' . $this->table_name . ' where name = :name';

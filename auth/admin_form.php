@@ -6,6 +6,12 @@ require_once dirname(__FILE__) . '/../Classes/auth/AdminClass.php';
 var_dump($_SESSION);
 $admin = new AdminClass();
 $post = $admin->sanitize($_POST);
+//var_dump($_COOKIE);
+if (isset($_COOKIE['admin_name'], $_COOKIE['admin_password'])) {
+ $post['name'] = $_COOKIE['admin_name'];
+ $post['password'] = $_COOKIE['admin_password'];
+}
+
 if (isset($post['admin-logout'])) {
  $admin->adminLogout();
 }

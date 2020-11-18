@@ -6,49 +6,36 @@ class AdminClass extends AuthClass
 
  protected $table_name = 'admins';
 
- private function sessionStore($row)
+ protected function cookieStore()
  {
-  $_SESSION['admin'] = $_POST;
-  $_SESSION['admin_id'] = $row['id'];
+  // クッキーに保存
+  setcookie('admin_name', $_POST['name'], time() + 60 * 60 * 24 * 14);
+  setcookie('admin_password', $_POST['password'], time() + 60 * 60 * 24 * 14);
  }
 
- function adminLogin()
+ protected function sessionStore($row)
  {
-  try {
-   $db = $this->dbConnect();
-   $sql = "SELECT * from $this->table_name where name = :name and password = :password";
-   $stmt = $db->prepare($sql);
-   $stmt->bindValue(':name', $_POST['name'], PDO::PARAM_STR);
-   $stmt->bindValue(':password', $_POST['password'], PDO::PARAM_STR);
-   $stmt->execute();
-   $result = $stmt->fetch(PDO::FETCH_ASSOC);
-   $this->sessionStore($result);
-  } catch (\Exception $e) {
-   echo $e->getMessage();
-  }
-  var_dump($result);
-  if (!isset($result['name'])) {
-   exit('メールアドレス又はパスワードが間違っています。');
-  }
-
-  header("Location: ../auth/admin_user.php"); // 戻るページがない場合、トップページへ
+  $_SESSION['admin_name'] = $_POST['name'];
+  $_SESSION['admin_password'] = $_POST['password'];
+  $_SESSION['admin_id'] = $row['id'];
  }
 
  function adminLogout()
  {
-  if (isset($_SESSION["admin"])) {
+  if (isset($_SESSION["admin_name"])) {
    echo 'Logoutしました。';
   } else {
    echo 'SessionがTimeoutしました。';
   }
   //セッション変数のクリア
-  unset($_SESSION["admin"]);
+  unset($_SESSION["admin_name"]);
+  unset($_SESSION["admin_password"]);
   unset($_SESSION["admin_id"]);
  }
 
  function admin_check($redirectPath)
  {
-  if (!isset($_SESSION['admin'])) {
+  if (!isset($_SESSION['admin_name'])) {
    // ログインする前にそのページのurlを取得する
    $_SESSION['return'] = $_SERVER["REQUEST_URI"];
    header("Location: $redirectPath");
