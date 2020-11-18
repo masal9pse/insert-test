@@ -4,6 +4,7 @@ require_once dirname(__FILE__) . '/../UtilClass.php';
 class AuthClass extends UtilClass
 {
  protected $table_name = 'users';
+ protected $redirect = '../index.php';
 
  function login(string $err_msg = null)
  {
@@ -26,7 +27,7 @@ class AuthClass extends UtilClass
     header("Location: $url");
     exit;
    } else {
-    header("Location: ../index.php"); // 戻るページがない場合、トップページへ
+    header("Location: $this->redirect"); // 戻るページがない場合、トップページへ
     exit;
    }
   } else {
@@ -89,11 +90,12 @@ class AuthClass extends UtilClass
   if (isset($session)) {
    header("Location: $php_file");
   }
-  //セッション変数のクリア
-  $session = array();
 
-  //セッションクリア
-  session_destroy();
+  //セッション変数のクリア
+  unset($_SESSION["name"]);
+  unset($_SESSION["password"]);
+  unset($_SESSION["auth_id"]);
+
   (string)$session['auth_id'] = "名無しのごんべ";
   return $session;
  }

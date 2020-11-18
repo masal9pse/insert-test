@@ -5,6 +5,7 @@ class AdminClass extends AuthClass
 {
 
  protected $table_name = 'admins';
+ protected $redirect = '../auth/admin_user.php';
 
  protected function cookieStore()
  {

@@ -6,6 +6,6 @@ require_once dirname(__FILE__) . '/../Classes/auth/AdminClass.php';
 //var_dump($_SESSION);
 $admin = new AdminClass();
 $post = $admin->sanitize($_POST);
-//$admin->adminLogin();
+
+// ここ一般ログインと共通
 $admin->login();
-//var_dump($result);
