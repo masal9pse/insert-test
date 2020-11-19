@@ -13,20 +13,36 @@ if (empty($_POST['title'])) {
 //var_dump($new_image);
 //exit;
 
-if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_token']) {
- echo "正常なリクエストです。";
- try {
-  $db->beginTransaction();
-  $postInstance->postUpdate($_POST);
-  $db->commit();
-  echo '更新に成功しました';
- } catch (PDOException $e) {
-  $db->rollBack();
-  echo $e . '更新できませんでした';
- }
-} else {
- echo "不正なリクエストです。";
+$token = filter_input(INPUT_POST, 'csrf_token');
+// トークンがない or 一致しない場合処理を中止
+if (!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token']) {
+ exit('不正なリクエストです');
+}
+
+try {
+ $db->beginTransaction();
+ $postInstance->postUpdate($_POST);
+ $db->commit();
+ echo '更新に成功しました';
+} catch (PDOException $e) {
+ $db->rollBack();
+ echo $e . '更新できませんでした';
 }
 
 
-echo "<a href='./index.php'>一覧フォームへ</a>";
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>更新処理</title>
+</head>
+
+<body>
+ <a href="./update_form.php">戻る</a>
+ <a href="./index.php">トップページへ</a>
+</body>
+
+</html>
