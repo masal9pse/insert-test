@@ -6,7 +6,7 @@ class AuthClass extends UtilClass
  protected $table_name = 'users';
  protected $redirect = '../index.php';
 
- function login()
+ public function login()
  {
   $duble = $this->duplicateCheck();
 
@@ -14,21 +14,27 @@ class AuthClass extends UtilClass
    exit('パスワードかユーザー名が間違っています');
   }
 
-  $db = $this->dbConnect();
-  $sql = 'SELECT * from ' . $this->table_name . ' where name = :name';
-  $stmt = $db->prepare($sql);
-  $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
-  $stmt->execute();
-  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  $row = false;
 
-  if (password_verify($_POST['password'], $row['password'])) {
-   $this->sessionStore($row['id']);
+  try {
+   $db = $this->dbConnect();
+   $sql = 'SELECT * from ' . $this->table_name . ' where name = :name';
+   $stmt = $db->prepare($sql);
+   $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
+   $stmt->execute();
+   $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-   // クッキーに保存
-   $this->cookieStore();
+   if (password_verify($_POST['password'], $row['password'])) {
+    $this->sessionStore($row['id']);
 
-   // リダイレクト処理
-   $this->getRedirect();
+    // クッキーに保存
+    $this->cookieStore();
+
+    // リダイレクト処理
+    $this->getRedirect();
+   }
+  } catch (\Exception $e) {
+   return $row;
   }
  }
 
@@ -83,14 +89,12 @@ class AuthClass extends UtilClass
    $user_id = $db->lastinsertid();
 
    // データをクッキーに保存
-   setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 14);
-   setcookie('password', $_POST['password'], time() + 60 * 60 * 24 * 14);
+   $this->cookieStore();
 
    // セッションにログイン情報を保存
    $this->sessionStore($user_id);
 
-   header('Location: ../index.php');
-   exit();
+   $this->getRedirect();
   }
  }
 
