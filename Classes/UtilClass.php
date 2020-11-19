@@ -58,12 +58,19 @@ class UtilClass
   }
  }
 
- public function saveCsrf()
+ /**
+  * @param void
+  * @return string $csrf_token
+  */
+ public function setToken()
  {
-  $toke_byte = openssl_random_pseudo_bytes(16);
-  $csrf_token = bin2hex($toke_byte);
-  // 生成したトークンをセッションに保存します
+  if (!isset($_SESSION)) {
+   session_start();
+  }
+  $csrf_token = bin2hex(random_bytes(32));
   $_SESSION['csrf_token'] = $csrf_token;
+
+  return $csrf_token;
  }
 
  function auth_check($redirectPath)

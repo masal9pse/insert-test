@@ -1,10 +1,21 @@
 <?php
 ini_set('display_errors', "On");
+var_dump($_POST);
+exit;
 session_start();
 require_once dirname(__FILE__) . '/../Classes/Auth/AuthClass.php';
 $authInstance = new AuthClass;
 
 $err = [];
+
+$token = filter_input(INPUT_POST, 'csrf_token');
+// トークンがない or 一致しない場合処理を中止
+if (!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token']) {
+ exit('不正なリクエスト');
+}
+
+unset($_SESSION['csrf_token']);
+
 if (!$name = filter_input(INPUT_POST, 'name')) {
  $err[] = "ユーザー名を入力してください<br>";
 }

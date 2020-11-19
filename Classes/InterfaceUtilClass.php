@@ -11,7 +11,7 @@ interface InterfaceUtilClass
 
  function sanitize($inputs);
 
- public function saveCsrf();
+ public function setToken();
 
  function auth_check($redirectPath);
 

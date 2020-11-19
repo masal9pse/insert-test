@@ -22,7 +22,7 @@ if (isset($_POST['logout'])) {
 // ログイン画面だけ表示
 //var_dump($_COOKIE);
 $likeInstance = new LikeClass();
-$likeInstance->saveCsrf();
+$likeInstance->setToken();
 ?>
 <!DOCTYPE html>
 <html lang="en">

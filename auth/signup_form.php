@@ -18,6 +18,7 @@ $post = $util->sanitize($_POST);
   名前<input type="text" name="name" value="<?php print($util->empty_check($post, 'name')); ?>"><br />
   パスワード<input type="password" name="password" value="<?php print($util->empty_check($post, 'password')); ?>"><br />
   パスワード確認<input type="password" name="password_conf" value="<?php print($util->empty_check($post, 'password_conf')); ?>"><br />
+  <input type="hidden" name="csrf_token" value="<?php echo $util->sanitize($util->setToken()); ?>">
   <button type="submit">新規登録</button>
  </form>
  <button type="button" onclick="location.href='./login.php'">ログイン画面へ</button>

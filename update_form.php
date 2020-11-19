@@ -5,7 +5,7 @@ require('./Classes/Function/PostClass.php');
 $postInstance = new PostClass();
 $postInstance->auth_check('./auth/login.php');
 $update_post = $postInstance->getById($_GET['id']);
-$postInstance->saveCsrf();
+$postInstance->setToken();
 ?>
 
 <!DOCTYPE html>

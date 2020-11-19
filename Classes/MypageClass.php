@@ -77,7 +77,7 @@ class MypageClass implements InterfaceUtilClass
   }
  }
 
- public function saveCsrf()
+ public function setToken()
  {
   $toke_byte = openssl_random_pseudo_bytes(16);
   $csrf_token = bin2hex($toke_byte);
