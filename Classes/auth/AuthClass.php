@@ -6,7 +6,7 @@ class AuthClass extends UtilClass
  protected $table_name = 'users';
  protected $redirect = '../index.php';
 
- function login(string $err_msg = null)
+ function login()
  {
   $db = $this->dbConnect();
   $sql = 'SELECT * from ' . $this->table_name . ' where name = :name';
@@ -23,8 +23,6 @@ class AuthClass extends UtilClass
 
    // リダイレクト処理
    $this->getRedirect();
-  } else {
-   echo '<p>' . $err_msg . '</p>';
   }
  }
 
@@ -100,6 +98,7 @@ class AuthClass extends UtilClass
   unset($_SESSION["name"]);
   unset($_SESSION["password"]);
   unset($_SESSION["auth_id"]);
+  unset($_SESSION["return"]);
 
   (string)$session['auth_id'] = "名無しのごんべ";
   return $session;

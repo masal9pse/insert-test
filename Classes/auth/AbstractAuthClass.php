@@ -6,7 +6,7 @@ abstract class AbstractAuthClass extends UtilClass
  // 練習用に無理やり抽象クラスを作成
  abstract public function getFollow($follower_id);
 
- function login(string $err_msg)
+ function login()
  {
   $db = $this->dbConnect();
 
@@ -37,8 +37,6 @@ abstract class AbstractAuthClass extends UtilClass
      header("Location: ../index.php"); // 戻るページがない場合、トップページへ
      exit;
     }
-   } else {
-    echo '<p>' . $err_msg . '</p>';
    }
   }
  }

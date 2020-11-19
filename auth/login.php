@@ -4,22 +4,29 @@ ini_set('display_errors', "On");
 require_once dirname(__FILE__) . '/../Classes/auth/AuthClass.php';
 
 $loginInstance = new AuthClass();
-$err_msg = "";
-var_dump($_COOKIE);
-var_dump($_SESSION);
+//var_dump($_COOKIE);
+//var_dump($_SESSION);
 $post = $loginInstance->sanitize($_POST);
-
+$err = [];
 if (isset($_POST['login'])) {
- $loginInstance->login($err_msg);
+
+ if (!$name = filter_input(INPUT_POST, 'name')) {
+  $err[] = "ユーザー名を入力してください";
+ }
+
+ $password = filter_input(INPUT_POST, 'password');
+ if (!preg_match("/\A[a-z\d]{7,100}+\z/i", $password)) {
+  $err[] = 'パスワードは英数字8文字以上100文字以内にしてください';
+ }
+
+ if (count($err) === 0) {
+  $loginInstance->login();
+ }
 }
 
 if (isset($_COOKIE['name'], $_COOKIE['password'])) {
  $post['name'] = $_COOKIE['name'];
  $post['password'] = $_COOKIE['password'];
-}
-
-if (isset($post['name'], $post['password'])) {
- $err_msg = '未入力の項目があります。';
 }
 ?>
 <html>
@@ -32,11 +39,13 @@ if (isset($post['name'], $post['password'])) {
 
  <body>
   <form action="" method="post">
-   <?php if ($err_msg !== null && $err_msg !== '') {
-    echo $err_msg . "<br>";
-   } ?>
+   <?php if (count($err) > 0) : ?>
+    <?php foreach ($err as $e) : ?>
+     <p><?php echo $e; ?></p>
+    <?php endforeach ?>
+   <?php endif; ?>
    名前<input type="text" name="name" value="<?php print($loginInstance->empty_check($post, 'name')); ?>"><br />
-   パスワード<input type="text" name="password" value="<?php print($loginInstance->empty_check($post, 'password')); ?>"><br />
+   パスワード<input type="password" name="password" value="<?php print($loginInstance->empty_check($post, 'password')); ?>"><br />
    <button type="submit" name="login" class="btn btn-success">ログイン</button>
   </form>
   <button type="button" onclick="location.href='./signup_form.php'">新規登録画面へ</button>
