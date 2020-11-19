@@ -103,6 +103,7 @@ $likeInstance->setToken();
    <!-- tableからフェッチした値はstringになってしまう -->
    <?php if ((int)$list['user_id'] === $_SESSION['auth_id']) : ?>
     <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
+    <form action="archive.php" method="post"></form>
    <?php endif; ?>
 
   </div>

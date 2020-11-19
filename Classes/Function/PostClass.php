@@ -7,6 +7,17 @@ class PostClass extends UtilClass
  protected $table_name = 'posts';
  protected $sort = 'desc';
 
+ public function getAllData()
+ {
+  $db = $this->dbConnect();
+  $sql = "SELECT * from $this->table_name where delete_flag = 0 order by id $this->sort";
+  $stmt = $db->query($sql);
+  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $results = $this->sanitize($results);
+  return $results;
+  $db = null;
+ }
+
  // 記事投稿
  function postInsert($post)
  {

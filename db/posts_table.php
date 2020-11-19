@@ -18,6 +18,8 @@ $sql = 'CREATE TABLE posts (
 
 $add_sql = 'ALTER TABLE posts ADD user_id INT';
 $add_like_count_column = 'ALTER TABLE posts ADD like_count INT';
+// 0なら正常、1なら削除しているとみなす
+$add_like_count_column = 'ALTER TABLE posts ADD delete_flag INT default 0';
 
 
 
@@ -25,3 +27,4 @@ $add_like_count_column = 'ALTER TABLE posts ADD like_count INT';
 $res = $db->query($sql);
 $add_columd_res = $db->query($add_sql);
 $add_like_count_column_res = $db->query($add_like_count_column);
+$add_delete_flag_column_res = $db->query($add_delete_flag_column_res);

@@ -3,7 +3,7 @@ class UtilClass
 {
  protected $table_name;
  protected $sort;
-
+ protected $where;
  function dbConnect()
  {
   try {
