@@ -76,4 +76,14 @@ class PostClass extends UtilClass
   }
   $new_stmt->execute();
  }
+
+ function postLogicalDelete($delete_id)
+ {
+  $db = $this->dbConnect();
+  $sql = 'UPDATE posts set delete_flag = 1 where id = :id';
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':id', $delete_id, PDO::PARAM_INT);
+  $result = $stmt->execute();
+  return $result;
+ }
 }
