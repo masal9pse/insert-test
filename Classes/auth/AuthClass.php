@@ -8,6 +8,12 @@ class AuthClass extends UtilClass
 
  function login()
  {
+  $duble = $this->duplicateCheck();
+
+  if ((int)$duble === 0) {
+   exit('パスワードかユーザー名が間違っています');
+  }
+
   $db = $this->dbConnect();
   $sql = 'SELECT * from ' . $this->table_name . ' where name = :name';
   $stmt = $db->prepare($sql);
@@ -107,7 +113,7 @@ class AuthClass extends UtilClass
  private function duplicateCheck()
  {
   $db = $this->dbConnect();
-  $stmt = $db->prepare('SELECT * FROM ' . $this->table_nane . ' WHERE name = :name limit 1');
+  $stmt = $db->prepare('SELECT * FROM ' . $this->table_name . ' WHERE name = :name limit 1');
   $stmt->bindValue(':name', $_POST['name'], PDO::PARAM_STR);
   $stmt->execute();
 
