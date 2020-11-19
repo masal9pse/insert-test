@@ -77,6 +77,8 @@ if (isset($_POST['logout'])) {
   <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
   </div>
  <?php endforeach ?>
+ <a href="auth_archive_list.php">アーカイブした記事一覧</a>
+ <br>
  <a href="index.php">トップページへ</a>
 </body>
 

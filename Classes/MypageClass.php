@@ -10,9 +10,9 @@ class MypageClass implements InterfaceUtilClass
  {
   $db = $this->dbConnect();
   $sql = 'SELECT posts.* from posts 
- inner join users 
- on posts.user_id = users.id
- where users.id=:user_id';
+          inner join users 
+          on posts.user_id = users.id
+          where users.id=:user_id';
 
   $stmt = $db->prepare($sql);
   $stmt->bindValue(':user_id', $_GET['id'], PDO::PARAM_INT);
