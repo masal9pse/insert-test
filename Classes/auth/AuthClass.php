@@ -72,20 +72,16 @@ class AuthClass extends UtilClass
    exit('重複しています');
   }
 
-  // バリデーション
-  if (empty($_POST['name'] && $_POST['password'])) {
-   exit('未入力の箇所があります');
-  }
+  $result = false;
 
-  // サインアップ処理
-  if (!empty($_POST['name'] && $_POST['password'])) {
+  try {
    $name = $_POST['name'];
    $password = $_POST['password'];
    $password = password_hash($password, PASSWORD_DEFAULT);
    $sql = 'INSERT into ' . $this->table_name . '(name, password) values (?, ?)';
    $db = $this->dbConnect();
    $stmt = $db->prepare($sql);
-   $stmt->execute(array($name, $password));
+   $result =  $stmt->execute(array($name, $password));
    $user_id = $db->lastinsertid();
 
    // データをクッキーに保存
@@ -95,6 +91,8 @@ class AuthClass extends UtilClass
    $this->sessionStore($user_id);
 
    $this->getRedirect();
+  } catch (\Exception $e) {
+   return $result;
   }
  }
 
