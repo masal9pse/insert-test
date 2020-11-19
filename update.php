@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', "On");
 session_start();
+ini_set('display_errors', "On");
 include('./Classes/Function/PostClass.php');
 $postInstance = new PostClass();
 $db = $postInstance->dbConnect();

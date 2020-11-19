@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', "On");
 session_start();
+ini_set('display_errors', "On");
 require('./Classes/auth/AuthClass.php');
 require('./Classes/Function/PostClass.php');
 require('./Classes/Function/LikeClass.php');
@@ -50,7 +50,6 @@ $likeInstance->setToken();
    <button type="submit" class="btn btn-danger">新規投稿</button>
   </form>
  <?php else : ?>
-  <!--<form action="./auth/logout.php" method="post">-->
   <form action="" method="post">
    <button type="submit" name="logout" class="btn btn-danger">ログアウト</button>
   </form>
@@ -100,7 +99,12 @@ $likeInstance->setToken();
     <?php endif; ?>
    </form>
    <?php echo count($followInstance->getFollow($list['id'])); ?>
-   <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
+
+   <!-- tableからフェッチした値はstringになってしまう -->
+   <?php if ((int)$list['user_id'] === $_SESSION['auth_id']) : ?>
+    <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
+   <?php endif; ?>
+
   </div>
  <?php endforeach ?>
 </body>

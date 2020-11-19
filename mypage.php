@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', "On");
 session_start();
+ini_set('display_errors', "On");
 require('./Classes/MypageClass.php');
 require('./Classes/Function/LikeClass.php');
 require('./Classes/auth/AuthClass.php');
