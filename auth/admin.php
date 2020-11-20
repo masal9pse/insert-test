@@ -36,7 +36,7 @@ if (count($err) === 0) {
    <p><?php echo $e; ?></p>
   <?php endforeach ?>
  <?php endif; ?>
- <a href="./admin_form.php">戻る</a>
+ <a href="admin_form.php">戻る</a>
 </body>
 
 </html>

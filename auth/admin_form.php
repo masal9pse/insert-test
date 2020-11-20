@@ -34,7 +34,7 @@ if (isset($post['admin-logout'])) {
   <form action="" method="post">
    <input type="submit" name="admin-logout" value="ログアウト">
   </form>
-  <button type="button" onclick="location.href='../index.php'">トップページへ</button>
+  <button type="button" onclick="location.href='../views/index.php'">トップページへ</button>
  </body>
 </div>
 

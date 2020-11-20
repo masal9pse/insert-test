@@ -15,7 +15,7 @@ if (isset($_POST['login'])) {
  }
 
  $password = filter_input(INPUT_POST, 'password');
- if (!preg_match("/\A[a-z\d]{7,100}+\z/i", $password)) {
+ if (!preg_match("/\A[a-z\d]{8,100}+\z/i", $password)) {
   $err[] = 'パスワードは英数字8文字以上100文字以内にしてください';
  }
 
@@ -49,7 +49,7 @@ if (isset($_COOKIE['name'], $_COOKIE['password'])) {
    <button type="submit" name="login" class="btn btn-success">ログイン</button>
   </form>
   <button type="button" onclick="location.href='./signup_form.php'">新規登録画面へ</button>
-  <button type="button" onclick="location.href='../index.php'">トップページへ</button>
+  <button type="button" onclick="location.href='../views/index.php'">トップページへ</button>
   <button type="button" onclick="location.href='./admin_form.php'">管理ユーザーログイン</button>
  </body>
 </div>

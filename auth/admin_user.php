@@ -22,7 +22,7 @@ $users = $user->getAllData();
 
 <body>
  <h1>ユーザー一覧</h1>
- <a href="../index.php">トップページへ</a>
+ <a href="../views/index.php">トップページへ</a>
  <?php foreach ($users as $user) : ?>
   <ul>
    <li>

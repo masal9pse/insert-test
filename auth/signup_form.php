@@ -22,7 +22,7 @@ $post = $util->sanitize($_POST);
   <button type="submit">新規登録</button>
  </form>
  <button type="button" onclick="location.href='./login.php'">ログイン画面へ</button>
- <button type="button" onclick="location.href='../index.php'">トップページへ</button>
+ <button type="button" onclick="location.href='../views/index.php'">トップページへ</button>
 </body>
 
 </html>

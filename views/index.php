@@ -39,7 +39,7 @@ $likeInstance->setToken();
  <h1>一覧リスト</h1>
  <a href="./search_form.php">検索リンク</a>
  <a href="./insert_form.php">投稿リンク</a>
- <form action="./auth/admin_form.php" method="get">
+ <form action="../auth/admin_form.php" method="get">
   <button type="submit" class="btn btn-success">管理画面</button>
  </form>
  <?php if (is_string($_SESSION['auth_id'])) : ?>
@@ -86,19 +86,6 @@ $likeInstance->setToken();
    <span>
     <?php echo count($likeInstance->getLike($list['id']));  ?>
    </span>
-
-   <!-- フォロー機能 -->
-   <?php $followInstance = new FollowClass; ?>
-   <form action="../follow.php" method="post" style="display:inline;">
-    <input type="hidden" name="follower_id" value="<?= $list['id']; ?>">
-    <input type="hidden" name="follow_id" value="<?= $_SESSION['auth_id']; ?>">
-    <?php if ($followInstance->check_follow($_SESSION['auth_id'], $list['id'])) : ?>
-     <button class="btn btn-danger" type="submit" name="follow">フォロー中</button>
-    <?php else : ?>
-     <button class="btn btn-primary" type="submit" name="follow">フォロー</button>
-    <?php endif; ?>
-   </form>
-   <?php echo count($followInstance->getFollow($list['id'])); ?>
 
    <!-- tableからフェッチした値はstringになってしまう -->
    <?php if ((int)$list['user_id'] === $_SESSION['auth_id']) : ?>

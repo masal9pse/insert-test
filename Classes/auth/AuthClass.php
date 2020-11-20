@@ -4,7 +4,7 @@ require_once dirname(__FILE__) . '/../UtilClass.php';
 class AuthClass extends UtilClass
 {
  protected $table_name = 'users';
- protected $redirect = '../index.php';
+ protected $redirect = '../views/index.php';
 
  public function login()
  {
