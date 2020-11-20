@@ -31,8 +31,8 @@ class PostClass extends UtilClass
   $stmt->bindValue(':detail', $post['detail'], PDO::PARAM_STR);
   $stmt->bindValue(':user_id', $post['user_id'], PDO::PARAM_STR);
   if (!empty($_FILES['image']['name'])) {
-   move_uploaded_file($_FILES['image']['tmp_name'], './images/' . $image);
-   echo "<img src=\" ./images/$image \">";
+   move_uploaded_file($_FILES['image']['tmp_name'], '../images/' . $image);
+   echo "<img src=\" ../images/$image \">";
   }
   $stmt->execute();
   echo '<p>' . $post['title'] . "のアップロードに成功しました</p>";
@@ -71,8 +71,8 @@ class PostClass extends UtilClass
   $new_stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
   $new_stmt->bindValue(':id', $post['id'], PDO::PARAM_INT);
   if (!empty($_FILES['image']['name'])) {
-   unlink('./images/' . $result['image']);
-   move_uploaded_file($_FILES['image']['tmp_name'], './images/' . $new_image);
+   unlink('../images/' . $result['image']);
+   move_uploaded_file($_FILES['image']['tmp_name'], '../images/' . $new_image);
   }
   $new_stmt->execute();
  }
@@ -94,7 +94,7 @@ class PostClass extends UtilClass
   $stmt = $db->prepare($sql);
   $stmt->bindValue(':id', $update_id, PDO::PARAM_INT);
   $stmt->execute();
-  header("Location: ./mypage.php?id={$_SESSION['auth_id']}");
+  header("Location: ../views/mypage.php?id={$_SESSION['auth_id']}");
   //exit();
   //return $result;
  }

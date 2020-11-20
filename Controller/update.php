@@ -1,7 +1,7 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-include('./Classes/Function/PostClass.php');
+include('../Classes/Function/PostClass.php');
 $postInstance = new PostClass();
 $db = $postInstance->dbConnect();
 var_dump($_POST);
@@ -41,8 +41,8 @@ try {
 </head>
 
 <body>
- <a href="./update_form.php">戻る</a>
- <a href="./index.php">トップページへ</a>
+ <a href="../views/update_form.php">戻る</a>
+ <a href="../views/index.php">トップページへ</a>
 </body>
 
 </html>

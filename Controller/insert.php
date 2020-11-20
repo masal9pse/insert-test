@@ -3,7 +3,7 @@ ini_set('display_errors', "On");
 session_start();
 var_dump($_POST);
 //exit;
-require('./Classes/Function/PostClass.php');
+require('../Classes/Function/PostClass.php');
 $postInstance = new PostClass;
 $db = $postInstance->dbConnect();
 
@@ -19,7 +19,7 @@ try {
  }
  echo '投稿に成功しました';
  // 空の場合
- echo "<a href='./insert_form.php'>投稿フォームへ</a>";
+ echo "<a href='../views/insert_form.php'>投稿フォームへ</a>";
  $db->commit();
 } catch (PDOException $e) {
  $db->rollBack();

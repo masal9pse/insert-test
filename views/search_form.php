@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', "On");
-require_once('./Classes/Function/CategoryClass.php');
-require_once('./Classes/Function/TagClass.php');
+require_once('../Classes/Function/CategoryClass.php');
+require_once('../Classes/Function/TagClass.php');
 $categoryInstance = new CategoryClass();
 $categories = $categoryInstance->getAllData();
 //var_dump($categories);
@@ -27,7 +27,7 @@ $get = $TagInstance->sanitize($_GET);
  <h1>検索フォーム</h1>
  <a href="./index.php">全件表示リンク</a>
  <a href="./insert_form.php">投稿リンク</a>
- <form action="search.php" method="get">
+ <form action="../Controller/search.php" method="get">
   <select name="category">
    <option value="">未選択</option>
    <?php foreach ($categories as $category) : ?>

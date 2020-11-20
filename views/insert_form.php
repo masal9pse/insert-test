@@ -1,10 +1,10 @@
 <?php
 ini_set('display_errors', "On");
 session_start();
-include('./Classes/Function/TagClass.php');
+include('../Classes/Function/TagClass.php');
 $tagInstance = new TagClass;
 // TagClassはUtilClassクラスを継承しているためutilクラスのメソッドが使用できる
-$tagInstance->auth_check('./auth/login.php');
+$tagInstance->auth_check('../auth/login.php');
 $tags = $tagInstance->getAllData();
 $post = $tagInstance->sanitize($_POST);
 ?>
@@ -20,12 +20,12 @@ $post = $tagInstance->sanitize($_POST);
 
 <body>
  <h1>投稿フォーム</h1>
- <form action="./auth/logout.php" method="post">
+ <form action="../auth/logout.php" method="post">
   <button type="submit" name="logout" class="btn btn-danger">ログアウト</button>
  </form>
  <a href="./index.php">一覧表示リンク</a>
  <a href="./search_form.php">検索リンク</a>
- <form action="insert.php" method="post" enctype="multipart/form-data">
+ <form action="../Controller/insert.php" method="post" enctype="multipart/form-data">
   <table border="1">
    <tr>
     <td>タイトル</td>
