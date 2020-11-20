@@ -9,7 +9,7 @@ $(function() {
   console.log(likePostId)
   $.ajax({
    type: 'POST',
-   url: './Api/Like.php', //post送信を受けとるphpファイル
+   url: '../Api/Like.php', //post送信を受けとるphpファイル
    data: {post_id: likePostId} //{キー:投稿ID}
   }).done(function(data) {
    console.log('Ajax Success');
