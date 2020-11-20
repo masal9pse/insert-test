@@ -6,7 +6,7 @@ try {
 }
 
 // テーブル作成のSQLを作
-$sql = 'CREATE TABLE tags (
+$sql = 'CREATE TABLE if not exists tags (
  id SERIAL NOT NULL,
  tag VARCHAR(255) NOT NULL, 
  created_at TIMESTAMP,

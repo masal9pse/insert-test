@@ -6,10 +6,12 @@ try {
 }
 
 // テーブル作成のSQLを作成
-$sql = 'CREATE TABLE post_category (
+$sql = 'CREATE TABLE if not exists post_category (
  id SERIAL NOT NULL,
  post_id INT,
  category_id INT,
+ foreign key (post_id) references posts(id) ON DELETE CASCADE ON Update CASCADE,
+ foreign key (user_id) references categories(id) ON DELETE CASCADE ON Update CASCADE,
  created_at TIMESTAMP,
  updated_at TIMESTAMP,
  PRIMARY KEY (id)
