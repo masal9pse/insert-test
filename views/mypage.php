@@ -25,26 +25,8 @@ if (isset($_POST['logout'])) {
  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
  <title>マイページ</title>
  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript"></script>
- <script src="../Controller/like.js"></script>
- <style>
-  .btn-good {
-   display: inline-block;
-   padding: 0 8px;
-   cursor: pointer;
-  }
-
-  .btn-good:hover {
-   color: #f44336;
-  }
-
-  .active {
-   color: #f44336;
-  }
-
-  .btn-good .active {
-   color: #f44336;
-  }
- </style>
+ <script src="../public/js/like.js"></script>
+ <link rel="stylesheet" href="../public/css/like.css">
 </head>
 
 <body>
