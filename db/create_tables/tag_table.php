@@ -5,7 +5,7 @@ try {
  echo $e . 'エラーです';
 }
 
-// テーブル作成のSQLを作成
+// テーブル作成のSQLを作
 $sql = 'CREATE TABLE tags (
  id SERIAL NOT NULL,
  tag VARCHAR(255) NOT NULL, 
