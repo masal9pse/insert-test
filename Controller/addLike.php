@@ -1,9 +1,9 @@
 <?php
 ini_set('display_errors', "On");
 session_start();
-require('./Classes/Function/LikeClass.php');
+require('../Classes/Function/LikeClass.php');
 $likeInstance = new LikeClass();
-$likeInstance->auth_check('./auth/login.php');
+$likeInstance->auth_check('../auth/login.php');
 var_dump($_POST);
 // issetが空文字でもtrueであるか調べる
 var_dump($_SESSION);
@@ -16,4 +16,4 @@ if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_toke
  echo "不正なリクエストです。";
 }
 ?>
-<a href="index.php">トップページへ</a>
+<a href="../views/index.php">トップページへ</a>

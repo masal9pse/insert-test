@@ -66,7 +66,7 @@ $likeInstance->setToken();
 
    <!-- いいね機能 -->
    <?php if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) : ?>
-    <form action="rmLike.php" method="post" style="display:inline;">
+    <form action="../Controller/rmLike.php" method="post" style="display:inline;">
      <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
      <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
      <button type="submit" class="btn p-0 border-0">
@@ -74,7 +74,7 @@ $likeInstance->setToken();
      </button>
     </form>
    <?php else : ?>
-    <form action="addLike.php" method="post" style="display:inline;">
+    <form action="../Controller/addLike.php" method="post" style="display:inline;">
      <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
      <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
      <button type="submit" class="btn p-0 border-0">
