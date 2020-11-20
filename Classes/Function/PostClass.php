@@ -77,28 +77,24 @@ class PostClass extends UtilClass
   $new_stmt->execute();
  }
 
- function postLogicalDelete($delete_id)
+ function postLogicalDelete($post)
  {
   $db = $this->dbConnect();
-  //$sql = 'UPDATE posts set delete_flag = 1 where user_id = :user_id';
   $sql = 'UPDATE posts set delete_flag = 1 where id = :id';
   $stmt = $db->prepare($sql);
-  //$stmt->bindValue(':user_id', $delete_id, PDO::PARAM_INT);
-  $stmt->bindValue(':id', $delete_id, PDO::PARAM_INT);
+  $stmt->bindValue(':id', $post, PDO::PARAM_INT);
   $result = $stmt->execute();
   return $result;
  }
 
- function postLogicalUpdate($update_id)
+ function postLogicalUpdate($post)
  {
   $db = $this->dbConnect();
   $sql = 'UPDATE posts set delete_flag = 0 where id = :id';
   $stmt = $db->prepare($sql);
-  $stmt->bindValue(':id', $update_id, PDO::PARAM_INT);
+  $stmt->bindValue(':id', $post, PDO::PARAM_INT);
   $stmt->execute();
   header("Location: ../views/mypage.php");
-  //exit();
-  //return $result;
  }
 
  function postLogicalDeleteList()

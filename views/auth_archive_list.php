@@ -7,7 +7,6 @@ $post = new PostClass;
 $lists = $post->postLogicalDeleteList();
 
 if (isset($_POST['submit'])) {
- //$post->postLogicalUpdate($_SESSION['auth_id']);
  $post->postLogicalUpdate($_POST['update_id']);
 }
 ?>
