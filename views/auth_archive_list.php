@@ -1,7 +1,7 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require('./Classes/Function/PostClass.php');
+require('../Classes/Function/PostClass.php');
 
 $post = new PostClass;
 $lists = $post->postLogicalDeleteList();

@@ -1,13 +1,13 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require('./Classes/MypageClass.php');
-require('./Classes/Function/LikeClass.php');
-require('./Classes/auth/AuthClass.php');
+require('../Classes/MypageClass.php');
+require('../Classes/Function/LikeClass.php');
+require('../Classes/auth/AuthClass.php');
 
 $mypageInstance = new MypageClass;
 $likeInstance = new LikeClass;
-$mypageInstance->auth_check('./auth/login.php');
+$mypageInstance->auth_check('../auth/login.php');
 //var_dump($_SESSION);
 $lists = $mypageInstance->myPageList();
 $authInstance = new AuthClass();
@@ -75,9 +75,13 @@ if (isset($_POST['logout'])) {
   </div>
   </td>
   <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
+  <form action="../Controller/archive.php" method="post" style="display:inline;">
+   <input type="hidden" name="delete_id" value="<?php echo $list['id']; ?>">
+   <button type="submit">アーカイブ</button>
+  </form>
   </div>
  <?php endforeach ?>
- <a href="auth_archive_list.php">アーカイブした記事一覧</a>
+ <a href="./auth_archive_list.php">アーカイブした記事一覧</a>
  <br>
  <a href="index.php">トップページへ</a>
 </body>
