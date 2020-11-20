@@ -1,10 +1,10 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require('./Classes/auth/AuthClass.php');
-require('./Classes/Function/PostClass.php');
-require('./Classes/Function/LikeClass.php');
-require('./Classes/Function/FollowClass.php');
+require('../Classes/auth/AuthClass.php');
+require('../Classes/Function/PostClass.php');
+require('../Classes/Function/LikeClass.php');
+require('../Classes/Function/FollowClass.php');
 
 $postInstance = new PostClass();
 $lists = $postInstance->getAllData();
@@ -43,10 +43,10 @@ $likeInstance->setToken();
   <button type="submit" class="btn btn-success">管理画面</button>
  </form>
  <?php if (is_string($_SESSION['auth_id'])) : ?>
-  <form action="./auth/login.php" method="get">
+  <form action="../auth/login.php" method="get">
    <button type="submit" class="btn btn-danger">ログイン</button>
   </form>
-  <form action="./auth/signup_form.php" method="get">
+  <form action="../auth/signup_form.php" method="get">
    <button type="submit" class="btn btn-danger">新規投稿</button>
   </form>
  <?php else : ?>
@@ -89,7 +89,7 @@ $likeInstance->setToken();
 
    <!-- フォロー機能 -->
    <?php $followInstance = new FollowClass; ?>
-   <form action="follow.php" method="post" style="display:inline;">
+   <form action="../follow.php" method="post" style="display:inline;">
     <input type="hidden" name="follower_id" value="<?= $list['id']; ?>">
     <input type="hidden" name="follow_id" value="<?= $_SESSION['auth_id']; ?>">
     <?php if ($followInstance->check_follow($_SESSION['auth_id'], $list['id'])) : ?>
@@ -102,7 +102,7 @@ $likeInstance->setToken();
 
    <!-- tableからフェッチした値はstringになってしまう -->
    <?php if ((int)$list['user_id'] === $_SESSION['auth_id']) : ?>
-    <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
+    <td><button type="button" onclick="location.href='../update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
     <form action="archive.php" method="post" style="display:inline;">
      <input type="hidden" name="delete_id" value="<?php echo $postInstance->sanitize($list['id']); ?>">
      <button type="submit">アーカイブ</button>
