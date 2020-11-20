@@ -12,10 +12,10 @@ class MypageClass implements InterfaceUtilClass
   $sql = 'SELECT posts.* from posts 
           inner join users 
           on posts.user_id = users.id
-          where users.id=:user_id';
+          where posts.delete_flag = 0 and users.id=:user_id';
 
   $stmt = $db->prepare($sql);
-  $stmt->bindValue(':user_id', $_GET['id'], PDO::PARAM_INT);
+  $stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
   $stmt->execute();
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $results = $this->sanitize($results);

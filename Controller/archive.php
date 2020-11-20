@@ -1,5 +1,7 @@
 <?php
 session_start();
+//var_dump($_POST);
+//exit;
 ini_set('display_errors', "On");
 require('../Classes/Function/PostClass.php');
 
@@ -19,7 +21,7 @@ $post->postLogicalDelete($_POST['delete_id']);
 <body>
  <p>アーカイブしました</p>
  <a href="../views/index.php">トップページ</a>
- <a href="../views/mypage.php?id=<?php echo $_SESSION['auth_id'] ?>">マイページへ</a>
+ <a href="../views/mypage.php">マイページへ</a>
 </body>
 
 </html>

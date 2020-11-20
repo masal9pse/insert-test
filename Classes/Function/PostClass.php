@@ -80,8 +80,10 @@ class PostClass extends UtilClass
  function postLogicalDelete($delete_id)
  {
   $db = $this->dbConnect();
+  //$sql = 'UPDATE posts set delete_flag = 1 where user_id = :user_id';
   $sql = 'UPDATE posts set delete_flag = 1 where id = :id';
   $stmt = $db->prepare($sql);
+  //$stmt->bindValue(':user_id', $delete_id, PDO::PARAM_INT);
   $stmt->bindValue(':id', $delete_id, PDO::PARAM_INT);
   $result = $stmt->execute();
   return $result;
@@ -94,7 +96,7 @@ class PostClass extends UtilClass
   $stmt = $db->prepare($sql);
   $stmt->bindValue(':id', $update_id, PDO::PARAM_INT);
   $stmt->execute();
-  header("Location: ../views/mypage.php?id={$_SESSION['auth_id']}");
+  header("Location: ../views/mypage.php");
   //exit();
   //return $result;
  }
@@ -102,8 +104,10 @@ class PostClass extends UtilClass
  function postLogicalDeleteList()
  {
   $db = $this->dbConnect();
-  $sql = "SELECT * from $this->table_name where delete_flag = 1 order by id $this->sort";
-  $stmt = $db->query($sql);
+  $sql = "SELECT * from $this->table_name where delete_flag = 1 and user_id=:user_id order by id $this->sort";
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
+  $stmt->execute();
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $results = $this->sanitize($results);
   return $results;

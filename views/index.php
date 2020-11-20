@@ -54,7 +54,7 @@ $likeInstance->setToken();
    <button type="submit" name="logout" class="btn btn-danger">ログアウト</button>
   </form>
   <?php if (is_int($_SESSION['auth_id'])) : ?>
-   <button type="button" onclick="location.href='./mypage.php?id=<?php echo $_SESSION['auth_id'] ?>'">マイページ</button>
+   <button type="button" onclick="location.href='./mypage.php'">マイページ</button>
   <?php endif; ?>
  <?php endif; ?>
 
