@@ -1,7 +1,7 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-include('../Classes/Function/PostClass.php');
+include('../Models/Function/PostClass.php');
 $postInstance = new PostClass();
 $db = $postInstance->dbConnect();
 var_dump($_POST);

@@ -1,9 +1,9 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require('../Classes/MypageClass.php');
-require('../Classes/Function/LikeClass.php');
-require('../Classes/auth/AuthClass.php');
+require('../Models/MypageClass.php');
+require('../Models/Function/LikeClass.php');
+require('../Models/auth/AuthClass.php');
 
 $mypageInstance = new MypageClass;
 $likeInstance = new LikeClass;

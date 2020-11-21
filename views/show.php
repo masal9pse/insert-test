@@ -3,9 +3,9 @@ session_start();
 $_SESSION['show_page'] = $_SERVER["REQUEST_URI"];
 var_dump($_SESSION);
 
-require_once("../Classes/Function/PostClass.php");
-require_once("../Classes/Function/UserClass.php");
-require_once("../Classes/Function/FollowClass.php");
+require_once("../Models/Function/PostClass.php");
+require_once("../Models/Function/UserClass.php");
+require_once("../Models/Function/FollowClass.php");
 
 $post = new PostClass;
 $post = $post->getById($_GET['id']);

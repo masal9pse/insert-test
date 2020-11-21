@@ -1,6 +1,6 @@
 <?php
 ini_set('display_errors', "On");
-require('../Classes/Function/SearchClass.php');
+require('../Models/Function/SearchClass.php');
 $searchInstance = new SearchClass;
 
 var_dump($_GET);

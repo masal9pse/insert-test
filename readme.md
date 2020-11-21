@@ -17,7 +17,7 @@
   - 非同期処理の利用した機能のバックエンド
 - auth
   - 認証系に関しては画面ファイルも実行処理もここに入っている
-- Classes
+- Models
   - クラス一覧
 - public
   - CSS,JSFile
@@ -37,7 +37,7 @@
 # DB,テーブルのセットアップ
 
 1. DB は任意の DB を作成してください
-2. Classes/UtilClass.php の dbConnect メソッドを作成した DB の情報に書き換えてください
+2. Models/UtilClass.php の dbConnect メソッドを作成した DB の情報に書き換えてください
 3. 次に db/create_table.sql 内の SQL 文をコピーアンドペーストして実行してください。
    postico の場合は、option+command+enter キーを入力しないと全ての query を実行することができないので注意が必要です。
 

@@ -2,8 +2,8 @@
 var_dump($_GET);
 session_start();
 ini_set('display_errors', "On");
-require_once dirname(__FILE__) . '/../Classes/Function/LikeClass.php';
-require_once dirname(__FILE__) . '/../Classes/auth/AdminClass.php';
+require_once dirname(__FILE__) . '/../Models/Function/LikeClass.php';
+require_once dirname(__FILE__) . '/../Models/auth/AdminClass.php';
 
 $admin = new AdminClass;
 $admin->admin_check('./admin_form.php');

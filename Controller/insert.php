@@ -3,7 +3,7 @@ ini_set('display_errors', "On");
 session_start();
 var_dump($_POST);
 //exit;
-require('../Classes/Function/PostClass.php');
+require('../Models/Function/PostClass.php');
 $postInstance = new PostClass;
 $db = $postInstance->dbConnect();
 

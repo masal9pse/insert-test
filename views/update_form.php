@@ -1,7 +1,7 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require('../Classes/Function/PostClass.php');
+require('../Models/Function/PostClass.php');
 $postInstance = new PostClass();
 $postInstance->auth_check('../auth/login.php');
 $update_post = $postInstance->getById($_GET['id']);

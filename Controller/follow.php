@@ -1,6 +1,6 @@
 <?php
 ini_set('display_errors', "On");
-require('../Classes/Function/FollowClass.php');
+require('../Models/Function/FollowClass.php');
 session_start();
 $followInstance = new FollowClass;
 $followInstance->auth_check('../auth/login.php');

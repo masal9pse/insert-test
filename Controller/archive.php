@@ -3,7 +3,7 @@ session_start();
 //var_dump($_POST);
 //exit;
 ini_set('display_errors', "On");
-require('../Classes/Function/PostClass.php');
+require('../Models/Function/PostClass.php');
 
 $post = new PostClass;
 $post->postLogicalDelete($_POST['delete_id']);

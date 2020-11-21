@@ -1,6 +1,6 @@
 <?php
 ini_set('display_errors', "On");
-require_once dirname(__FILE__) . '/../Classes/UtilClass.php';
+require_once dirname(__FILE__) . '/../Models/UtilClass.php';
 $util = new UtilClass;
 $post = $util->sanitize($_POST);
 ?>

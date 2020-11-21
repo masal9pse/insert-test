@@ -1,10 +1,10 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require('../Classes/auth/AuthClass.php');
-require('../Classes/Function/PostClass.php');
-require('../Classes/Function/LikeClass.php');
-require('../Classes/Function/FollowClass.php');
+require('../Models/auth/AuthClass.php');
+require('../Models/Function/PostClass.php');
+require('../Models/Function/LikeClass.php');
+require('../Models/Function/FollowClass.php');
 
 $postInstance = new PostClass();
 $lists = $postInstance->getAllData();
