@@ -62,7 +62,7 @@ $likeInstance->setToken();
   <div>
    <td><?php echo $list['id']; ?></td>
    <td>
-    <a href="show.php?id=<?php print($list['id']) ?>">
+    <a href="show.php?id=<?php print($list['id']) ?>&user_id=<?php print($list['user_id']) ?>">
      <?php echo $list['title']; ?>
     </a>
    </td>

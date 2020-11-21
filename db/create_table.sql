@@ -93,7 +93,7 @@ if not exists follows
 (id) ON
 DELETE CASCADE,
  follower_id INT
-not null references posts
+not null references users
 (id) ON
 DELETE CASCADE,
  created_at TIMESTAMP,
