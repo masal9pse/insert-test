@@ -3,7 +3,7 @@ session_start();
 //var_dump($_GET);
 //exit;
 $_SESSION['show_page'] = $_SERVER["REQUEST_URI"];
-//var_dump($_SESSION);
+var_dump($_SESSION);
 
 require_once("../Models/Function/PostClass.php");
 require_once("../Models/Function/UserClass.php");
@@ -30,17 +30,18 @@ var_dump($user);
   この記事を作成したユーザ <?php echo $user['name']; ?>
   <!-- フォロー機能 -->
   <?php $followInstance = new FollowClass; ?>
-  <form action="../Controller/follow.php" method="post" style="display:inline;">
-   <input type="hidden" name="follow_id" value="<?php echo $_SESSION['auth_id']; ?>">
-   <input type="hidden" name="follower_id" value="<?php echo $user['user_id']; ?>">
-   <?php if ($followInstance->check_follow($_SESSION['auth_id'], $user['user_id'])) : ?>
-    <button class="btn btn-danger" type="submit" name="follow">フォロー中</button>
-   <?php else : ?>
-    <button class="btn btn-primary" type="submit" name="follow">フォロー</button>
-   <?php endif; ?>
-  </form>
-  <?php echo count($followInstance->getFollow($user['user_id'])); ?>
-
+  <?php if ($user['name'] !== $_SESSION['name']) : ?>
+   <form action="../Controller/follow.php" method="post" style="display:inline;">
+    <input type="hidden" name="follow_id" value="<?php echo $_SESSION['auth_id']; ?>">
+    <input type="hidden" name="follower_id" value="<?php echo $user['user_id']; ?>">
+    <?php if ($followInstance->check_follow($_SESSION['auth_id'], $user['user_id'])) : ?>
+     <button class="btn btn-danger" type="submit" name="follow">フォロー中</button>
+    <?php else : ?>
+     <button class="btn btn-primary" type="submit" name="follow">フォロー</button>
+    <?php endif; ?>
+   </form>
+   <?php echo count($followInstance->getFollow($user['user_id'])); ?>
+  <?php endif; ?>
  </p>
  <ul>
   <li>記事タイトル <?php echo $user['title'] ?></li>
