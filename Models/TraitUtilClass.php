@@ -65,6 +65,9 @@ trait TraitUtilClass
   $stmt->execute();
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $results = $this->sanitize($results);
+  if (count($results) == 0) {
+   echo '結果は0件です';
+  }
   var_dump($results);
  }
 }
