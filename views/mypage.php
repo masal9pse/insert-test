@@ -63,7 +63,7 @@ if (isset($_POST['logout'])) {
   </form>
   </div>
  <?php endforeach ?>
- <a href="./auth_archive_list.php">アーカイブした記事一覧</a>
+ <a href="./mypage_archive_list.php">アーカイブした記事一覧</a>
  <br>
  <a href="index.php">トップページへ</a>
 </body>
