@@ -10,13 +10,13 @@ $postInstance = new PostClass();
 $lists = $postInstance->getAllData();
 //var_dump($lists);
 //exit;
-var_dump($_SESSION);
+//var_dump($_SESSION);
 if (empty($_SESSION['auth_id'])) {
  (string)$_SESSION['auth_id'] = "名無しのごんべ";
 }
 
-$authInstance = new AuthClass();
 if (isset($_POST['logout'])) {
+ $authInstance = new AuthClass();
  $authInstance->logout($_SESSION, 'index.php');
 }
 // ログイン画面だけ表示
@@ -62,7 +62,7 @@ $likeInstance->setToken();
   <div>
    <td><?php echo $list['id']; ?></td>
    <td>
-    <a href="show.php?id=<?php print($list['id']) ?>&user_id=<?php print($list['user_id']) ?>">
+    <a href="show.php?post_id=<?php print($list['id']) ?>&user_id=<?php print($list['user_id']) ?>">
      <?php echo $list['title']; ?>
     </a>
    </td>
