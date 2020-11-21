@@ -61,7 +61,11 @@ $likeInstance->setToken();
  <?php foreach ($lists as $list) : ?>
   <div>
    <td><?php echo $list['id']; ?></td>
-   <td><?php echo $list['title']; ?></td>
+   <td>
+    <a href="show.php?id=<?php print($list['id']) ?>">
+     <?php echo $list['title']; ?>
+    </a>
+   </td>
    <td><?php echo $list['detail']; ?></td>
 
    <!-- いいね機能 -->
@@ -82,11 +86,9 @@ $likeInstance->setToken();
      </button>
     </form>
    <?php endif;  ?>
-
    <span>
     <?php echo count($likeInstance->getLike($list['id']));  ?>
    </span>
-
    <!-- tableからフェッチした値はstringになってしまう -->
    <?php if ((int)$list['user_id'] === $_SESSION['auth_id']) : ?>
     <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>

@@ -73,7 +73,7 @@ class UtilClass
   return $csrf_token;
  }
 
- function auth_check($redirectPath)
+ function auth_check(string $redirectPath)
  {
   if (!isset($_SESSION['name'])) {
    // ログインする前にそのページのurlを取得する
