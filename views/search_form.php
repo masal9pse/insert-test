@@ -24,7 +24,8 @@ $get = $TagInstance->sanitize($_GET);
 </head>
 
 <body>
- <h1>検索フォーム</h1>
+ <?php $searchForm = TagClass::callSearchFormStatic(); ?>
+ <h3><?php print($searchForm); ?></h3>
  <a href="./index.php">全件表示リンク</a>
  <a href="./insert_form.php">投稿リンク</a>
  <form action="../Controller/search.php" method="get">
