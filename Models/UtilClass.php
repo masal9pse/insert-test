@@ -16,7 +16,7 @@ class UtilClass
   return $db;
  }
 
- function getAllData()
+ function getAllData(): array
  {
   $db = $this->dbConnect();
   $sql = "SELECT * from $this->table_name order by id $this->sort";
@@ -27,7 +27,8 @@ class UtilClass
   $db = null;
  }
 
- function getById(int $id)
+ //function getById(int $id): int // err
+ function getById(int $id): array
  {
   $db = $this->dbConnect();
   $sql = "SELECT * from $this->table_name where id=:id";
@@ -90,6 +91,7 @@ class UtilClass
   }
  }
 
+ // あとで返り値から呼び出すように変更する
  protected function queryPost($stmt)
  {
   $stmt->execute();

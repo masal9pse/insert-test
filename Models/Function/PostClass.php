@@ -7,7 +7,8 @@ class PostClass extends UtilClass
  protected $table_name = 'posts';
  protected $sort = 'desc';
 
- public function getAllData()
+ // UtilClassからオーバーライド
+ public function getAllData(): array
  {
   $db = $this->dbConnect();
   $sql = "SELECT * from $this->table_name where delete_flag = 0 order by id $this->sort";
