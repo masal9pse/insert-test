@@ -99,4 +99,10 @@ class UtilClass
   $results = $this->sanitize($results);
   var_dump($results);
  }
+
+ // staticキーワード内で、staticキーワードでないメソッドを呼ぶことはできない
+ public static function searchFormStatic()
+ {
+  return '検索フォーム';
+ }
 }
