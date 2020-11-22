@@ -3,11 +3,10 @@ trait TraitAllSearch
 {
  public function AllSearch()
  {
-  if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
-   list($tag_binds, $whereSql) = $this->tagWhere();
-   // explodeが使えるかチェック
-   //var_dump($whereSql);
-   $sql = "SELECT distinct posts.*
+  list($tag_binds, $whereSql) = $this->tagWhere();
+  // explodeが使えるかチェック
+  //var_dump($whereSql);
+  $sql = "SELECT distinct posts.*
               FROM posts
               LEFT JOIN post_category
               ON posts.id = post_category.post_id
@@ -21,18 +20,17 @@ trait TraitAllSearch
               AND tags.tag IN ($whereSql)  
               AND (posts.title like :title OR posts.detail like :detail )";
 
-   var_dump($sql);
-   // dbconnectをコメントアウトしてもエラーにならなかった
-   $db = $this->dbConnect();
-   $stmt = $db->prepare($sql);
-   $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
+  var_dump($sql);
+  // dbconnectをコメントアウトしてもエラーにならなかった
+  $db = $this->dbConnect();
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
 
-   // タグ検索 $tag_bindsのキーと$whereSqlは同じ
-   $this->tagBinds($tag_binds, $stmt);
+  // タグ検索 $tag_bindsのキーと$whereSqlは同じ
+  $this->tagBinds($tag_binds, $stmt);
 
-   $stmt->bindValue(':title', "%{$_GET['search']}%", PDO::PARAM_STR);
-   $stmt->bindValue(':detail', "%{$_GET['search']}%", PDO::PARAM_STR);
-   $this->queryPost($stmt);
-  }
+  $stmt->bindValue(':title', "%{$_GET['search']}%", PDO::PARAM_STR);
+  $stmt->bindValue(':detail', "%{$_GET['search']}%", PDO::PARAM_STR);
+  $this->queryPost($stmt);
  }
 }
