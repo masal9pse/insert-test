@@ -13,4 +13,4 @@ $searchInstance->textSearch();
 $searchInstance->categoryTextSearch();
 $searchInstance->AllNotSearch();
 ?>
-<a href="./index.php">トップページへ</a>
+<a href="../views/index.php">トップページへ</a>
