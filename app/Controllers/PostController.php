@@ -2,23 +2,19 @@
 
 namespace App\Controllers;
 
-use App\Models\UtilModel;
 use PDO;
+use App\Models\PostModel;
 
-final class PostController extends UtilModel
+final class PostController
 {
- protected $table_name = 'posts';
- protected $sort = 'desc';
-
- // UtilClassからオーバーライド
  public function getAllData(): array
  {
-  $util = new UtilModel;
-  $db = $util->dbConnect();
-  $sql = "SELECT * from $this->table_name where delete_flag = 0 order by id $this->sort";
+  $post = new PostModel;
+  $db = $post->dbConnect();
+  $sql = "SELECT * from $post->table_name where delete_flag = 0 order by id $post->sort";
   $stmt = $db->query($sql);
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  $results = $util->sanitize($results);
+  $results = $post->sanitize($results);
   return $results;
   $db = null;
  }
