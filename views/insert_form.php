@@ -1,6 +1,11 @@
 <?php
-ini_set('display_errors', "On");
+
 session_start();
+ini_set('display_errors', "On");
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Controllers\PostTitleController;
+
 include('../Models/Function/TagClass.php');
 $tagInstance = new TagClass('tags', 'asc');
 $tagInstance->auth_check('../auth/login.php');
@@ -18,7 +23,11 @@ $post = $tagInstance->sanitize($_POST);
 </head>
 
 <body>
- <h1>投稿フォーム</h1>
+ <?php
+ $title = new PostTitleController;
+ ?>
+ <!--<h1>投稿フォーム</h1>-->
+ <h1><?php $title->run(); ?></h1>
  <form action="../auth/logout.php" method="post">
   <button type="submit" name="logout" class="btn btn-danger">ログアウト</button>
  </form>
