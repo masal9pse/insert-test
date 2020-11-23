@@ -1,12 +1,18 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Controllers\PostController;
+
+$postInstance = new PostController();
+$result = $postInstance->getAllData();
+var_dump($result);
+exit;
 require('../Models/auth/AuthClass.php');
-require('../Models/Function/PostClass.php');
 require('../Models/Function/LikeClass.php');
 require('../Models/Function/FollowClass.php');
 
-$postInstance = new PostClass();
 $lists = $postInstance->getAllData();
 //var_dump($lists);
 //exit;

@@ -1,6 +1,10 @@
 <?php
-//final class UtilClass => 別のクラスに継承されているのでfinalは使えない
-class UtilClass
+
+namespace App\Models;
+
+use PDO;
+
+class UtilModel
 {
  protected $table_name;
  protected $sort;
