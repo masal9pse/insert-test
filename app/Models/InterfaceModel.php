@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-interface InterfaceUtilClass
+interface InterfaceModel
 {
  // インターフェースではプロパティの使用ができない
 
@@ -16,7 +16,7 @@ interface InterfaceUtilClass
 
  public function setToken();
 
- function auth_check($redirectPath);
+ //function auth_check($redirectPath);
 
  function empty_check($key, $name);
 

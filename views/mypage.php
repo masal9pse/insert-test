@@ -12,6 +12,7 @@ $mypageInstance = new MypageController;
 $likeInstance = new LikeClass;
 $mypageInstance->auth_check('../auth/login.php');
 //var_dump($_SESSION);
+
 $lists = $mypageInstance->myPageList();
 if (isset($_POST['logout'])) {
  $authInstance = new AuthClass();
