@@ -1,4 +1,9 @@
 <?php
+
+namespace App\Controllers;
+
+use PDO;
+
 trait TraitAllSearch
 {
  public function AllSearch()

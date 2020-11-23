@@ -1,11 +1,18 @@
 <?php
-require_once dirname(__FILE__) . '/../TraitUtilClass.php';
-require_once dirname(__FILE__) . '/./TraitAllSearch.php';
 
-final class SearchClass
+namespace App\Controllers;
+
+use App\Models\TraitUtilModel;
+use App\Controllers\TraitAllSearch;
+use PDO;
+
+//require_once dirname(__FILE__) . '/../TraitUtilClass.php';
+//require_once dirname(__FILE__) . '/./TraitAllSearch.php';
+
+final class SearchController
 {
  //　finalクラスは現状のところ、トレイトに影響しないことがわかった
- use TraitUtilClass, TraitAllSearch;
+ use TraitUtilModel, TraitAllSearch;
 
  // tagとカテゴリーの絞り込み検索
  public function tagCategorySearch()

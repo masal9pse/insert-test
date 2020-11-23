@@ -1,6 +1,10 @@
 <?php
-//final trait TraitUtilClass => traitにfinalは使えない
-trait TraitUtilClass
+
+namespace App\Models;
+
+use PDO;
+
+trait TraitUtilModel
 {
  protected $table_name;
  protected $sort;
