@@ -1,4 +1,5 @@
 <?php
+//final trait TraitUtilClass => traitにfinalは使えない
 trait TraitUtilClass
 {
  protected $table_name;

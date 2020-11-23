@@ -2,8 +2,9 @@
 require_once dirname(__FILE__) . '/../TraitUtilClass.php';
 require_once dirname(__FILE__) . '/./TraitAllSearch.php';
 
-class SearchClass
+final class SearchClass
 {
+ //　finalクラスは現状のところ、トレイトに影響しないことがわかった
  use TraitUtilClass, TraitAllSearch;
 
  // tagとカテゴリーの絞り込み検索

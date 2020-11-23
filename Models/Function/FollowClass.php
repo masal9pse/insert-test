@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/../auth/AbstractAuthClass.php';
 
-class FollowClass extends AbstractAuthClass
+final class FollowClass extends AbstractAuthClass
 {
  function check_follow($follow_user, $follower_user)
  {

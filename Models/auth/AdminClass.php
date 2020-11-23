@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/./AuthClass.php';
 
-class AdminClass extends AuthClass
+final class AdminClass extends AuthClass
 {
 
  protected $table_name = 'admins';

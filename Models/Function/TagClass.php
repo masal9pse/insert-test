@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/../UtilClass.php';
 
-class TagClass extends UtilClass
+final class TagClass extends UtilClass
 {
  public function __construct($table_name, $sort)
  {

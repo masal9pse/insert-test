@@ -1,7 +1,7 @@
 <?php
 require('InterfaceUtilClass.php');
 
-class MypageClass implements InterfaceUtilClass
+final class MypageClass implements InterfaceUtilClass
 {
  public $table_name = "users";
  public $sort = "asc";

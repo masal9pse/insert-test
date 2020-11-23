@@ -2,7 +2,7 @@
 require_once dirname(__FILE__) . '/../UtilClass.php';
 require_once dirname(__FILE__) . '/./TraitLikeApi.php';
 
-class LikeClass extends UtilClass
+final class LikeClass extends UtilClass
 {
  use LikeApi;
  // いいねしているか判定する

@@ -1,4 +1,5 @@
 <?php
+//final interface InterfaceUtilClass => インターフェースでもfinal使えない
 interface InterfaceUtilClass
 {
  // インターフェースではプロパティの使用ができない

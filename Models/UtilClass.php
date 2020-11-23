@@ -1,4 +1,5 @@
 <?php
+//final class UtilClass => 別のクラスに継承されているのでfinalは使えない
 class UtilClass
 {
  protected $table_name;
