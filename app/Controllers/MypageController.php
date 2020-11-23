@@ -1,10 +1,24 @@
 <?php
-require('InterfaceUtilClass.php');
 
-final class MypageClass implements InterfaceUtilClass
+namespace App\Controllers;
+
+use PDO;
+
+class MypageController
 {
  public $table_name = "users";
  public $sort = "asc";
+
+ function dbConnect()
+ {
+  try {
+   $db = new PDO('pgsql:dbname=offshoa_db;host=127.0.0.1;port=5432;', 'yamamotohiroto', '');
+   //echo '接続成功です';
+  } catch (PDOException $e) {
+   echo $e . 'エラーです';
+  }
+  return $db;
+ }
 
  public function myPageList()
  {
@@ -21,18 +35,6 @@ final class MypageClass implements InterfaceUtilClass
   $results = $this->sanitize($results);
   //var_dump($results);
   return $results;
- }
-
- function dbConnect()
- {
-  try {
-   $db = new PDO('pgsql:dbname=offshoa_db;host=127.0.0.1;port=5432;', 'yamamotohiroto', '');
-   //echo '接続成功です';
-  } catch (PDOException $e) {
-   ini_set('display_errors', "On");
-   echo $e . 'エラーです';
-  }
-  return $db;
  }
 
  function getAllData()

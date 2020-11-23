@@ -1,11 +1,14 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require('../Models/MypageClass.php');
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Controllers\MypageController;
+
 require('../Models/Function/LikeClass.php');
 require('../Models/auth/AuthClass.php');
 
-$mypageInstance = new MypageClass;
+$mypageInstance = new MypageController;
 $likeInstance = new LikeClass;
 $mypageInstance->auth_check('../auth/login.php');
 //var_dump($_SESSION);

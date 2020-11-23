@@ -1,5 +1,7 @@
 <?php
-//final interface InterfaceUtilClass => インターフェースでもfinal使えない
+
+namespace App\Models;
+
 interface InterfaceUtilClass
 {
  // インターフェースではプロパティの使用ができない
