@@ -33,7 +33,7 @@ $post = $tagInstance->sanitize($_POST);
  </form>
  <a href="./index.php">一覧表示リンク</a>
  <a href="./search_form.php">検索リンク</a>
- <form action="../Controller/insert.php" method="post" enctype="multipart/form-data">
+ <form action="../Execute/insert.php" method="post" enctype="multipart/form-data">
   <table border="1">
    <tr>
     <td>タイトル</td>

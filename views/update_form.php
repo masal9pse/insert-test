@@ -18,7 +18,7 @@ $postInstance->setToken();
 </head>
 
 <body>
- <form action="../Controller/update.php" method="post" enctype="multipart/form-data">
+ <form action="../Execute/update.php" method="post" enctype="multipart/form-data">
   <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
   <input type="hidden" name="id" value="<?php echo $update_post['id'] ?>">
   <input type="text" name="title" value="<?php echo $update_post['title']; ?>">

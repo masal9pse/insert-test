@@ -70,7 +70,7 @@ $likeInstance->setToken();
 
    <!-- いいね機能 -->
    <?php if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) : ?>
-    <form action="../Controller/rmLike.php" method="post" style="display:inline;">
+    <form action="../Execute/rmLike.php" method="post" style="display:inline;">
      <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
      <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
      <button type="submit" class="btn p-0 border-0">
@@ -78,7 +78,7 @@ $likeInstance->setToken();
      </button>
     </form>
    <?php else : ?>
-    <form action="../Controller/addLike.php" method="post" style="display:inline;">
+    <form action="../Execute/addLike.php" method="post" style="display:inline;">
      <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
      <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
      <button type="submit" class="btn p-0 border-0">
@@ -92,7 +92,7 @@ $likeInstance->setToken();
    <!-- tableからフェッチした値はstringになってしまう -->
    <?php if ((int)$list['user_id'] === $_SESSION['auth_id']) : ?>
     <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
-    <form action="../Controller/archive.php" method="post" style="display:inline;">
+    <form action="../Execute/archive.php" method="post" style="display:inline;">
      <input type="hidden" name="delete_id" value="<?php echo $postInstance->sanitize($list['id']); ?>">
      <button type="submit">アーカイブ</button>
     </form>

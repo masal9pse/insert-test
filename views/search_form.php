@@ -29,7 +29,7 @@ $get = $TagInstance->sanitize($_GET);
  <h3><?php print($searchForm); ?></h3>
  <a href="./index.php">全件表示リンク</a>
  <a href="./insert_form.php">投稿リンク</a>
- <form action="../Controller/search.php" method="get">
+ <form action="../Execute/search.php" method="get">
   <select name="category">
    <option value="">未選択</option>
    <?php foreach ($categories as $category) : ?>

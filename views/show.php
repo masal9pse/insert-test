@@ -31,7 +31,7 @@ var_dump($user);
   <!-- フォロー機能 -->
   <?php $followInstance = new FollowClass; ?>
   <?php if ($user['name'] !== $_SESSION['name']) : ?>
-   <form action="../Controller/follow.php" method="post" style="display:inline;">
+   <form action="../Execute/follow.php" method="post" style="display:inline;">
     <input type="hidden" name="follow_id" value="<?php echo $_SESSION['auth_id']; ?>">
     <input type="hidden" name="follower_id" value="<?php echo $user['user_id']; ?>">
     <?php if ($followInstance->check_follow($_SESSION['auth_id'], $user['user_id'])) : ?>

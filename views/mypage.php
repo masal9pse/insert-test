@@ -61,7 +61,7 @@ if (isset($_POST['logout'])) {
   </div>
   </td>
   <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
-  <form action="../Controller/archive.php" method="post" style="display:inline;">
+  <form action="../Execute/archive.php" method="post" style="display:inline;">
    <input type="hidden" name="delete_id" value="<?php echo $list['id']; ?>">
    <button type="submit">アーカイブ</button>
   </form>
