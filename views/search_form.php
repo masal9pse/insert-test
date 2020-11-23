@@ -7,7 +7,8 @@ $categories = $categoryInstance->getAllData();
 //var_dump($categories);
 //exit;
 
-$TagInstance = new TagClass();
+//$TagInstance = new TagClass;
+$TagInstance = new TagClass('tags', 'asc');
 $tags = $TagInstance->getAllData();
 //var_dump($tags);
 //exit;

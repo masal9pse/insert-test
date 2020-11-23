@@ -2,7 +2,7 @@
 ini_set('display_errors', "On");
 session_start();
 include('../Models/Function/TagClass.php');
-$tagInstance = new TagClass;
+$tagInstance = new TagClass('tags', 'asc');
 $tagInstance->auth_check('../auth/login.php');
 $tags = $tagInstance->getAllData();
 $post = $tagInstance->sanitize($_POST);

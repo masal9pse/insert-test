@@ -3,8 +3,12 @@ require_once dirname(__FILE__) . '/../UtilClass.php';
 
 class TagClass extends UtilClass
 {
- protected $table_name = 'tags';
- protected $sort = 'asc';
+ public function __construct($table_name, $sort)
+ {
+  $this->table_name = $table_name;
+  $this->sort = $sort;
+ }
+
 
  public static function callSearchFormStatic()
  {
