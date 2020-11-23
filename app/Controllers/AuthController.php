@@ -1,11 +1,12 @@
 <?php
-require_once dirname(__FILE__) . '/../UtilClass.php';
 
-class AuthClass extends UtilClass
+namespace App\Controllers;
+
+use App\Models\AuthModel;
+use PDO;
+
+class AuthController
 {
- protected $table_name = 'users';
- protected $redirect = '../views/index.php';
-
  public function login()
  {
   $duble = $this->duplicateCheck();

@@ -1,9 +1,11 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require_once dirname(__FILE__) . '/../Models/auth/AuthClass.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$loginInstance = new AuthClass();
+use App\Controllers\AuthController;
+
+$loginInstance = new AuthController();
 //var_dump($_COOKIE);
 //var_dump($_SESSION);
 $post = $loginInstance->sanitize($_POST);

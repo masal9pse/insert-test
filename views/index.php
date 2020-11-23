@@ -13,10 +13,6 @@ require('../Models/auth/AuthClass.php');
 require('../Models/Function/LikeClass.php');
 require('../Models/Function/FollowClass.php');
 
-$lists = $postInstance->getAllData();
-//var_dump($lists);
-//exit;
-//var_dump($_SESSION);
 if (empty($_SESSION['auth_id'])) {
  (string)$_SESSION['auth_id'] = "名無しのごんべ";
 }

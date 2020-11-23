@@ -4,17 +4,18 @@ namespace App\Controllers;
 
 use PDO;
 use App\Models\PostModel;
+use App\Controllers\UtilController;
 
-final class PostController
+final class PostController extends UtilController
 {
  public function getAllData(): array
  {
+  $db = $this->dbConnect();
   $post = new PostModel;
-  $db = $post->dbConnect();
   $sql = "SELECT * from $post->table_name where delete_flag = 0 order by id $post->sort";
   $stmt = $db->query($sql);
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  $results = $post->sanitize($results);
+  $results = $this->sanitize($results);
   return $results;
   $db = null;
  }
