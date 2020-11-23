@@ -48,26 +48,26 @@ class AuthController extends UtilController
   if ($result > 0) {
    exit('重複しています');
   }
-
+  $model = new AuthModel;
   $result = false;
 
   try {
    $name = $_POST['name'];
    $password = $_POST['password'];
    $password = password_hash($password, PASSWORD_DEFAULT);
-   $sql = 'INSERT into ' . $this->table_name . '(name, password) values (?, ?)';
+   $sql = 'INSERT into ' . $model->table_name . '(name, password) values (?, ?)';
    $db = $this->dbConnect();
    $stmt = $db->prepare($sql);
    $result =  $stmt->execute(array($name, $password));
    $user_id = $db->lastinsertid();
 
    // データをクッキーに保存
-   $this->cookieStore();
+   $model->cookieStore();
 
    // セッションにログイン情報を保存
-   $this->sessionStore($user_id);
+   $model->sessionStore($user_id);
 
-   $this->getRedirect();
+   $model->getRedirect();
   } catch (\Exception $e) {
    return $result;
   }

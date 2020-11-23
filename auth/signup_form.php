@@ -1,7 +1,10 @@
 <?php
 ini_set('display_errors', "On");
-require_once dirname(__FILE__) . '/../Models/UtilClass.php';
-$util = new UtilClass;
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Controllers\UtilController;
+
+$util = new UtilController;
 $post = $util->sanitize($_POST);
 ?>
 <!DOCTYPE html>
