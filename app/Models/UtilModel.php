@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use PDO;
-
 class UtilModel
 {
  protected $table_name;

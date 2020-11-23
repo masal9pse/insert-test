@@ -7,6 +7,7 @@ use App\Controllers\PostController;
 
 $postInstance = new PostController();
 $result = $postInstance->getAllData();
+var_dump($_SESSION);
 var_dump($result);
 exit;
 require('../Models/auth/AuthClass.php');

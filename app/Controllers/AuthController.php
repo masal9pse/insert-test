@@ -3,12 +3,14 @@
 namespace App\Controllers;
 
 use App\Models\AuthModel;
+use App\Controllers\UtilController;
 use PDO;
 
-class AuthController
+class AuthController extends UtilController
 {
  public function login()
  {
+  $model = new AuthModel;
   $duble = $this->duplicateCheck();
 
   if ((int)$duble === 0) {
@@ -19,50 +21,24 @@ class AuthController
 
   try {
    $db = $this->dbConnect();
-   $sql = 'SELECT * from ' . $this->table_name . ' where name = :name';
+   $sql = 'SELECT * from ' . $model->table_name . ' where name = :name';
    $stmt = $db->prepare($sql);
    $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
    $stmt->execute();
    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
    if (password_verify($_POST['password'], $row['password'])) {
-    $this->sessionStore($row['id']);
+    $model->sessionStore($row['id']);
 
     // クッキーに保存
-    $this->cookieStore();
+    $model->cookieStore();
 
     // リダイレクト処理
-    $this->getRedirect();
+    $model->getRedirect();
    }
   } catch (\Exception $e) {
    return $row;
   }
- }
-
- private function getRedirect()
- {
-  if (!empty($_SESSION['return'])) {
-   $url = $_SESSION['return'];
-   header("Location: $url");
-   exit;
-  } else {
-   header("Location: $this->redirect");
-   exit;
-  }
- }
-
- protected function cookieStore()
- {
-  // クッキーに保存
-  setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 14);
-  setcookie('password', $_POST['password'], time() + 60 * 60 * 24 * 14);
- }
-
- protected function sessionStore($row)
- {
-  $_SESSION['name'] = $_POST['name'];
-  $_SESSION['password'] = $_POST['password'];
-  $_SESSION['auth_id'] = (int)$row;
  }
 
  function signUp()
@@ -113,10 +89,11 @@ class AuthController
   return $session;
  }
 
- private function duplicateCheck()
+ protected function duplicateCheck()
  {
+  $model = new AuthModel;
   $db = $this->dbConnect();
-  $stmt = $db->prepare('SELECT * FROM ' . $this->table_name . ' WHERE name = :name limit 1');
+  $stmt = $db->prepare('SELECT * FROM ' . $model->table_name . ' WHERE name = :name limit 1');
   $stmt->bindValue(':name', $_POST['name'], PDO::PARAM_STR);
   $stmt->execute();
 
