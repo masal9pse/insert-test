@@ -5,21 +5,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use App\Controllers\TagController;
 use App\Controllers\CategoryController;
 
-$categoryInstance = new CategoryController();
-$categories = $categoryInstance->getAllData();
-var_dump($categories);
-exit;
 $TagInstance = new TagController('tags', 'asc');
+$categoryInstance = new CategoryController();
 $tags = $TagInstance->getAllData();
-//var_dump($tags);
-//exit;
-//var_dump($categories);
-//exit;
-
-//$TagInstance = new TagClass;
-$tags = $TagInstance->getAllData();
-//var_dump($tags);
-//exit;
+$categories = $categoryInstance->getAllData();
 $get = $TagInstance->sanitize($_GET);
 ?>
 
@@ -33,7 +22,7 @@ $get = $TagInstance->sanitize($_GET);
 </head>
 
 <body>
- <?php $searchForm = TagClass::callSearchFormStatic(); ?>
+ <?php $searchForm = TagController::callSearchFormStatic(); ?>
  <h3><?php print($searchForm); ?></h3>
  <a href="./index.php">全件表示リンク</a>
  <a href="./insert_form.php">投稿リンク</a>
