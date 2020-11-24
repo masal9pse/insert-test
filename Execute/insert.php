@@ -2,20 +2,22 @@
 ini_set('display_errors', "On");
 session_start();
 var_dump($_POST);
-//exit;
-require('../Models/Function/PostClass.php');
-$postInstance = new PostClass;
-$db = $postInstance->dbConnect();
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Controllers\PostController;
+
+$post = new PostController;
 
 if (empty($_POST['title'])) {
  exit('タイトルを入力してください');
 }
 
+$db = $post->dbConnect();
 $db->beginTransaction();
 try {
- $postInstance->postInsert($_POST);
+ $post->postInsert($_POST);
+ $post->postTagInsert($_POST);
  if (!empty($_POST['tags'])) {
-  $postInstance->postTagInsert($_POST);
  }
  echo '投稿に成功しました';
  // 空の場合
