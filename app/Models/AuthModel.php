@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class AuthModel
+use App\Models\UtilModel;
+
+class AuthModel extends UtilModel
 {
  // AuthControllerに継承していないので、インスタンス化する。 => protectedやprivateは使えない
  public $table_name = 'users';

@@ -1,14 +1,20 @@
 <?php
 ini_set('display_errors', "On");
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Controllers\TagController;
+
+$TagInstance = new TagController('tags', 'asc');
+$tags = $TagInstance->getAllData();
+var_dump($tags);
+exit;
 require_once('../Models/Function/CategoryClass.php');
-require_once('../Models/Function/TagClass.php');
 $categoryInstance = new CategoryClass();
 $categories = $categoryInstance->getAllData();
 //var_dump($categories);
 //exit;
 
 //$TagInstance = new TagClass;
-$TagInstance = new TagClass('tags', 'asc');
 $tags = $TagInstance->getAllData();
 //var_dump($tags);
 //exit;
