@@ -8,6 +8,9 @@ use App\Controllers\UtilController;
 
 final class PostController extends UtilController
 {
+ protected $table_name = 'posts';
+ protected $sort = 'asc';
+
  public function getAllData(): array
  {
   $db = $this->dbConnect();

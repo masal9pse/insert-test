@@ -9,7 +9,6 @@ use App\Controllers\UserController;
 use App\Controllers\FollowController;
 
 $user = new UserController;
-//$followInstance = new FollowController;
 $user = $user->getUserId($_GET['post_id'], $_GET['user_id']);
 var_dump($user);
 ?>
