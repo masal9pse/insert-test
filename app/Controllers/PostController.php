@@ -1,17 +1,21 @@
 <?php
 
-require_once dirname(__FILE__) . '/../UtilClass.php';
+namespace App\Controllers;
 
-final class PostClass extends UtilClass
+use PDO;
+use App\Models\PostModel;
+use App\Controllers\UtilController;
+
+final class PostController extends UtilController
 {
  protected $table_name = 'posts';
- protected $sort = 'desc';
+ protected $sort = 'asc';
 
- // UtilClassからオーバーライド
  public function getAllData(): array
  {
   $db = $this->dbConnect();
-  $sql = "SELECT * from $this->table_name where delete_flag = 0 order by id $this->sort";
+  $post = new PostModel;
+  $sql = "SELECT * from $post->table_name where delete_flag = 0 order by id $post->sort";
   $stmt = $db->query($sql);
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $results = $this->sanitize($results);
@@ -30,12 +34,15 @@ final class PostClass extends UtilClass
   $stmt->bindValue(':image', $image, PDO::PARAM_STR);
   $stmt->bindValue(':title', $post['title'], PDO::PARAM_STR);
   $stmt->bindValue(':detail', $post['detail'], PDO::PARAM_STR);
-  $stmt->bindValue(':user_id', $post['user_id'], PDO::PARAM_STR);
+  $stmt->bindValue(':user_id', $post['user_id'], PDO::PARAM_INT);
   if (!empty($_FILES['image']['name'])) {
    move_uploaded_file($_FILES['image']['tmp_name'], '../images/' . $image);
    echo "<img src=\" ../images/$image \">";
   }
   $stmt->execute();
+  $id = $db->lastInsertId();
+  $_SESSION['now_post_insert_id'] = $id;
+  echo '<p>' . $id . "のアップロードに成功しました</p>";
   echo '<p>' . $post['title'] . "のアップロードに成功しました</p>";
  }
 
@@ -44,15 +51,15 @@ final class PostClass extends UtilClass
  {
   $db = $this->dbConnect();
   $sql = "INSERT INTO post_tag(post_id,tag_id) VALUES (:post_id,:tag_id)";
-  $now_post_insert_id = $db->lastInsertId();
+  $now_post_insert_id = $_SESSION['now_post_insert_id'];
   var_dump($now_post_insert_id);
   foreach ($tags['tags'] as $tag_num) {
    $tag_stmt = $db->prepare($sql);
-   //var_dump($tag_num);
    $tag_stmt->bindValue(':post_id', $now_post_insert_id, PDO::PARAM_INT);
    $tag_stmt->bindValue(':tag_id', $tag_num, PDO::PARAM_INT);
    $tag_stmt->execute();
   }
+  unset($_SESSION['now_post_insert_id']);
  }
 
  // 記事更新
@@ -101,7 +108,8 @@ final class PostClass extends UtilClass
  function postLogicalDeleteList()
  {
   $db = $this->dbConnect();
-  $sql = "SELECT * from $this->table_name where delete_flag = 1 and user_id=:user_id order by id $this->sort";
+  $post = new PostModel;
+  $sql = "SELECT * from $post->table_name where delete_flag = 1 and user_id=:user_id order by id $post->sort";
   $stmt = $db->prepare($sql);
   $stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
   $stmt->execute();

@@ -1,9 +1,11 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require('../Models/Function/PostClass.php');
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$post = new PostClass;
+use App\Controllers\PostController;
+
+$post = new PostController;
 $lists = $post->postLogicalDeleteList();
 
 if (isset($_POST['submit'])) {

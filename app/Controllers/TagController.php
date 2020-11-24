@@ -1,7 +1,11 @@
 <?php
-require_once dirname(__FILE__) . '/../UtilClass.php';
 
-final class TagClass extends UtilClass
+namespace App\Controllers;
+
+use App\Controllers\UtilController;
+use App\Models\TagModel;
+
+final class TagController extends UtilController
 {
  public function __construct($table_name, $sort)
  {

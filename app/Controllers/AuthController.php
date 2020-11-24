@@ -1,7 +1,12 @@
 <?php
-require_once dirname(__FILE__) . '/../UtilClass.php';
 
-class AuthClass extends UtilClass
+namespace App\Controllers;
+
+use App\Models\AuthModel;
+use App\Controllers\UtilController;
+use PDO;
+
+class AuthController extends UtilController
 {
  protected $table_name = 'users';
  protected $redirect = '../views/index.php';
@@ -38,7 +43,7 @@ class AuthClass extends UtilClass
   }
  }
 
- private function getRedirect()
+ public function getRedirect()
  {
   if (!empty($_SESSION['return'])) {
    $url = $_SESSION['return'];
@@ -50,14 +55,14 @@ class AuthClass extends UtilClass
   }
  }
 
- protected function cookieStore()
+ public function cookieStore()
  {
   // クッキーに保存
   setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 14);
   setcookie('password', $_POST['password'], time() + 60 * 60 * 24 * 14);
  }
 
- protected function sessionStore($row)
+ public function sessionStore($row)
  {
   $_SESSION['name'] = $_POST['name'];
   $_SESSION['password'] = $_POST['password'];
@@ -71,26 +76,26 @@ class AuthClass extends UtilClass
   if ($result > 0) {
    exit('重複しています');
   }
-
+  $model = new AuthModel;
   $result = false;
 
   try {
    $name = $_POST['name'];
    $password = $_POST['password'];
    $password = password_hash($password, PASSWORD_DEFAULT);
-   $sql = 'INSERT into ' . $this->table_name . '(name, password) values (?, ?)';
+   $sql = 'INSERT into ' . $model->table_name . '(name, password) values (?, ?)';
    $db = $this->dbConnect();
    $stmt = $db->prepare($sql);
    $result =  $stmt->execute(array($name, $password));
    $user_id = $db->lastinsertid();
 
    // データをクッキーに保存
-   $this->cookieStore();
+   $model->cookieStore();
 
    // セッションにログイン情報を保存
-   $this->sessionStore($user_id);
+   $model->sessionStore($user_id);
 
-   $this->getRedirect();
+   $model->getRedirect();
   } catch (\Exception $e) {
    return $result;
   }
@@ -112,7 +117,7 @@ class AuthClass extends UtilClass
   return $session;
  }
 
- private function duplicateCheck()
+ protected function duplicateCheck()
  {
   $db = $this->dbConnect();
   $stmt = $db->prepare('SELECT * FROM ' . $this->table_name . ' WHERE name = :name limit 1');

@@ -1,9 +1,11 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require_once dirname(__FILE__) . '/../Models/auth/AdminClass.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$admin = new AdminClass();
+use App\Controllers\AdminController;
+
+$admin = new AdminController();
 $post = $admin->sanitize($_POST);
 
 $err = [];

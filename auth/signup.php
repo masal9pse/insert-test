@@ -1,8 +1,11 @@
 <?php
 ini_set('display_errors', "On");
 session_start();
-require_once dirname(__FILE__) . '/../Models/Auth/AuthClass.php';
-$authInstance = new AuthClass;
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Controllers\AuthController;
+
+$authInstance = new AuthController;
 
 $err = [];
 

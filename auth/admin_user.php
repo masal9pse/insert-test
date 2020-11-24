@@ -1,12 +1,15 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require_once dirname(__FILE__) . '/../Models/Function/UserClass.php';
-require_once dirname(__FILE__) . '/../Models/auth/AdminClass.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$admin = new AdminClass;
+use App\Controllers\AdminController;
+use App\Controllers\UserController;
+
+$admin = new AdminController;
 $admin->admin_check('./admin_form.php');
-$user = new UserClass;
+
+$user = new UserController;
 $users = $user->getAllData();
 
 //var_dump($user);

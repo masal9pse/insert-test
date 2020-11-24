@@ -1,10 +1,15 @@
 <?php
-require_once dirname(__FILE__) . '/../UtilClass.php';
-require_once dirname(__FILE__) . '/./TraitLikeApi.php';
 
-final class LikeClass extends UtilClass
+namespace App\Controllers;
+
+use PDO;
+use App\Controllers\TraitLikeApi;
+use App\Controllers\UtilController;
+
+final class LikeController extends UtilController
 {
- use LikeApi;
+ // traitのuseと名前空間のuseは全く別物
+ use TraitLikeApi;
  // いいねしているか判定する
  function isLike($post_id, $user_id)
  {

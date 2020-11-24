@@ -1,17 +1,14 @@
 <?php
 ini_set('display_errors', "On");
-require_once('../Models/Function/CategoryClass.php');
-require_once('../Models/Function/TagClass.php');
-$categoryInstance = new CategoryClass();
-$categories = $categoryInstance->getAllData();
-//var_dump($categories);
-//exit;
+require_once __DIR__ . '/../vendor/autoload.php';
 
-//$TagInstance = new TagClass;
-$TagInstance = new TagClass('tags', 'asc');
+use App\Controllers\TagController;
+use App\Controllers\CategoryController;
+
+$TagInstance = new TagController('tags', 'asc');
+$categoryInstance = new CategoryController();
 $tags = $TagInstance->getAllData();
-//var_dump($tags);
-//exit;
+$categories = $categoryInstance->getAllData();
 $get = $TagInstance->sanitize($_GET);
 ?>
 
@@ -25,7 +22,7 @@ $get = $TagInstance->sanitize($_GET);
 </head>
 
 <body>
- <?php $searchForm = TagClass::callSearchFormStatic(); ?>
+ <?php $searchForm = TagController::callSearchFormStatic(); ?>
  <h3><?php print($searchForm); ?></h3>
  <a href="./index.php">全件表示リンク</a>
  <a href="./insert_form.php">投稿リンク</a>

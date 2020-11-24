@@ -1,27 +1,26 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require('../Models/auth/AuthClass.php');
-require('../Models/Function/PostClass.php');
-require('../Models/Function/LikeClass.php');
-require('../Models/Function/FollowClass.php');
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$postInstance = new PostClass();
+use App\Controllers\PostController;
+use App\Controllers\AuthController;
+use App\Controllers\LikeController;
+
+
+$postInstance = new PostController();
 $lists = $postInstance->getAllData();
-//var_dump($lists);
-//exit;
-//var_dump($_SESSION);
+
 if (empty($_SESSION['auth_id'])) {
  (string)$_SESSION['auth_id'] = "名無しのごんべ";
 }
 
 if (isset($_POST['logout'])) {
- $authInstance = new AuthClass();
+ $authInstance = new AuthController();
  $authInstance->logout($_SESSION, 'index.php');
 }
-// ログイン画面だけ表示
-//var_dump($_COOKIE);
-$likeInstance = new LikeClass();
+
+$likeInstance = new LikeController();
 $likeInstance->setToken();
 ?>
 <!DOCTYPE html>
@@ -36,70 +35,72 @@ $likeInstance->setToken();
 </head>
 
 <body>
- <h1>一覧リスト</h1>
- <a href="./search_form.php">検索リンク</a>
- <a href="./insert_form.php">投稿リンク</a>
- <form action="../auth/admin_form.php" method="get">
-  <button type="submit" class="btn btn-success">管理画面</button>
- </form>
- <?php if (is_string($_SESSION['auth_id'])) : ?>
-  <form action="../auth/login.php" method="get">
-   <button type="submit" class="btn btn-danger">ログイン</button>
+ <div class="container mt-5">
+  <h1>一覧リスト</h1>
+  <a href="./search_form.php">検索リンク</a>
+  <a href="./insert_form.php">投稿リンク</a>
+  <form action="../auth/admin_form.php" method="get">
+   <button type="submit" class="btn btn-success">管理画面</button>
   </form>
-  <form action="../auth/signup_form.php" method="get">
-   <button type="submit" class="btn btn-danger">新規投稿</button>
-  </form>
- <?php else : ?>
-  <form action="" method="post">
-   <button type="submit" name="logout" class="btn btn-danger">ログアウト</button>
-  </form>
-  <?php if (is_int($_SESSION['auth_id'])) : ?>
-   <button type="button" onclick="location.href='./mypage.php'">マイページ</button>
-  <?php endif; ?>
- <?php endif; ?>
-
- <?php foreach ($lists as $list) : ?>
-  <div>
-   <td><?php echo $list['id']; ?></td>
-   <td>
-    <a href="show.php?post_id=<?php print($list['id']) ?>&user_id=<?php print($list['user_id']) ?>">
-     <?php echo $list['title']; ?>
-    </a>
-   </td>
-   <td><?php echo $list['detail']; ?></td>
-
-   <!-- いいね機能 -->
-   <?php if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) : ?>
-    <form action="../Execute/rmLike.php" method="post" style="display:inline;">
-     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-     <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
-     <button type="submit" class="btn p-0 border-0">
-      <i class="fas fa-heart fa-fw text-danger"></i>
-     </button>
-    </form>
-   <?php else : ?>
-    <form action="../Execute/addLike.php" method="post" style="display:inline;">
-     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-     <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
-     <button type="submit" class="btn p-0 border-0">
-      <i class="fas fa-heart"></i>
-     </button>
-    </form>
-   <?php endif;  ?>
-   <span>
-    <?php echo count($likeInstance->getLike($list['id']));  ?>
-   </span>
-   <!-- tableからフェッチした値はstringになってしまう -->
-   <?php if ((int)$list['user_id'] === $_SESSION['auth_id']) : ?>
-    <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
-    <form action="../Execute/archive.php" method="post" style="display:inline;">
-     <input type="hidden" name="delete_id" value="<?php echo $postInstance->sanitize($list['id']); ?>">
-     <button type="submit">アーカイブ</button>
-    </form>
+  <?php if (is_string($_SESSION['auth_id'])) : ?>
+   <form action="../auth/login.php" method="get">
+    <button type="submit" class="btn btn-danger">ログイン</button>
+   </form>
+   <form action="../auth/signup_form.php" method="get">
+    <button type="submit" class="btn btn-danger">新規投稿</button>
+   </form>
+  <?php else : ?>
+   <form action="" method="post">
+    <button type="submit" name="logout" class="btn btn-danger">ログアウト</button>
+   </form>
+   <?php if (is_int($_SESSION['auth_id'])) : ?>
+    <button type="button" onclick="location.href='./mypage.php'">マイページ</button>
    <?php endif; ?>
+  <?php endif; ?>
 
-  </div>
- <?php endforeach ?>
+  <?php foreach ($lists as $list) : ?>
+   <div>
+    <td><?php echo $list['id']; ?></td>
+    <td>
+     <a href="show.php?post_id=<?php print($list['id']) ?>&user_id=<?php print($list['user_id']) ?>">
+      <?php echo $list['title']; ?>
+     </a>
+    </td>
+    <td><?php echo $list['detail']; ?></td>
+
+    <!-- いいね機能 -->
+    <?php if ($likeInstance->isLike($list['id'], $_SESSION['auth_id'])) : ?>
+     <form action="../Execute/rmLike.php" method="post" style="display:inline;">
+      <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+      <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
+      <button type="submit" class="btn p-0 border-0">
+       <i class="fas fa-heart fa-fw text-danger"></i>
+      </button>
+     </form>
+    <?php else : ?>
+     <form action="../Execute/addLike.php" method="post" style="display:inline;">
+      <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+      <input type="hidden" name="post_id" value="<?php echo $list['id']; ?>">
+      <button type="submit" class="btn p-0 border-0">
+       <i class="fas fa-heart"></i>
+      </button>
+     </form>
+    <?php endif;  ?>
+    <span>
+     <?php echo count($likeInstance->getLike($list['id']));  ?>
+    </span>
+    <!-- tableからフェッチした値はstringになってしまう -->
+    <?php if ((int)$list['user_id'] === $_SESSION['auth_id']) : ?>
+     <td><button type="button" onclick="location.href='./update_form.php?id=<?php print($list['id']) ?>'">編集</button></td>
+     <form action="../Execute/archive.php" method="post" style="display:inline;">
+      <input type="hidden" name="delete_id" value="<?php echo $postInstance->sanitize($list['id']); ?>">
+      <button type="submit">アーカイブ</button>
+     </form>
+    <?php endif; ?>
+
+   </div>
+  <?php endforeach ?>
+ </div>
 </body>
 
 </html>

@@ -1,15 +1,14 @@
 <?php
 session_start();
-//var_dump($_GET);
-//exit;
+ini_set('display_errors', "On");
 $_SESSION['show_page'] = $_SERVER["REQUEST_URI"];
-var_dump($_SESSION);
 
-require_once("../Models/Function/PostClass.php");
-require_once("../Models/Function/UserClass.php");
-require_once("../Models/Function/FollowClass.php");
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$user = new UserClass;
+use App\Controllers\UserController;
+use App\Controllers\FollowController;
+
+$user = new UserController;
 $user = $user->getUserId($_GET['post_id'], $_GET['user_id']);
 var_dump($user);
 ?>
@@ -29,7 +28,7 @@ var_dump($user);
  <p>
   この記事を作成したユーザ <?php echo $user['name']; ?>
   <!-- フォロー機能 -->
-  <?php $followInstance = new FollowClass; ?>
+  <?php $followInstance = new FollowController; ?>
   <?php if ($user['name'] !== $_SESSION['name']) : ?>
    <form action="../Execute/follow.php" method="post" style="display:inline;">
     <input type="hidden" name="follow_id" value="<?php echo $_SESSION['auth_id']; ?>">

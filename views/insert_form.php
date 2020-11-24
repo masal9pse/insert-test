@@ -2,14 +2,21 @@
 
 session_start();
 ini_set('display_errors', "On");
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\PostTitleController;
+use App\Controllers\TagController;
 
-include('../Models/Function/TagClass.php');
-$tagInstance = new TagClass('tags', 'asc');
+$tagInstance = new TagController('tags', 'asc');
+
+// 認証チェック
 $tagInstance->auth_check('../auth/login.php');
+
+// 全権取得
 $tags = $tagInstance->getAllData();
+
+// XSS対策
 $post = $tagInstance->sanitize($_POST);
 ?>
 <!DOCTYPE html>
@@ -25,6 +32,7 @@ $post = $tagInstance->sanitize($_POST);
 <body>
  <?php
  $title = new PostTitleController;
+ var_dump($_SESSION);
  ?>
  <!--<h1>投稿フォーム</h1>-->
  <h1><?php $title->run(); ?></h1>

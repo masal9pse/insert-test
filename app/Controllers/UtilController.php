@@ -1,10 +1,12 @@
 <?php
-//final class UtilClass => 別のクラスに継承されているのでfinalは使えない
-class UtilClass
+
+namespace App\Controllers;
+
+use App\Models\UtilModel;
+use PDO;
+
+class UtilController extends UtilModel
 {
- protected $table_name;
- protected $sort;
- protected $where;
  function dbConnect()
  {
   try {

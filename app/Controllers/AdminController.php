@@ -1,20 +1,23 @@
 <?php
-require_once dirname(__FILE__) . '/./AuthClass.php';
 
-final class AdminClass extends AuthClass
+namespace App\Controllers;
+
+use App\Controllers\AuthController;
+
+final class AdminController extends AuthController
 {
 
  protected $table_name = 'admins';
  protected $redirect = '../auth/admin_user.php';
 
- protected function cookieStore()
+ function cookieStore()
  {
   // クッキーに保存
   setcookie('admin_name', $_POST['name'], time() + 60 * 60 * 24 * 14);
   setcookie('admin_password', $_POST['password'], time() + 60 * 60 * 24 * 14);
  }
 
- protected function sessionStore($row)
+ function sessionStore($row)
  {
   $_SESSION['admin_name'] = $_POST['name'];
   $_SESSION['admin_password'] = $_POST['password'];
@@ -26,7 +29,7 @@ final class AdminClass extends AuthClass
   if (isset($_SESSION["admin_name"])) {
    echo 'Logoutしました。';
   } else {
-   echo 'SessionがTimeoutしました。';
+   echo 'SessionがTimeoutしました。ログアウトできていません';
   }
   //セッション変数のクリア
   unset($_SESSION["admin_name"]);

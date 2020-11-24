@@ -2,13 +2,15 @@
 var_dump($_GET);
 session_start();
 ini_set('display_errors', "On");
-require_once dirname(__FILE__) . '/../Models/Function/LikeClass.php';
-require_once dirname(__FILE__) . '/../Models/auth/AdminClass.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$admin = new AdminClass;
+use App\Controllers\LikeController;
+use App\Controllers\AdminController;
+
+$admin = new AdminController;
 $admin->admin_check('./admin_form.php');
 
-$like = new LikeClass;
+$like = new LikeController;
 $like_users = $like->like_user_list();
 //var_dump($like_users);
 ?>

@@ -1,10 +1,14 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require('../Models/Function/PostClass.php');
-$postInstance = new PostClass();
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Controllers\PostController;
+
+$postInstance = new PostController();
 $postInstance->auth_check('../auth/login.php');
 $update_post = $postInstance->getById($_GET['id']);
+//var_dump($update_post);
 $postInstance->setToken();
 ?>
 

@@ -1,7 +1,13 @@
 <?php
-require_once dirname(__FILE__) . '/../UtilClass.php';
 
-final class UserClass extends UtilClass
+namespace App\Controllers;
+
+// クラスの外のuseは名前空間関連に使い、そのクラスを使う際にはインスタンス化しないといけない。
+// 継承した時は別
+use PDO;
+use App\Controllers\UtilController;
+
+final class UserController extends UtilController
 {
  protected $table_name = 'users';
 

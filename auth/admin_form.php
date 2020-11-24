@@ -1,10 +1,12 @@
 <?php
 session_start();
 ini_set('display_errors', "On");
-require_once dirname(__FILE__) . '/../Models/auth/AdminClass.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Controllers\AdminController;
 
 var_dump($_SESSION);
-$admin = new AdminClass();
+$admin = new AdminController();
 $post = $admin->sanitize($_POST);
 //var_dump($_COOKIE);
 if (isset($_COOKIE['admin_name'], $_COOKIE['admin_password'])) {
