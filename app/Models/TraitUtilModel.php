@@ -73,6 +73,10 @@ trait TraitUtilModel
   if (count($results) == 0) {
    echo '結果は0件です';
   }
-  var_dump($results);
+  //var_dump($results);
+  foreach ($results as $result) {
+   //echo $result['title'];
+   return $result['title'];
+  }
  }
 }

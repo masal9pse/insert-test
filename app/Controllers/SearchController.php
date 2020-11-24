@@ -39,7 +39,8 @@ final class SearchController
   $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
   // タグ検索 $tag_bindsのキーと$whereSqlは同じ
   $this->tagBinds($tag_binds, $stmt);
-  $this->queryPost($stmt);
+  $result =  $this->queryPost($stmt);
+  return $result;
  }
 
  public function tagTextSearch()

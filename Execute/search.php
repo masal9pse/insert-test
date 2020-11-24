@@ -10,7 +10,8 @@ $search = new SearchController;
 var_dump($_GET);
 
 if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
- $search->AllSearch();
+ $result = $search->AllSearch();
+ echo $result;
 }
 if (!empty($_GET['tags'] && $_GET['category']) && empty($_GET['search'])) {
  $search->tagCategorySearch();
