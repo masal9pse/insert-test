@@ -4,16 +4,12 @@ ini_set('display_errors', "On");
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\PostController;
+use App\Controllers\AuthController;
+use App\Controllers\LikeController;
+
 
 $postInstance = new PostController();
 $lists = $postInstance->getAllData();
-//var_dump($_SESSION);
-//var_dump($result);
-//exit;
-//require('../Models/auth/AuthClass.php');
-use App\Controllers\AuthController;
-//require('../Models/Function/LikeClass.php');
-use App\Controllers\LikeController;
 
 if (empty($_SESSION['auth_id'])) {
  (string)$_SESSION['auth_id'] = "名無しのごんべ";
@@ -23,8 +19,7 @@ if (isset($_POST['logout'])) {
  $authInstance = new AuthController();
  $authInstance->logout($_SESSION, 'index.php');
 }
-// ログイン画面だけ表示
-//var_dump($_COOKIE);
+
 $likeInstance = new LikeController();
 $likeInstance->setToken();
 ?>
