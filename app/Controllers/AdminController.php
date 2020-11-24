@@ -10,14 +10,14 @@ final class AdminController extends AuthController
  protected $table_name = 'admins';
  protected $redirect = '../auth/admin_user.php';
 
- protected function cookieStore()
+ function cookieStore()
  {
   // クッキーに保存
   setcookie('admin_name', $_POST['name'], time() + 60 * 60 * 24 * 14);
   setcookie('admin_password', $_POST['password'], time() + 60 * 60 * 24 * 14);
  }
 
- protected function sessionStore($row)
+ function sessionStore($row)
  {
   $_SESSION['admin_name'] = $_POST['name'];
   $_SESSION['admin_password'] = $_POST['password'];
@@ -29,7 +29,7 @@ final class AdminController extends AuthController
   if (isset($_SESSION["admin_name"])) {
    echo 'Logoutしました。';
   } else {
-   echo 'SessionがTimeoutしました。';
+   echo 'SessionがTimeoutしました。ログアウトできていません';
   }
   //セッション変数のクリア
   unset($_SESSION["admin_name"]);
