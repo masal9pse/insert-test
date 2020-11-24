@@ -59,6 +59,7 @@ final class PostController extends UtilController
    $tag_stmt->bindValue(':tag_id', $tag_num, PDO::PARAM_INT);
    $tag_stmt->execute();
   }
+  unset($_SESSION['now_post_insert_id']);
  }
 
  //// 記事更新
