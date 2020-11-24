@@ -2,9 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Controllers\AbstractAuthClass;
+use PDO;
+use App\Controllers\AbstractAuthController;
 
-final class FollowController extends AbstractAuthClass
+final class FollowController extends AbstractAuthController
 {
  function check_follow($follow_user, $follower_user)
  {

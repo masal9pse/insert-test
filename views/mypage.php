@@ -4,18 +4,17 @@ ini_set('display_errors', "On");
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\MypageController;
-
-require('../Models/Function/LikeClass.php');
-require('../Models/auth/AuthClass.php');
+use App\Controllers\LikeController;
+use App\Controllers\AuthController;
 
 $mypageInstance = new MypageController;
-$likeInstance = new LikeClass;
+$likeInstance = new LikeController;
 $mypageInstance->auth_check('../auth/login.php');
 //var_dump($_SESSION);
 
 $lists = $mypageInstance->myPageList();
 if (isset($_POST['logout'])) {
- $authInstance = new AuthClass();
+ $authInstance = new AuthController();
  $authInstance->logout($_SESSION, 'index.php');
 }
 ?>

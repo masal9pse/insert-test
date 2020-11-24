@@ -82,36 +82,37 @@ final class PostController extends UtilController
   $new_stmt->execute();
  }
 
- //function postLogicalDelete($post)
- //{
- // $db = $util->dbConnect();
- // $sql = 'UPDATE posts set delete_flag = 1 where id = :id';
- // $stmt = $db->prepare($sql);
- // $stmt->bindValue(':id', $post, PDO::PARAM_INT);
- // $result = $stmt->execute();
- // return $result;
- //}
+ function postLogicalDelete($post)
+ {
+  $db = $this->dbConnect();
+  $sql = 'UPDATE posts set delete_flag = 1 where id = :id';
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':id', $post, PDO::PARAM_INT);
+  $result = $stmt->execute();
+  return $result;
+ }
 
- //function postLogicalUpdate($post)
- //{
- // $db = $util->dbConnect();
- // $sql = 'UPDATE posts set delete_flag = 0 where id = :id';
- // $stmt = $db->prepare($sql);
- // $stmt->bindValue(':id', $post, PDO::PARAM_INT);
- // $stmt->execute();
- // header("Location: ../views/mypage.php");
- //}
+ function postLogicalUpdate($post)
+ {
+  $db = $this->dbConnect();
+  $sql = 'UPDATE posts set delete_flag = 0 where id = :id';
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':id', $post, PDO::PARAM_INT);
+  $stmt->execute();
+  header("Location: ../views/mypage.php");
+ }
 
- //function postLogicalDeleteList()
- //{
- // $db = $util->dbConnect();
- // $sql = "SELECT * from $util->table_name where delete_flag = 1 and user_id=:user_id order by id $util->sort";
- // $stmt = $db->prepare($sql);
- // $stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
- // $stmt->execute();
- // $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
- // $results = $util->sanitize($results);
- // return $results;
- // $db = null;
- //}
+ function postLogicalDeleteList()
+ {
+  $db = $this->dbConnect();
+  $post = new PostModel;
+  $sql = "SELECT * from $post->table_name where delete_flag = 1 and user_id=:user_id order by id $post->sort";
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
+  $stmt->execute();
+  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $results = $this->sanitize($results);
+  return $results;
+  $db = null;
+ }
 }
