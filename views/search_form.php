@@ -3,14 +3,16 @@ ini_set('display_errors', "On");
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\TagController;
+use App\Controllers\CategoryController;
 
+$categoryInstance = new CategoryController();
+$categories = $categoryInstance->getAllData();
+var_dump($categories);
+exit;
 $TagInstance = new TagController('tags', 'asc');
 $tags = $TagInstance->getAllData();
-var_dump($tags);
-exit;
-require_once('../Models/Function/CategoryClass.php');
-$categoryInstance = new CategoryClass();
-$categories = $categoryInstance->getAllData();
+//var_dump($tags);
+//exit;
 //var_dump($categories);
 //exit;
 
