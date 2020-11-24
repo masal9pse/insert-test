@@ -1,7 +1,10 @@
 <?php
-require_once dirname(__FILE__) . '/../auth/AbstractAuthClass.php';
 
-final class FollowClass extends AbstractAuthClass
+namespace App\Controllers;
+
+use App\Controllers\AbstractAuthClass;
+
+final class FollowController extends AbstractAuthClass
 {
  function check_follow($follow_user, $follower_user)
  {

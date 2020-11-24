@@ -1,7 +1,10 @@
 <?php
-require_once dirname(__FILE__) . '/./AuthClass.php';
 
-final class AdminClass extends AuthClass
+namespace App\Controllers;
+
+use App\Controllers\AuthController;
+
+final class AdminController extends AuthController
 {
 
  protected $table_name = 'admins';

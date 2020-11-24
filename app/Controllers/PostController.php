@@ -43,18 +43,15 @@ final class PostController extends UtilController
   echo '<p>' . $post['title'] . "のアップロードに成功しました</p>";
  }
 
- ////// 記事に紐づいたタグを中間テーブルにインサート
+ // 記事に紐づいたタグを中間テーブルにインサート
  function postTagInsert($tags)
  {
   $db = $this->dbConnect();
   $sql = "INSERT INTO post_tag(post_id,tag_id) VALUES (:post_id,:tag_id)";
-  //$now_post_insert_id = $db->lastInsertId("SELECT * from posts");
   $now_post_insert_id = $_SESSION['now_post_insert_id'];
   var_dump($now_post_insert_id);
-  //print_r($db->errorInfo());
   foreach ($tags['tags'] as $tag_num) {
    $tag_stmt = $db->prepare($sql);
-   //var_dump($tag_num);
    $tag_stmt->bindValue(':post_id', $now_post_insert_id, PDO::PARAM_INT);
    $tag_stmt->bindValue(':tag_id', $tag_num, PDO::PARAM_INT);
    $tag_stmt->execute();
@@ -62,28 +59,28 @@ final class PostController extends UtilController
   unset($_SESSION['now_post_insert_id']);
  }
 
- //// 記事更新
- //function postUpdate($post)
- //{
- // $db = $util->dbConnect();
- // $result = $util->getById($post['id']);
- // //exit;
- // $new_sql = 'UPDATE posts SET title=:title,detail=:detail,image=:image,created_at=now(),updated_at=now(),user_id=:user_id where id=:id';
- // $new_image = uniqid(mt_rand(), true); //ファイル名をユニーク化
- // //var_dump($new_image);
- // $new_image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);
- // $new_stmt = $db->prepare($new_sql);
- // $new_stmt->bindValue(':title', $post['title'], PDO::PARAM_STR);
- // $new_stmt->bindValue(':detail', $post['detail'], PDO::PARAM_STR);
- // $new_stmt->bindValue(':image', $new_image, PDO::PARAM_STR);
- // $new_stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
- // $new_stmt->bindValue(':id', $post['id'], PDO::PARAM_INT);
- // if (!empty($_FILES['image']['name'])) {
- //  unlink('../images/' . $result['image']);
- //  move_uploaded_file($_FILES['image']['tmp_name'], '../images/' . $new_image);
- // }
- // $new_stmt->execute();
- //}
+ // 記事更新
+ function postUpdate($post)
+ {
+  $db = $this->dbConnect();
+  $result = $this->getById($post['id']);
+  //exit;
+  $new_sql = 'UPDATE posts SET title=:title,detail=:detail,image=:image,created_at=now(),updated_at=now(),user_id=:user_id where id=:id';
+  $new_image = uniqid(mt_rand(), true); //ファイル名をユニーク化
+  //var_dump($new_image);
+  $new_image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);
+  $new_stmt = $db->prepare($new_sql);
+  $new_stmt->bindValue(':title', $post['title'], PDO::PARAM_STR);
+  $new_stmt->bindValue(':detail', $post['detail'], PDO::PARAM_STR);
+  $new_stmt->bindValue(':image', $new_image, PDO::PARAM_STR);
+  $new_stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
+  $new_stmt->bindValue(':id', $post['id'], PDO::PARAM_INT);
+  if (!empty($_FILES['image']['name'])) {
+   unlink('../images/' . $result['image']);
+   move_uploaded_file($_FILES['image']['tmp_name'], '../images/' . $new_image);
+  }
+  $new_stmt->execute();
+ }
 
  //function postLogicalDelete($post)
  //{

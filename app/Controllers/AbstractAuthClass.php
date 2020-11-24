@@ -1,8 +1,10 @@
 <?php
-require_once dirname(__FILE__) . '/../UtilClass.php';
 
-//final abstract class AbstractAuthClass extends UtilClass => abstractは継承されることが前提なのでfinalはもちろん使えない
-abstract class AbstractAuthClass extends UtilClass
+namespace App\Controllers;
+
+use App\Controllers\UtilController;
+
+abstract class AbstractAuthController extends UtilController
 {
  // 練習用に無理やり抽象クラスを作成
  abstract public function getFollow($follower_id);

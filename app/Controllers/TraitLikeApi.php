@@ -1,7 +1,9 @@
 <?php
-//require_once dirname(__FILE__) . '/./LikeClass.php';
 
-trait LikeApi
+namespace App\Controllers;
+
+// ファイル名とトレイト名を同じにしないとエラーになった
+trait TraitLikeApi
 {
  public $id;
  public $post_id;
