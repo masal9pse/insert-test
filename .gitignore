@@ -1,1 +1,5 @@
 /vendor/
+/terraform/example
+/terraform/example.pub
+/terraform/.terraform
+/terraform/terraform.tfstate
