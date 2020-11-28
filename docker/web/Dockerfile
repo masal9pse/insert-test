@@ -1,5 +1,6 @@
 FROM php:7.3-apache
 
+RUN cd /usr/bin && curl -s http://getcomposer.org/installer | php && ln -s /usr/bin/composer.phar /usr/bin/composer
 RUN apt-get update
 
 RUN apt-get install -y vim less

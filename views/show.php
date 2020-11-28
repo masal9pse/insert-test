@@ -45,6 +45,7 @@ var_dump($user);
  <ul>
   <li>記事タイトル <?php echo $user['title'] ?></li>
   <li>記事 <?php echo $user['detail'] ?></li>
+  <img src="<?php echo '../images/' . $update_post['image'] ?>" alt="">
  </ul>
  <a href="./index.php">トップページへ</a>
 </body>
