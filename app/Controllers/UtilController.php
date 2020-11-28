@@ -10,11 +10,23 @@ class UtilController extends UtilModel
  function dbConnect()
  {
   try {
-   $db = new PDO('pgsql:dbname=offshoa_db;host=127.0.0.1;port=5432;', 'yamamotohiroto', '');
-   //echo '接続成功です';
+   $db = new PDO(
+    'pgsql:host=db;dbname=offshoa_db;',
+    'test_user',
+    'secret'
+   );
+   //$db = new PDO('pgsql:dbname=offshoa_db;host=127.0.0.1;port=5432;', 'yamamotohiroto', '');
+   echo '接続成功です';
   } catch (PDOException $e) {
-   ini_set('display_errors', "On");
-   echo $e . 'エラーです';
+   try {
+    $db = new PDO(
+     'pgsql:host=db;dbname=offshoa_db;charset=utf8mb4',
+     'test_user',
+     'secret'
+    );
+   } catch (PDOException $e) {
+    echo 'エラーです';
+   }
   }
   return $db;
  }
