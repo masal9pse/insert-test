@@ -1,3 +1,10 @@
+# production のログイン情報
+
+一般ユーザーログイン
+名前: root パスワード: password
+管理ログイン
+名前: admin パスワード: password
+
 # 機能一覧
 
 - CUR 機能 + 投稿の際にタグを紐付け
