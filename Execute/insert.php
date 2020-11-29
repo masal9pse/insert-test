@@ -16,8 +16,8 @@ $db = $post->dbConnect();
 $db->beginTransaction();
 try {
  $post->postInsert($_POST);
- $post->postTagInsert($_POST);
  if (!empty($_POST['tags'])) {
+  $post->postTagInsert($_POST);
  }
  echo '投稿に成功しました';
  // 空の場合

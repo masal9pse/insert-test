@@ -79,7 +79,9 @@ final class PostController extends UtilController
   $new_stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
   $new_stmt->bindValue(':id', $post['id'], PDO::PARAM_INT);
   if (!empty($_FILES['image']['name'])) {
-   unlink('../images/' . $result['image']);
+   if (file_exists('../images/' . $result['image'])) {
+    unlink('../images/' . $result['image']);
+   }
    move_uploaded_file($_FILES['image']['tmp_name'], '../images/' . $new_image);
   }
   $new_stmt->execute();

@@ -44,7 +44,7 @@ try {
 </head>
 
 <body>
- <a href="../views/update_form.php">戻る</a>
+ <!--<a href="../views/update_form.php">戻る</a>-->
  <a href="../views/index.php">トップページへ</a>
 </body>
 
