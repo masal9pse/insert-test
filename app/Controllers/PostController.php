@@ -10,6 +10,7 @@ final class PostController extends UtilController
 {
  protected $table_name = 'posts';
  protected $sort = 'asc';
+ public $id;
 
  public function getAllData(): array
  {
@@ -22,6 +23,32 @@ final class PostController extends UtilController
   return $results;
   $db = null;
  }
+ // Delete Category
+ public function delete()
+ {
+  // Create query
+  $query = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
+
+  // Prepare Statement
+  $stmt = $this->dbConnect()->prepare($query);
+
+  // clean data
+  $this->id = htmlspecialchars(strip_tags($this->id));
+
+  // Bind Data
+  $stmt->bindParam(':id', $this->id);
+
+  // Execute query
+  if ($stmt->execute()) {
+   return true;
+  }
+
+  // Print error if something goes wrong
+  printf("Error: $s.\n", $stmt->error);
+
+  return false;
+ }
+
 
  // 記事投稿
  function postInsert($post)

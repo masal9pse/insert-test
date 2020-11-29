@@ -96,7 +96,11 @@ $likeInstance->setToken();
       <input type="hidden" name="delete_id" value="<?php echo $postInstance->sanitize($list['id']); ?>">
       <button type="submit">アーカイブ</button>
      </form>
-    <?php endif; ?>
+     <td>
+      <button type="button" class="btn btn-danger btn-sm deleteBtn" id="<?php echo $list['id'] ?>" data-target="#deletemodal" data-toggle="modal" data-backdrop="false">
+       削除
+      </button>
+     <?php endif; ?>
 
    </div>
   <?php endforeach ?>

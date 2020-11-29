@@ -3,13 +3,37 @@
 namespace App\Controllers;
 
 use PDO;
-use App\Controllers\TraitLikeApi;
+//use App\Controllers\TraitLikeApi;
 use App\Controllers\UtilController;
 
 final class LikeController extends UtilController
 {
  // traitのuseと名前空間のuseは全く別物
- use TraitLikeApi;
+ //use TraitLikeApi;
+ public $id;
+ public $post_id;
+ public $user_id;
+
+ public function addLikeApi()
+ {
+  $db = $this->dbConnect();
+  $sql = 'INSERT INTO likes(post_id,user_id) values (:post_id,:user_id)';
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':post_id', $this->post_id, PDO::PARAM_INT);
+  $stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
+  $stmt->execute();
+ }
+
+ public function rmLikeApi()
+ {
+  $db = $this->dbConnect();
+  $sql = 'DELETE FROM likes WHERE post_id = :post_id AND user_id = :user_id';
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':post_id', $this->post_id, PDO::PARAM_INT);
+  $stmt->bindValue(':user_id', $_SESSION['auth_id'], PDO::PARAM_INT);
+  $stmt->execute();
+ }
+
  // いいねしているか判定する
  function isLike($post_id, $user_id)
  {
