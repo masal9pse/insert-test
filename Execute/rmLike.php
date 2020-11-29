@@ -10,7 +10,8 @@ $likeInstance->auth_check('../auth/login.php');
 var_dump($_POST);
 var_dump($_SESSION);
 if (isset($_POST["csrf_token"]) && $_POST["csrf_token"] === $_SESSION['csrf_token']) {
- echo "正常なリクエストです。";
+ echo "正常なリクエストです。" . "\n";
+ echo "いいねを削除しました";
  $likeInstance->rmLike();
 } else {
  echo "不正なリクエストです。";

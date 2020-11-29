@@ -13,12 +13,12 @@ use App\Controllers\LikeController;
 
 $likeApi = new LikeController;
 
-$likeApi->post_id = $_POST['post_id'];
+//$likeApi->post_id = $_POST['post_id'];
 
-if (!$likeApi->isLike($likeApi->post_id, $_SESSION['auth_id'])) {
- $likeApi->addLikeApi();
- echo count($likeApi->getLike($likeApi->post_id));
+if (!$likeApi->isLike($_POST['post_id'], $_SESSION['auth_id'])) {
+ $likeApi->addLike();
+ echo count($likeApi->getLike($_POST['post_id']));
 } else {
- $likeApi->rmLikeApi();
- echo count($likeApi->getLike($likeApi->post_id));
+ $likeApi->rmLike();
+ echo count($likeApi->getLike($_POST['post_id']));
 }
