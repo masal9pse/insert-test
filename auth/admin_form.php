@@ -8,7 +8,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\AdminController;
 
-var_dump($_SESSION);
+//var_dump($_SESSION);
 $admin = new AdminController();
 $post = $admin->sanitize($_POST);
 //var_dump($_COOKIE);

@@ -6,7 +6,7 @@ use App\Controllers\SearchController;
 
 $search = new SearchController;
 
-var_dump($_GET);
+//var_dump($_GET);
 
 if (!empty($_GET['tags'] && $_GET['search'] && $_GET['category'])) {
  $search->AllSearch();

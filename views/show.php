@@ -10,7 +10,7 @@ use App\Controllers\FollowController;
 
 $user = new UserController;
 $user = $user->getUserId($_GET['post_id'], $_GET['user_id']);
-var_dump($user);
+//var_dump($user);
 ?>
 <!DOCTYPE html>
 <html lang="en">
