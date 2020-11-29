@@ -29,7 +29,7 @@ var_dump($user);
   この記事を作成したユーザ <?php echo $user['name']; ?>
   <!-- フォロー機能 -->
   <?php $followInstance = new FollowController; ?>
-  <?php if ($user['name'] !== $_SESSION['name']) : ?>
+  <?php if (!empty($_SESSION['name']) && $user['name'] !== $_SESSION['name']) : ?>
    <form action="../Execute/follow.php" method="post" style="display:inline;">
     <input type="hidden" name="follow_id" value="<?php echo $_SESSION['auth_id']; ?>">
     <input type="hidden" name="follower_id" value="<?php echo $user['user_id']; ?>">
