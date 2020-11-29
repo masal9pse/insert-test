@@ -50,6 +50,9 @@ $likeInstance->setToken();
     <button type="submit" class="btn btn-danger">新規投稿</button>
    </form>
   <?php else : ?>
+   <p>
+    認証ユーザーは<?php echo $_SESSION['name']; ?>です。
+   </p>
    <form action="" method="post">
     <button type="submit" name="logout" class="btn btn-danger">ログアウト</button>
    </form>
