@@ -9,6 +9,9 @@ var_dump($_SESSION);
 $admin = new AdminController();
 $post = $admin->sanitize($_POST);
 //var_dump($_COOKIE);
+if ($_SESSION['admin_name']) {
+ header("Location: ./admin_user.php");
+}
 if (isset($_COOKIE['admin_name'], $_COOKIE['admin_password'])) {
  $post['name'] = $_COOKIE['admin_name'];
  $post['password'] = $_COOKIE['admin_password'];

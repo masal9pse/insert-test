@@ -1,5 +1,4 @@
 <?php
-var_dump($_GET);
 session_start();
 ini_set('display_errors', "On");
 require_once __DIR__ . '/../vendor/autoload.php';
