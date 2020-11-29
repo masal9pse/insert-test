@@ -12,7 +12,12 @@ trait TraitUtilModel
  function dbConnect()
  {
   try {
-   $db = new PDO('pgsql:dbname=offshoa_db;host=127.0.0.1;port=5432;', 'yamamotohiroto', '');
+   $db = new PDO(
+    'pgsql:host=db;dbname=offshoa_db;',
+    'test_user',
+    'secret'
+   );
+   //$db = new PDO('pgsql:dbname=offshoa_db;host=127.0.0.1;port=5432;', 'yamamotohiroto', '');
    //echo '接続成功です';
   } catch (PDOException $e) {
    ini_set('display_errors', "On");
