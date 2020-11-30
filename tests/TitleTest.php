@@ -1,10 +1,9 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use App\Controllers\UtilController;
 
-ini_set('display_errors', "On");
+//ini_set('display_errors', "On");
 
 class TitleTest extends TestCase
 {
