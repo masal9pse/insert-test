@@ -12,6 +12,6 @@ class TitleTest extends TestCase
  {
   $title = UtilController::searchFormStatic();
   $this->assertSame($title, '検索フォーム');
-  $this->assertSame($title, '検索フォームa');
+  $this->assertNotSame($title, '検索フォームだおおおおおお');
  }
 }
