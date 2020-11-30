@@ -46,6 +46,9 @@ $likeInstance->setToken();
    <form action="../auth/login.php" method="get">
     <button type="submit" class="btn btn-danger">ログイン</button>
    </form>
+   <form action="../auth/test_user_login.php" method="get">
+    <button type="submit" class="btn btn-primary">テストユーザーログイン</button>
+   </form>
    <form action="../auth/signup_form.php" method="get">
     <button type="submit" class="btn btn-danger">新規投稿</button>
    </form>
@@ -100,9 +103,9 @@ $likeInstance->setToken();
       <button type="submit">アーカイブ</button>
      </form>
      <td>
-      <button type="button" class="btn btn-danger btn-sm deleteBtn" id="<?php echo $list['id'] ?>" data-target="#deletemodal" data-toggle="modal" data-backdrop="false">
+      <!--<button type="button" class="btn btn-danger btn-sm deleteBtn" id="<?php /* echo $list['id'] */ ?>" data-target="#deletemodal" data-toggle="modal" data-backdrop="false">
        削除
-      </button>
+      </button>-->
      <?php endif; ?>
 
    </div>
