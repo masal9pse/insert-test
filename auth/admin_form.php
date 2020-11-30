@@ -1,6 +1,6 @@
 <?php
 session_start();
-if ($_SESSION['admin_name']) {
+if (!empty($_SESSION['admin_name'])) {
  header("Location: ./admin_user.php");
 }
 ini_set('display_errors', "On");
@@ -17,10 +17,6 @@ if (isset($_COOKIE['admin_name'], $_COOKIE['admin_password'])) {
  $post['name'] = $_COOKIE['admin_name'];
  $post['password'] = $_COOKIE['admin_password'];
 }
-
-if (isset($post['admin-logout'])) {
- $admin->adminLogout();
-}
 ?>
 <html>
 
@@ -36,9 +32,6 @@ if (isset($post['admin-logout'])) {
    名前<input type="text" name="name" value="<?php print($admin->empty_check($post, 'name')); ?>"><br />
    パスワード<input type="text" name="password" value="<?php print($admin->empty_check($post, 'password')); ?>"><br />
    <button type="submit" name="admin" class="btn btn-success">ログイン</button>
-  </form>
-  <form action="" method="post">
-   <input type="submit" name="admin-logout" value="ログアウト">
   </form>
   <button type="button" onclick="location.href='../views/index.php'">トップページへ</button>
  </body>

@@ -26,12 +26,6 @@ final class AdminController extends AuthController
 
  function adminLogout()
  {
-  if (isset($_SESSION["admin_name"])) {
-   echo 'Logoutしました。';
-  } else {
-   echo 'SessionがTimeoutしました。ログアウトできていません';
-  }
-  //セッション変数のクリア
   unset($_SESSION["admin_name"]);
   unset($_SESSION["admin_password"]);
   unset($_SESSION["admin_id"]);

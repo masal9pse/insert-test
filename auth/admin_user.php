@@ -6,12 +6,16 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use App\Controllers\AdminController;
 use App\Controllers\UserController;
 
+//var_dump($_SESSION);
 $admin = new AdminController;
 $admin->admin_check('./admin_form.php');
 
 $user = new UserController;
 $users = $user->getAllData();
-
+if (isset($_POST['admin-logout'])) {
+ $admin->adminLogout();
+ header("Location: ../views/index.php");
+}
 //var_dump($user);
 ?>
 <!DOCTYPE html>
@@ -26,6 +30,9 @@ $users = $user->getAllData();
 <body>
  <h1>ユーザー一覧</h1>
  <a href="../views/index.php">トップページへ</a>
+ <form action="" method="post">
+  <input type="submit" name="admin-logout" value="ログアウト">
+ </form>
  <?php foreach ($users as $user) : ?>
   <ul>
    <li>
