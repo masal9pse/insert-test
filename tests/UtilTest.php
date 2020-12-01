@@ -2,23 +2,26 @@
 
 use PHPUnit\Framework\TestCase;
 use App\Controllers\UtilController;
-use SebastianBergmann\CodeCoverage\Util;
 
 class UtilTest extends TestCase
 {
- public function testReturnArgumentStub()
+ // webコンテナに入らないとエラーになる。
+ public function testDbConnect()
  {
-  // SomeClass クラスのスタブを作成します
-  $stub = $this->createMock(UtilController::class);
+  $mock = $this->createMock(UtilController::class);
 
-  // スタブの設定を行います
-  $stub->method('dbconnect')
-   ->will($this->returnArgument(0));
+  $db = new PDO(
+   'pgsql:host=db;dbname=offshoa_db;',
+   'test_user',
+   'secret',
+  );
 
-  // $stub->dbconnect('foo') は 'foo' を返します
-  $this->assertSame('foo', $stub->dbconnect('foo'));
+  $mock->method('dbconnect')
+   ->willReturn($db);
 
-  // $stub->dbconnect('bar') は 'bar' を返します
-  $this->assertSame('bar', $stub->dbconnect('bar'));
+  $result = $mock->dbconnect();
+  var_dump($result);
+  $this->assertIsObject($result);
+  $this->assertEquals($db, $result);
  }
 }
