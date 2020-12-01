@@ -13,10 +13,10 @@ class UtilController extends UtilModel
    $db = new PDO(
     'pgsql:host=db;dbname=offshoa_db;',
     'test_user',
-    'secret'
+    'secret',
    );
   } catch (PDOException $e) {
-   echo $e . 'err';
+   echo 'err';
   }
   return $db;
  }

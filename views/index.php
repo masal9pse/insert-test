@@ -12,7 +12,7 @@ $postInstance = new PostController();
 $lists = $postInstance->getAllData();
 
 if (empty($_SESSION['auth_id'])) {
- (string)$_SESSION['auth_id'] = "名無しのごんべ";
+ $_SESSION['auth_id'] = "名無しのごんべ";
 }
 
 if (isset($_POST['logout'])) {
