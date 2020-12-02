@@ -20,8 +20,9 @@ try {
   $post->postTagInsert($_POST);
  }
  echo '投稿に成功しました';
- // 空の場合
+ echo '<br>';
  echo "<a href='../views/insert_form.php'>投稿フォームへ</a>";
+ echo '<br>';
  echo "<a href='../views/index.php'>トップページへ</a>";
  $db->commit();
 } catch (PDOException $e) {

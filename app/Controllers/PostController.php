@@ -57,7 +57,7 @@ class PostController extends UtilController
   $db = $this->dbConnect();
   $sql = "INSERT INTO post_tag(post_id,tag_id) VALUES (:post_id,:tag_id)";
   $now_post_insert_id = $_SESSION['now_post_insert_id'];
-  var_dump($now_post_insert_id);
+  //var_dump($now_post_insert_id);
   foreach ($tags['tags'] as $tag_num) {
    $tag_stmt = $db->prepare($sql);
    $tag_stmt->bindValue(':post_id', $now_post_insert_id, PDO::PARAM_INT);

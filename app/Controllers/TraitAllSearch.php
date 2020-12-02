@@ -25,7 +25,7 @@ trait TraitAllSearch
               AND tags.tag IN ($whereSql)  
               AND (posts.title like :title OR posts.detail like :detail )";
 
-  var_dump($sql);
+  //var_dump($sql);
   // dbconnectをコメントアウトしてもエラーにならなかった
   $db = $this->dbConnect();
   $stmt = $db->prepare($sql);

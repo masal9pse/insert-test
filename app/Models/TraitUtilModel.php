@@ -17,10 +17,8 @@ trait TraitUtilModel
     'test_user',
     'secret'
    );
-   //$db = new PDO('pgsql:dbname=offshoa_db;host=127.0.0.1;port=5432;', 'yamamotohiroto', '');
    //echo '接続成功です';
   } catch (PDOException $e) {
-   ini_set('display_errors', "On");
    echo $e . 'エラーです';
   }
   return $db;
@@ -78,6 +76,9 @@ trait TraitUtilModel
   if (count($results) == 0) {
    echo '結果は0件です';
   }
-  var_dump($results);
+  foreach ($results as $result) {
+   echo $result['title'] . ' ' . $result['detail'];
+   echo '<br>';
+  }
  }
 }

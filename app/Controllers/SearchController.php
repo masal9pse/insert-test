@@ -8,14 +8,13 @@ use PDO;
 
 final class SearchController
 {
- //　finalクラスは現状のところ、トレイトに影響しないことがわかった
  use TraitUtilModel, TraitAllSearch;
 
  // tagとカテゴリーの絞り込み検索
  public function tagCategorySearch()
  {
   list($tag_binds, $whereSql) = $this->tagWhere();
-  var_dump($whereSql);
+  //var_dump($whereSql);
 
   $sql = "SELECT distinct posts.*
               FROM posts
@@ -30,7 +29,7 @@ final class SearchController
               WHERE  categories.category = :category
                 AND tags.tag IN ($whereSql)";
 
-  var_dump($sql);
+  //var_dump($sql);
   $db = $this->dbConnect();
   $stmt = $db->prepare($sql);
   $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
@@ -42,7 +41,7 @@ final class SearchController
  public function tagTextSearch()
  {
   list($tag_binds, $whereSql) = $this->tagWhere();
-  var_dump($whereSql);
+  //var_dump($whereSql);
 
   $sql = "SELECT distinct posts.*
               FROM posts
@@ -58,7 +57,7 @@ final class SearchController
                 AND posts.title LIKE :title
                 OR posts.detail LIKE :detail";
 
-  var_dump($sql);
+  //var_dump($sql);
   $db = $this->dbConnect();
   $stmt = $db->prepare($sql);
   // タグ検索 $tag_bindsのキーと$whereSqlは同じ
@@ -81,7 +80,7 @@ final class SearchController
 
   $sql = $first_sql . $whereSql . '))' . ' ' .  $second_sql;
   //$sql .= $whereSql;
-  var_dump($sql);
+  //var_dump($sql);
   $db = $this->dbConnect();
   $stmt = $db->prepare($sql);
   $this->tagBinds($tag_binds, $stmt);
@@ -99,7 +98,7 @@ final class SearchController
               ON categories.id = post_category.category_id
               WHERE categories.category = :category';
 
-  var_dump($sql);
+  //var_dump($sql);
   $db = $this->dbConnect();
   $stmt = $db->prepare($sql);
   $stmt->bindValue(':category', $_GET["category"], PDO::PARAM_STR);
@@ -130,7 +129,7 @@ final class SearchController
               AND (posts.title like :title 
               OR posts.detail like :detail)';
 
-  var_dump($sql);
+  //var_dump($sql);
   $db = $this->dbConnect();
   $stmt = $db->prepare($sql);
   $stmt->bindValue(':category', $_GET['category'], PDO::PARAM_STR);
@@ -154,14 +153,14 @@ final class SearchController
    $tag_binds[":tag" . $key] = $tag;
   }
   $whereSql = implode(' , ', $tag_where);
-  var_dump($whereSql);
+  //var_dump($whereSql);
   return [$tag_binds, $whereSql];
  }
 
  private function tagBinds($tag_binds, $stmt)
  {
   foreach ($tag_binds as $key => $val) {
-   var_dump($key);
+   //var_dump($key);
    $stmt->bindValue($key, $val, PDO::PARAM_STR);
   }
  }

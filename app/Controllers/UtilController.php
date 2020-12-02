@@ -102,7 +102,10 @@ class UtilController extends UtilModel
   $stmt->execute();
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
   $results = $this->sanitize($results);
-  var_dump($results);
+  //var_dump($results);
+  foreach ($results as $result) {
+   echo $result['title'];
+  }
  }
 
  // staticキーワード内で、staticキーワードでないメソッドを呼ぶことはできない

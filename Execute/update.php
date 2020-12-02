@@ -7,11 +7,11 @@ use App\Controllers\PostController;
 
 $postInstance = new PostController();
 $db = $postInstance->dbConnect();
-var_dump($_POST);
+//var_dump($_POST);
 //var_dump($_FILES);
 
 if (empty($_POST['title'])) {
- echo "<a href='./index.php'>一覧フォームへ</a>";
+ echo "<a href='./views/index.php'>一覧フォームへ</a>";
  exit('タイトルが未入力です');
 }
 //var_dump($new_image);
@@ -44,7 +44,6 @@ try {
 </head>
 
 <body>
- <!--<a href="../views/update_form.php">戻る</a>-->
  <a href="../views/index.php">トップページへ</a>
 </body>
 
