@@ -1,7 +1,9 @@
 <?php
 
+use App\Controllers\PostController;
 use PHPUnit\Framework\TestCase;
 use App\Controllers\UtilController;
+use App\Controllers\TagController;
 
 class UtilTest extends TestCase
 {
@@ -35,7 +37,15 @@ class UtilTest extends TestCase
    'test_user',
    'secret',
   );
-  var_dump($result);
   $this->assertEquals($db, $result);
+ }
+
+ public function testGetById()
+ {
+  $util = new PostController;
+  $result = $util->getById(1);
+  $result = $result['title'];
+  var_dump($result);
+  $this->assertEquals('鬼滅の刃', $result);
  }
 }
