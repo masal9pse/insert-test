@@ -32,7 +32,7 @@ $post = $tagInstance->sanitize($_POST);
 <body>
  <?php
  $title = new PostTitleController;
- var_dump($_SESSION);
+ //var_dump($_SESSION);
  ?>
  <!--<h1>投稿フォーム</h1>-->
  <h1><?php $title->run(); ?></h1>

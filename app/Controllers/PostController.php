@@ -48,6 +48,7 @@ class PostController extends UtilController
   $_SESSION['now_post_insert_id'] = $id;
   echo '<p>' . $id . "のアップロードに成功しました</p>";
   echo '<p>' . $post['title'] . "のアップロードに成功しました</p>";
+  return true;
  }
 
  // 記事に紐づいたタグを中間テーブルにインサート

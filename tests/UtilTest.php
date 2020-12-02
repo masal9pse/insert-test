@@ -27,7 +27,7 @@ class UtilTest extends TestCase
  }
 
  // arrayが帰ってくることだけわかればいい
- public function testGetAllData()
+ public function testGetAllDataMock()
  {
   $stub = $this->createMock(PostController::class);
 
@@ -35,6 +35,14 @@ class UtilTest extends TestCase
    ->willReturn([0 => ['鬼滅']]);
 
   $this->assertSame([0 => ['鬼滅']], $stub->getAllData());
+ }
+
+ public function testPostInsertStub()
+ {
+  $stub = $this->createMock(PostController::class);
+  $stub->method('postInsert')
+   ->willReturn(true);
+  $this->assertTrue($stub->postInsert($_POST));
  }
 
  // コンテナ内に必ず入ること
@@ -55,7 +63,7 @@ class UtilTest extends TestCase
   $util = new PostController;
   $result = $util->getById(1);
   $result = $result['title'];
-  var_dump($result);
+  //var_dump($result);
   $this->assertEquals('鬼滅の刃', $result);
  }
 }
