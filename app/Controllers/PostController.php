@@ -6,7 +6,7 @@ use PDO;
 use App\Models\PostModel;
 use App\Controllers\UtilController;
 
-final class PostController extends UtilController
+class PostController extends UtilController
 {
  protected $table_name;
  protected $sort;

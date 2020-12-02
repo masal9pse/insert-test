@@ -3,7 +3,6 @@
 use App\Controllers\PostController;
 use PHPUnit\Framework\TestCase;
 use App\Controllers\UtilController;
-use App\Controllers\TagController;
 
 class UtilTest extends TestCase
 {
@@ -25,6 +24,17 @@ class UtilTest extends TestCase
   //var_dump($result);
   $this->assertIsObject($result);
   $this->assertEquals($db, $result);
+ }
+
+ // arrayが帰ってくることだけわかればいい
+ public function testGetAllData()
+ {
+  $stub = $this->createMock(PostController::class);
+
+  $stub->method('getAllData')
+   ->willReturn([0 => ['鬼滅']]);
+
+  $this->assertSame([0 => ['鬼滅']], $stub->getAllData());
  }
 
  // コンテナ内に必ず入ること
