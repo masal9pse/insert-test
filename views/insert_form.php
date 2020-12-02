@@ -34,7 +34,7 @@ $post = $tagInstance->sanitize($_POST);
  $title = new PostTitleController;
  //var_dump($_SESSION);
  ?>
- <!--<h1>投稿フォーム</h1>-->
+ <h1>投稿フォーム</h1>
  <h1><?php $title->run(); ?></h1>
  <form action="../auth/logout.php" method="post">
   <button type="submit" name="logout" class="btn btn-danger">ログアウト</button>

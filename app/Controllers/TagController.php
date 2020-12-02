@@ -16,6 +16,6 @@ final class TagController extends UtilController
 
  public static function callSearchFormStatic()
  {
-  return self::searchFormStatic() . 'だよ！';
+  return self::searchFormStatic();
  }
 }
